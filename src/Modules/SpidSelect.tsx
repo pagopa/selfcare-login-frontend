@@ -11,9 +11,12 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
+ /*    window.location.assign(
+      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
+    ); */
     window.location.assign(
-      `${process.env.BASE_SPID_LOGIN_PATH}/login?entityID=${entityID}&authLevel=SpidL2`
-    );
+      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
+    )
   };
 
   return (
