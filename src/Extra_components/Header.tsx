@@ -1,14 +1,8 @@
-import React, { Fragment } from "react";
-import LogoPagoPa from "../Icons/logo_pago_pa.svg";
+import { Fragment } from 'react';
+import { AppBar, Toolbar } from '@material-ui/core';
+import LogoPagoPa from '../Icons/logo_pago_pa.svg';
 
-import { AppBar, Toolbar, Container } from "@material-ui/core";
-
-type Props = {
-    children: any;
-  };
-  
-
-const Header = ({ children }: Props) => (
+const Header = () => (
   <Fragment>
     <AppBar>
       <Toolbar>

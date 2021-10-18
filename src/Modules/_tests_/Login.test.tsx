@@ -1,37 +1,35 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import Login from "../Login";
-import { width } from "@mui/system";
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { width } from '@mui/system';
+import Login from '../Login';
 
-test("renders learn react link scopri di più", () => {
+test('renders learn react link scopri di più', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Scopri di più/i);
   expect(LinkName).toHaveAttribute(
-    "href",
-    "https://www.spid.gov.it/cos-e-spid/come-attivare-spid/"
+    'href',
+    'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/'
   );
 });
 
-test("renders learn react link Informativa sulla Privacy", () => {
+test('renders learn react link Informativa sulla Privacy', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Informativa sulla Privacy/i);
-  expect(LinkName).toHaveAttribute("href", "#");
+  expect(LinkName).toHaveAttribute('href', '#');
 });
 
-test("renders button Autenticati con Spid", () => {
+test('renders button Autenticati con Spid', () => {
   const login = render(<Login />);
   const ButtonSpid = screen.getByText(/Autenticati con SPID/i);
   fireEvent.click(ButtonSpid);
-  expect(screen.getAllByRole('img')[0]).toHaveAttribute('src','spid_big.svg');
-    
+  expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
 
-test("renders button Autenticati con CIE", () => {
+test('renders button Autenticati con CIE', () => {
   const login = render(<Login />);
   const ButtonSpid = screen.getByRole(/Button/i, {
-    name: "Autenticati con CIE",
+    name: 'Autenticati con CIE',
   });
 
   fireEvent.click(ButtonSpid);
- 
 });
