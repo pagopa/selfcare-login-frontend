@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Location } from 'history';
-import SpidSelect from '../SpidSelect';
+import SpidSelect from '../pages/SpidSelect';
 
 const oldWindowLocation = global.window.location;
 

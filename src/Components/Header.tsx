@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { AppBar, Toolbar } from '@material-ui/core';
-import LogoPagoPa from '../Icons/logo_pago_pa.svg';
+import LogoPagoPa from '../assets/logo_pago_pa.svg';
 
 const Header = () => (
   <Fragment>

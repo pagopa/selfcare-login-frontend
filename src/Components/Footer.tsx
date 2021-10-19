@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-import LogoPagoPa from '../Icons/logo_pago_pa.svg';
+import LogoPagoPa from '../assets/logo_pago_pa.svg';
 import 'typeface-titillium-web';
 
 const Footer = () => (

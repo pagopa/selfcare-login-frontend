@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import App from './App';
+import App from './pages/App';
 
 declare module '@mui/material/styles' {
   interface ThemeOptions {

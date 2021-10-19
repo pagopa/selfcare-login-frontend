@@ -1,7 +1,7 @@
 import { Box } from '@material-ui/core';
 
-import Footer from '../Extra_components/Footer';
-import Header from '../Extra_components/Header';
+import Footer from './Footer';
+import Header from './Header';
 
 type Props = {
   children: any;
