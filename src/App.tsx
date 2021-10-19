@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 // import { setCookie, getCookie } from "./utils/cookie";
-import Login from './Login';
+import Login from './pages/login/Login';
 
 function App() {
   const token = 'dddd';

@@ -13,10 +13,10 @@ import Paper from '@mui/material/Paper';
 
 import 'typeface-titillium-web';
 
-import Layout from '../components/Layout';
-import { IDPS } from '../IDPS';
-import SpidIcon from '../assets/SpidIcon.svg';
-import CIEIcon from '../assets/CIEIcon.svg';
+import Layout from '../../components/Layout';
+import { IDPS } from '../../utils/IDPS';
+import SpidIcon from '../../assets/SpidIcon.svg';
+import CIEIcon from '../../assets/CIEIcon.svg';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (

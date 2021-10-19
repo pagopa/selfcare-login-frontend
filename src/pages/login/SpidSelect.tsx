@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import Button from '@mui/material/Button';
-import { IDPS } from '../IDPS';
-import SpidBig from '../assets/spid_big.svg';
+import { IDPS } from '../../utils/IDPS';
+import SpidBig from '../../assets/spid_big.svg';
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
     /*    window.location.assign(

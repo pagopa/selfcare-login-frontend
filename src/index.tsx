@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import App from './pages/App';
+import App from './App';
 
 declare module '@mui/material/styles' {
   interface ThemeOptions {
@@ -42,5 +42,5 @@ ReactDOM.render(
       <App />
     </React.StrictMode>
   </ThemeProvider>,
-  document.getElementById('app')
+  document.getElementById('root')
 );
