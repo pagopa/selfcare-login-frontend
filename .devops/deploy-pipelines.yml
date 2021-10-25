@@ -18,30 +18,33 @@ variables:
 
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
     environment: 'DEV'
-    endpoint_azure: '$(DEV_ENDPOINT_AZURE)'
-    profile_name_cdn_azure: '$(DEV_PROFILE_NAME_CDN_AZURE)'
-    resource_group_azure: '$(DEV_RESOURCE_GROUP_AZURE)'
-    storage_account_name: '$(DEV_STORAGE_ACCOUNT_NAME)'
+    azure_subscription: $(DEV_AZURE_SUBSCRIPTION)
+    cdn_endpoint: '$(DEV_CDN_ENDPOINT)'
+    cdn_profile: '$(DEV_CDN_PROFILE)'
+    resource_group: '$(DEV_RESOURCE_GROUP)'
+    storage_account: '$(DEV_STORAGE_ACCOUNT)'
     react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
 
   ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
     environment: 'UAT'
-    endpoint_azure: '$(UAT_ENDPOINT_AZURE)'
-    profile_name_cdn_azure: '$(UAT_PROFILE_NAME_CDN_AZURE)'
-    resource_group_azure: '$(UAT_RESOURCE_GROUP_AZURE)'
-    storage_account_name: '$(UAT_STORAGE_ACCOUNT_NAME)'
+    azure_subscription: $(UAT_AZURE_SUBSCRIPTION)
+    cdn_endpoint: '$(UAT_CDN_ENDPOINT)'
+    cdn_profile: '$(UAT_CDN_PROFILE)'
+    resource_group: '$(UAT_RESOURCE_GROUP)'
+    storage_account: '$(UAT_STORAGE_ACCOUNT)'
     react_app_url_fe_onboarding: '$(UAT_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
 
   ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),eq(variables['Build.SourceBranch'], 'refs/heads/release-prod')) }}:
     environment: 'PROD'
-    endpoint_azure: '$(PROD_ENDPOINT_AZURE)'
-    profile_name_cdn_azure: '$(PROD_PROFILE_NAME_CDN_AZURE)'
-    resource_group_azure: '$(PROD_RESOURCE_GROUP_AZURE)'
-    storage_account_name: '$(PROD_STORAGE_ACCOUNT_NAME)'
+    azure_subscription: $(PROD_AZURE_SUBSCRIPTION)
+    cdn_endpoint: '$(PROD_CDN_ENDPOINT)'
+    cdn_profile: '$(PROD_CDN_PROFILE)'
+    resource_group: '$(PROD_RESOURCE_GROUP)'
+    storage_account: '$(PROD_STORAGE_ACCOUNT)'
     react_app_url_fe_onboarding: '$(PROD_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
@@ -140,7 +143,7 @@ stages:
               azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
               scriptLocation: inlineScript
               inlineScript: |
-                call az storage blob sync --container $web --account-name $(storage_account_name) -s "$(Pipeline.Workspace)\Bundle" --exclude-path p
+                call az storage blob sync --container $web --account-name $(storage_account) -s "$(Pipeline.Workspace)\Bundle" --exclude-path p
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
@@ -148,4 +151,4 @@ stages:
               azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
               scriptLocation: inlineScript
               inlineScript: |
-                call az cdn endpoint purge -g $(resource_group_azure) -n $(endpoint_azure) --profile-name $(profile_name_cdn_azure) --content-paths "/*"
+                call az cdn endpoint purge -g $(resource_group) -n $(cdn_endpoint) --profile-name $(cdn_profile) --content-paths "/*"
