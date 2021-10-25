@@ -52,7 +52,7 @@ const IDPS = {
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };
 
-/*   if (process.env.NODE_ENV !== "production") {
+   if (process.env.NODE_ENV !== "production") {
     // eslint-disable-next-line functional/immutable-data
     IDPS.identityProviders.push({
       identifier: "test",
@@ -62,5 +62,4 @@ const IDPS = {
         "https://upload.wikimedia.org/wikipedia/commons/1/11/Test-Logo.svg"
     });
   }
-   */
 export { IDPS };
