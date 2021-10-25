@@ -1,0 +1,151 @@
+# Azure DevOps pipeline to release a new version and deploy to production.
+
+parameters:
+  - name: 'RELEASE_SEMVER'
+    displayName: 'When packing a release, define the version bump to apply'
+    type: string
+    values:
+      - major
+      - minor
+      - patch
+    default: minor
+
+variables:
+  NODE_VERSION: '16.10.0'
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+  # Execute agents (jobs) on latest Ubuntu version.
+  vmImageNameDefault: 'ubuntu-latest'
+
+  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
+    environment: 'DEV'
+    endpoint_azure: '$(DEV_ENDPOINT_AZURE)'
+    profile_name_cdn_azure: '$(DEV_PROFILE_NAME_CDN_AZURE)'
+    resource_group_azure: '$(DEV_RESOURCE_GROUP_AZURE)'
+    storage_account_name: '$(DEV_STORAGE_ACCOUNT_NAME)'
+    react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
+    react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
+    react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
+
+  ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
+    environment: 'UAT'
+    endpoint_azure: '$(UAT_ENDPOINT_AZURE)'
+    profile_name_cdn_azure: '$(UAT_PROFILE_NAME_CDN_AZURE)'
+    resource_group_azure: '$(UAT_RESOURCE_GROUP_AZURE)'
+    storage_account_name: '$(UAT_STORAGE_ACCOUNT_NAME)'
+    react_app_url_fe_onboarding: '$(UAT_REACT_APP_URL_FE_ONBOARDING)'
+    react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
+    react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
+
+  ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),eq(variables['Build.SourceBranch'], 'refs/heads/release-prod')) }}:
+    environment: 'PROD'
+    endpoint_azure: '$(PROD_ENDPOINT_AZURE)'
+    profile_name_cdn_azure: '$(PROD_PROFILE_NAME_CDN_AZURE)'
+    resource_group_azure: '$(PROD_RESOURCE_GROUP_AZURE)'
+    storage_account_name: '$(PROD_STORAGE_ACCOUNT_NAME)'
+    react_app_url_fe_onboarding: '$(PROD_REACT_APP_URL_FE_ONBOARDING)'
+    react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
+    react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
+
+# Automatically triggered on PR
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
+trigger:
+  branches:
+    include:
+      - main
+      - release-*
+
+pool:
+  vmImage: '$(vmImageNameDefault)'
+
+stages:
+  # Create a release
+  # Activated when ONE OF these are met:
+  # - is on branch main
+  # - is a tag in the form v{version}-RELEASE
+  - stage: Release
+    condition: and(
+      succeeded(),
+      or(
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'),
+      and(
+      startsWith(variables['Build.SourceBranch'], 'refs/tags'),
+      endsWith(variables['Build.SourceBranch'], '-RELEASE')
+      )
+      )
+      )
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: make_release
+        steps:
+          - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+              - template: azure-templates/node-github-release.yaml
+                parameters:
+                  release_branch: 'main'
+                  project_folder: 'io-pay-portal-fe'
+                  semver: '${{ parameters.RELEASE_SEMVER }}'
+                  gitEmail: $(GIT_EMAIL)
+                  gitUsername: $(GIT_USERNAME)
+                  gitHubConnection: $(GITHUB_CONNECTION)
+                  nodeVersion: $(NODE_VERSION)
+                  pkg_cache_version_id: $(CACHE_VERSION_ID)
+                  pkg_cache_folder: $(YARN_CACHE_FOLDER)
+
+          - ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+              - script: |
+                  echo "We assume this reference to be a valid release: $(Build.SourceBranch). Therefore, there is no need to bundle a new release."
+                displayName: 'Skip release bundle'
+
+  # Prepare Artifact with application bundle
+  - stage: Prepare_artifact
+    dependsOn:
+      - Release
+    jobs:
+      - job: 'make_build'
+        steps:
+          # Build application
+          - template: azure-templates/setup-project.yml
+          - template: azure-templates/make-build.yml
+          - publish: $(System.DefaultWorkingDirectory)/build
+            artifact: Bundle
+
+  # TODO
+  - stage: PreDeploy
+    dependsOn:
+      - Prepare_artifact
+    jobs:
+      - job: Deploy_PROD_WaitForApproval
+        displayName: Wait for PROD approval
+        pool: server
+        timeoutInMinutes: 4320 # job times out in 3 days
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440 # task times out in 1 day
+
+  # Deploy bundle
+  - stage: 'Deploy_to_${{ parameters.environment }}'
+    dependsOn:
+      - PreDeploy
+    jobs:
+      - job: 'Deploy_to_${{ parameters.environment }}'
+        steps:
+          - checkout: none
+
+          - download: current
+            artifact: Bundle
+
+          - task: AzureCLI@1
+            displayName: 'Sync checkout storage'
+            inputs:
+              azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
+              scriptLocation: inlineScript
+              inlineScript: |
+                call az storage blob sync --container $web --account-name $(storage_account_name) -s "$(Pipeline.Workspace)\Bundle" --exclude-path p
+
+          - task: AzureCLI@1
+            displayName: 'Purge CDN endpoint'
+            inputs:
+              azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
+              scriptLocation: inlineScript
+              inlineScript: |
+                call az cdn endpoint purge -g $(resource_group_azure) -n $(endpoint_azure) --profile-name $(profile_name_cdn_azure) --content-paths "/*"
