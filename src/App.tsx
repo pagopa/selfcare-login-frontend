@@ -1,17 +1,18 @@
 // import { setCookie, getCookie } from "./utils/cookie";
 import Login from './pages/login/Login';
 import { storageWrite, storageRead, storageDelete } from './lib/storage-utils';
+import { ROUTE_LOGIN, ROUTE_LOGIN_SUCCESS, ROUTE_LOGOUT } from './utils/constants';
 
 const redirectSuccessLogin = () => {
   window.location.assign(`${process.env.REACT_APP_SPID_DASHBOARD}`);
 };
 const redirectToLogin = () => {
-  window.location.assign(`${process.env.REACT_APP_SPID_LOGIN}`);
+  window.location.assign(ROUTE_LOGIN);
 };
 
 function App() {
   const token = storageRead('token', 'string');
-  if (window.location.pathname === '/logout') {
+  if (window.location.pathname === ROUTE_LOGOUT) {
     storageDelete('token');
     redirectToLogin();
   }
@@ -20,10 +21,10 @@ function App() {
     redirectSuccessLogin();
   }
   switch (window.location.pathname) {
-    case '/login':
+    case ROUTE_LOGIN:
       return <Login />;
 
-    case `/login/success`:
+    case ROUTE_LOGIN_SUCCESS:
       const { hash = '' } = window.location;
       const urlToken = hash.replace('#token=', '');
 

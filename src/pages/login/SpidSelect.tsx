@@ -9,14 +9,11 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
+import { URL_API_LOGIN } from '../../utils/constants';
+
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
-    /*    window.location.assign(
-      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
-    ); */
-    window.location.assign(
-      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
-    );
+    window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
 
   return (
@@ -45,21 +42,14 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Grid container direction="row" justifyContent="center" spacing={2}>
+            <Grid container direction="row" justifyItems="center" spacing={2}>
               {IDPS.identityProviders.map((IP, i) => (
-                <Grid item key={IP.entityId} xs={6}>
-                  <div
-                    style={{
-                      justifyContent: i % 2 === 0 ? 'end' : 'start',
-                      display: 'flex',
-                    }}
-                  >
-                    <Button onClick={() => getSPID(IP.entityId)}>
-                      <Icon sx={{ width: '100px', height: '48px' }}>
-                        <img width="100px" src={IP.imageUrl} alt={IP.name} />
-                      </Icon>
-                    </Button>
-                  </div>
+                <Grid item key={IP.entityId} xs={6} textAlign={i % 2 === 0 ? 'end' : 'start'}>
+                  <Button onClick={() => getSPID(IP.entityId)}>
+                    <Icon sx={{ width: '100px', height: '48px' }}>
+                      <img width="100px" src={IP.imageUrl} alt={IP.name} />
+                    </Icon>
+                  </Button>
                 </Grid>
               ))}
             </Grid>
