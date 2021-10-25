@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
 import Login from '../pages/Login';
 
-test('renders learn react link scopri di più', () => {
+test('rendering test', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Scopri di più/i);
   expect(LinkName).toHaveAttribute(
@@ -12,7 +12,7 @@ test('renders learn react link scopri di più', () => {
   );
 });
 
-test('renders learn react link Informativa sulla Privacy', () => {
+test('renders react link Informativa sulla Privacy', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Informativa sulla Privacy/i);
   expect(LinkName).toHaveAttribute('href', '#');
