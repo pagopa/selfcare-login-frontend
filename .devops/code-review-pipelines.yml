@@ -25,7 +25,7 @@ resources:
     - repository: pagopaCommons
       type: github
       name: pagopa/azure-pipeline-templates
-      ref: refs/tags/v14
+      ref: refs/tags/v18
       endpoint: 'io-azure-devops-github-ro'
 
 # Execute agents (jobs) on latest Ubuntu version.
