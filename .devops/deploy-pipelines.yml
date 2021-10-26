@@ -114,7 +114,7 @@ stages:
               nodeVersion: $(NODE_VERSION)
           - bash: |
               yarn build
-            env: |
+            env:
               SPID_TEST_ENV_ENABLED='$(spid_test_env_enabled)'
               INLINE_RUNTIME_CHUNK=false
               REACT_APP_URL_FE_ONBOARDING:'$(react_app_url_fe_onboarding)'
