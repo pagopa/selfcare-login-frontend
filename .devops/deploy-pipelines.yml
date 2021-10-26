@@ -133,8 +133,7 @@ stages:
 
   # Deploy bundle
   - stage: 'Deploy_to_${{ variables.environment }}'
-    dependsOn:
-      - Prepare_artifact
+    condition: succeeded()
     jobs:
       - job: 'Deploy_to_${{ variables.environment }}'
         steps:
