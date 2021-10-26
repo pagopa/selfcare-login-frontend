@@ -112,19 +112,6 @@ stages:
           - publish: $(System.DefaultWorkingDirectory)/build
             artifact: Bundle
 
-  # TODO
-  - stage: PreDeploy
-    dependsOn:
-      - Prepare_artifact
-    jobs:
-      - job: Deploy_PROD_WaitForApproval
-        displayName: Wait for PROD approval
-        pool: server
-        timeoutInMinutes: 4320 # job times out in 3 days
-        steps:
-          - task: ManualValidation@0
-            timeoutInMinutes: 1440 # task times out in 1 day
-
   # Deploy bundle
   - stage: 'Deploy_to_${{ parameters.environment }}'
     dependsOn:
@@ -140,15 +127,15 @@ stages:
           - task: AzureCLI@1
             displayName: 'Sync checkout storage'
             inputs:
-              azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
+              azureSubscription: '$(AZURE_SUBSCRIPTION)'
               scriptLocation: inlineScript
               inlineScript: |
-                call az storage blob sync --container $web --account-name $(storage_account) -s "$(Pipeline.Workspace)\Bundle" --exclude-path p
+                call az storage blob sync --container $web --account-name $(storage_account) -s "$(Pipeline.Workspace)\Bundle" --destination '/auth/'
 
           - task: AzureCLI@1
             displayName: 'Purge CDN endpoint'
             inputs:
-              azureSubscription: '$(AZURE_SUBSCRIPTION)' # TODO
+              azureSubscription: '$(AZURE_SUBSCRIPTION)'
               scriptLocation: inlineScript
               inlineScript: |
-                call az cdn endpoint purge -g $(resource_group) -n $(cdn_endpoint) --profile-name $(cdn_profile) --content-paths "/*"
+                call az cdn endpoint purge -g $(resource_group) -n $(cdn_endpoint) --profile-name $(cdn_profile) --content-paths "/auth/*"
