@@ -28,7 +28,7 @@ variables:
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
 
-  ${{ else if eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
     environment: 'PROD'
     azure_subscription: $(PROD_AZURE_SUBSCRIPTION)
     cdn_endpoint: '$(PROD_CDN_ENDPOINT)'
