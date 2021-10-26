@@ -62,6 +62,14 @@ trigger:
       - main
       - release-*
 
+resources:
+  repositories:
+    - repository: pagopaCommons
+      type: github
+      name: pagopa/azure-pipeline-templates
+      ref: refs/tags/v18
+      endpoint: 'io-azure-devops-github-ro'
+
 pool:
   vmImage: '$(vmImageNameDefault)'
 
