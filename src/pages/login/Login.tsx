@@ -48,31 +48,25 @@ const Login = () => {
     <Layout>
       <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}>
         <Typography
-          component="h1"
-          variant="h5"
-          style={{
+          sx={{
             padding: '10px 0px',
-            fontFamily: 'Titillium Web',
-            fontStyle: 'normal',
             fontWeight: 'bold',
             fontSize: '32px',
             lineHeight: '48px',
             textAlign: 'center',
-            color: '#17324D',
+            color: 'text.primary',
           }}
         >
           Accedi con SPID/CIE
         </Typography>
         <Typography
-          style={{
+          sx={{
             marginBottom: '60px',
-            fontFamily: 'Titillium Web',
-            fontStyle: 'normal',
             fontWeight: 'normal',
             fontSize: '16px',
             lineHeight: '24px',
             textAlign: 'center',
-            color: '#17324D',
+            color: 'text.primary',
           }}
         >
           Seleziona la modalità di autenticazione che preferisci e inizia il processo di adesione
@@ -82,15 +76,13 @@ const Login = () => {
           <Grid item xs={12} md={6} lg={5}>
             <Paper elevation={16}>
               <Typography
-                style={{
+                sx={{
                   padding: '40px 0px',
-                  fontFamily: 'Titillium Web',
-                  fontStyle: 'normal',
                   fontWeight: 'bold',
                   fontSize: '20px',
                   lineHeight: '24px',
                   textAlign: 'center',
-                  color: '#17324D',
+                  color: 'text.primary',
                 }}
                 component="div"
               >
@@ -106,8 +98,7 @@ const Login = () => {
                 }}
               >
                 <Button
-                  style={{
-                    background: '#0073E6',
+                  sx={{
                     borderRadius: '4px',
                     width: '70%',
                     height: '50px',
@@ -116,21 +107,8 @@ const Login = () => {
                   variant="contained"
                   startIcon={spidIcon()}
                 >
-                  <div
-                    style={{
-                      fontFamily: 'Titillium Web',
-                      fontStyle: 'normal',
-                      fontWeight: 'bold',
-                      fontSize: '16px',
-                      lineHeight: '18px',
-                      color: '#FFFFFF',
-                      flex: 'none',
-                      margin: '0px 8px',
-                    }}
-                  >
-                    {' '}
-                    Autenticati con SPID
-                  </div>
+                  {' '}
+                  Autenticati con SPID
                 </Button>
               </Box>
 
@@ -143,8 +121,7 @@ const Login = () => {
                 }}
               >
                 <Button
-                  style={{
-                    background: '#0073E6',
+                  sx={{
                     borderRadius: '4px',
                     width: '70%',
                     height: '50px',
@@ -153,35 +130,20 @@ const Login = () => {
                   startIcon={cieIcon()}
                   onClick={() => goCIE()}
                 >
-                  <div
-                    style={{
-                      fontFamily: 'Titillium Web',
-                      fontStyle: 'normal',
-                      fontWeight: 'bold',
-                      fontSize: '16px',
-                      lineHeight: '18px',
-                      color: '#FFFFFF',
-                      flex: 'none',
-                      margin: '0px 8px',
-                    }}
-                  >
-                    {' '}
-                    Autenticati con CIE
-                  </div>
+                  {' '}
+                  Autenticati con CIE
                 </Button>
               </Box>
 
               <Divider variant="middle" />
 
               <Typography
-                style={{
-                  fontFamily: 'Titillium Web',
-                  fontStyle: 'normal',
+                sx={{
                   fontWeight: 'normal',
                   fontSize: '14px',
                   lineHeight: '24px',
                   textAlign: 'center',
-                  color: '#17324D',
+                  color: 'text.primary',
                   padding: '24px 0px',
                 }}
                 component="div"
@@ -193,14 +155,12 @@ const Login = () => {
           </Grid>
         </Grid>
         <Typography
-          style={{
-            fontFamily: 'Titillium Web',
-            fontStyle: 'normal',
+          sx={{
             fontWeight: 'normal',
             fontSize: '14px',
             lineHeight: '24px',
             textAlign: 'center',
-            color: '#17324D',
+            color: 'text.primary',
             padding: '24px 0px',
           }}
           component="div"

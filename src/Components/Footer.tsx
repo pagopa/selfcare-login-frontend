@@ -22,14 +22,12 @@ const Footer = () => (
         <Grid item xs={9} md={9} lg={9}>
           <Typography
             component="div"
-            style={{
-              fontFamily: 'Titillium Web',
-              fontStyle: 'normal',
+            sx={{
               fontWeight: 'normal',
               fontSize: '15px',
               lineHeight: '15px',
               textAlign: 'center',
-              color: '#FFFFFF',
+              color: 'text.disabled',
             }}
           >
             PagoPA S.p.A. - società per azioni con socio unico - capitale sociale di euro 1,000,000
@@ -39,13 +37,11 @@ const Footer = () => (
         </Grid>
         <Typography
           style={{
-            fontFamily: 'Titillium Web',
-            fontStyle: 'normal',
             fontWeight: 'normal',
             fontSize: '15px',
             lineHeight: '15px',
             textAlign: 'center',
-            color: 'gray',
+            color: 'text.secondary',
 
             padding: '20px 0px',
           }}
@@ -54,37 +50,30 @@ const Footer = () => (
           <Link
             href="https://www.pagopa.gov.it/it/privacy-policy/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Privacy Policy '}{' '}
           </Link>
           <Link
             href="https://pagopa.portaleamministrazionetrasparente.it/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Società Trasparente '}{' '}
           </Link>
           <Link
             href="https://www.pagopa.it/it/lavora-con-noi/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Lavora Con Noi '}{' '}
           </Link>
           <Link
             href="https://www.pagopa.gov.it/it/privacy-policy/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Sicurezza '}{' '}
-          </Link>
-          <Link
-            href="https://www.pagopa.gov.it/it/privacy-policy/"
-            underline="none"
-            style={{ margin: '10px' }}
-          >
-            {'Privacy Policy'}{' '}
           </Link>
         </Typography>
       </Grid>

@@ -26,15 +26,13 @@ const Login = ({ onBack }: { onBack: () => void }) => {
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
-              style={{
+              sx={{
                 padding: '40px 0px',
-                fontFamily: 'Titillium Web',
-                fontStyle: 'normal',
                 fontWeight: 'bold',
                 fontSize: '32px',
                 lineHeight: '44px',
                 textAlign: 'center',
-                color: '#17324D',
+                color: 'text.primary',
               }}
               component="div"
             >
@@ -56,14 +54,12 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           </Grid>
           <Grid item>
             <Typography
-              style={{
-                fontFamily: 'Titillium Web',
-                fontStyle: 'normal',
+              sx={{
                 fontWeight: 'normal',
                 fontSize: '14px',
                 lineHeight: '24px',
                 textAlign: 'center',
-                color: '#17324D',
+                color: 'text.primary',
                 padding: '24px 0px',
               }}
               component="div"
@@ -72,9 +68,8 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Typography>
             <Button
               type="submit"
-              variant="contained"
-              style={{
-                background: '#0073E6',
+              variant="outlined"
+              sx={{
                 borderRadius: '4px',
                 width: '328px',
                 height: '50px',
