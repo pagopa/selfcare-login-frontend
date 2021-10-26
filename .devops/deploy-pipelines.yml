@@ -16,18 +16,6 @@ variables:
   # Execute agents (jobs) on latest Ubuntu version.
   vmImageNameDefault: 'ubuntu-latest'
 
-  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
-    environment: 'DEV'
-    azure_subscription: $(DEV_AZURE_SUBSCRIPTION)
-    cdn_endpoint: '$(DEV_CDN_ENDPOINT)'
-    cdn_profile: '$(DEV_CDN_PROFILE)'
-    resource_group: '$(DEV_RESOURCE_GROUP)'
-    storage_account: '$(DEV_STORAGE_ACCOUNT)'
-    react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
-    react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
-    react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
-    spid_test_env_enabled: 'true'
-
   ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
     environment: 'UAT'
     azure_subscription: $(UAT_AZURE_SUBSCRIPTION)
@@ -40,7 +28,7 @@ variables:
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
 
-  ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),eq(variables['Build.SourceBranch'], 'refs/heads/release-prod')) }}:
+  ${{ else if eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
     environment: 'PROD'
     azure_subscription: $(PROD_AZURE_SUBSCRIPTION)
     cdn_endpoint: '$(PROD_CDN_ENDPOINT)'
@@ -51,6 +39,20 @@ variables:
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'false'
+
+  # every branch different from past will be considered as DEV
+  #  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
+  ${{ else }}:
+    environment: 'DEV'
+    azure_subscription: $(DEV_AZURE_SUBSCRIPTION)
+    cdn_endpoint: '$(DEV_CDN_ENDPOINT)'
+    cdn_profile: '$(DEV_CDN_PROFILE)'
+    resource_group: '$(DEV_RESOURCE_GROUP)'
+    storage_account: '$(DEV_STORAGE_ACCOUNT)'
+    react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
+    react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
+    react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
+    spid_test_env_enabled: 'true'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
