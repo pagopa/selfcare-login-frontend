@@ -111,8 +111,7 @@ stages:
 
   # Prepare Artifact with application bundle
   - stage: Prepare_artifact
-    dependsOn:
-      - Release
+    condition: succeeded()
     jobs:
       - job: 'make_build'
         steps:
