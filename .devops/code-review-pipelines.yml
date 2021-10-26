@@ -40,6 +40,8 @@ stages:
       - job: make_build
         steps:
           - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
           - script: |
               yarn build
             displayName: 'Build'
@@ -50,6 +52,8 @@ stages:
       - job: lint
         steps:
           - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
           - script: |
               yarn lint
             displayName: 'Lint'
@@ -61,6 +65,8 @@ stages:
           )
         steps:
           - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
 
           - bash: |
               yarn danger ci
@@ -75,6 +81,8 @@ stages:
       - job: unit_tests
         steps:
           - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
 
           - script: |
               yarn generate
