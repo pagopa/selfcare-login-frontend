@@ -31,7 +31,7 @@
     "test:coverage": "react-scripts test -i --coverage",
     "eject": "react-scripts eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
-    "lint": "eslint --project .",
+    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\""
   },
   "eslintConfig": {
