@@ -111,7 +111,7 @@ stages:
 
   # Prepare Artifact with application bundle
   - stage: Prepare_artifact
-    condition: succeeded()
+    condition: or(eq($(environment), 'DEV', succeeded())
     jobs:
       - job: 'make_build'
         steps:
