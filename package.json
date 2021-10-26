@@ -27,10 +27,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:coverage": "jest -i --coverage",
+    "test": "react-scripts test -i",
+    "test:coverage": "react-scripts test -i --coverage",
     "eject": "react-scripts eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
+    "lint": "eslint --project .",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\""
   },
   "eslintConfig": {

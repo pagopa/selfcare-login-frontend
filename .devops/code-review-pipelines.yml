@@ -85,9 +85,5 @@ stages:
               nodeVersion: $(NODE_VERSION)
 
           - script: |
-              yarn generate
-            displayName: 'Generate definitions'
-
-          - script: |
               yarn test:coverage
             displayName: 'Unit tests exec'
