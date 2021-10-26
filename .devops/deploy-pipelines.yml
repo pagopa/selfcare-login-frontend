@@ -90,9 +90,6 @@ stages:
                   gitEmail: $(GIT_EMAIL)
                   gitUsername: $(GIT_USERNAME)
                   gitHubConnection: $(GITHUB_CONNECTION)
-                  nodeVersion: $(NODE_VERSION)
-                  pkg_cache_version_id: $(CACHE_VERSION_ID)
-                  pkg_cache_folder: $(YARN_CACHE_FOLDER)
 
           - ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/main') }}:
               - script: |
@@ -106,9 +103,10 @@ stages:
     jobs:
       - job: 'make_build'
         steps:
+          - template: ./azure-templates/setup-yarn-cache.yml
           # Build application
-          - template: azure-templates/setup-project.yml
-          - template: azure-templates/make-build.yml
+          - template: ./azure-templates/setup-project.yml
+          - template: ./azure-templates/make-build.yml
           - publish: $(System.DefaultWorkingDirectory)/build
             artifact: Bundle
 
