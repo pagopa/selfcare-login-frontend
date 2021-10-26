@@ -26,6 +26,7 @@ variables:
     react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
+    spid_test_env_enabled: 'true'
 
   ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
     environment: 'UAT'
@@ -37,6 +38,7 @@ variables:
     react_app_url_fe_onboarding: '$(UAT_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
+    spid_test_env_enabled: 'true'
 
   ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),eq(variables['Build.SourceBranch'], 'refs/heads/release-prod')) }}:
     environment: 'PROD'
@@ -48,6 +50,7 @@ variables:
     react_app_url_fe_onboarding: '$(PROD_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
+    spid_test_env_enabled: 'false'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
@@ -104,18 +107,27 @@ stages:
       - job: 'make_build'
         steps:
           - template: ./azure-templates/setup-yarn-cache.yml
-          # Build application
-          - template: ./azure-templates/setup-project.yml
-          - template: ./azure-templates/make-build.yml
+          - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
+          - bash: |
+              yarn build
+            env: |
+              SPID_TEST_ENV_ENABLED='$(spid_test_env_enabled)'
+              INLINE_RUNTIME_CHUNK=false
+              REACT_APP_URL_FE_ONBOARDING:'$(react_app_url_fe_onboarding)'
+              REACT_APP_URL_FE_DASHBOARD:'$(react_app_url_fe_dashboard)'
+              REACT_APP_URL_API_LOGIN:'$(react_app_url_api_login)'
+            displayName: 'Build files'
           - publish: $(System.DefaultWorkingDirectory)/build
             artifact: Bundle
 
   # Deploy bundle
-  - stage: 'Deploy_to_${{ parameters.environment }}'
+  - stage: 'Deploy_to_${{ variables.environment }}'
     dependsOn:
       - PreDeploy
     jobs:
-      - job: 'Deploy_to_${{ parameters.environment }}'
+      - job: 'Deploy_to_${{ variables.environment }}'
         steps:
           - checkout: none
 
