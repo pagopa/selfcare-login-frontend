@@ -133,7 +133,7 @@ stages:
 
   # Deploy bundle
   - stage: 'Deploy_to_${{ variables.environment }}'
-    condition: succeeded()
+    condition: or(eq(variables['environment'], 'DEV'), succeeded())
     jobs:
       - job: 'Deploy_to_${{ variables.environment }}'
         steps:
