@@ -29,6 +29,7 @@ variables:
     react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
+    spid_cie_entity_id: 'xx_servizicie_test'
 
   ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     environment: 'PROD'
@@ -41,6 +42,7 @@ variables:
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'false'
+    spid_cie_entity_id: 'xx_servizicie'
 
   # every branch different from past will be considered as DEV
   #  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
@@ -55,6 +57,7 @@ variables:
     react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
+    spid_cie_entity_id: 'xx_servizicie_test'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
@@ -81,13 +84,12 @@ stages:
   # - is on branch $(DEFAULT_BRANCH)
   # - is a tag in the form v{version}-RELEASE
   - stage: Release
-    condition:
-      or(
-        eq(variables['Build.SourceBranch'], format('refs/heads/{0}', variables.DEFAULT_BRANCH)),
-        and(
-          startsWith(variables['Build.SourceBranch'], 'refs/tags'),
-          endsWith(variables['Build.SourceBranch'], '-RELEASE')
-        )
+    condition: or(
+      eq(variables['Build.SourceBranch'], format('refs/heads/{0}', variables.DEFAULT_BRANCH)),
+      and(
+      startsWith(variables['Build.SourceBranch'], 'refs/tags'),
+      endsWith(variables['Build.SourceBranch'], '-RELEASE')
+      )
       )
     pool:
       vmImage: 'ubuntu-latest'
@@ -127,7 +129,8 @@ stages:
               yarn build
             displayName: 'Build files'
             env:
-              SPID_TEST_ENV_ENABLED: '$(spid_test_env_enabled)'
+              REACT_APP_SPID_TEST_ENV_ENABLED: '$(spid_test_env_enabled)'
+              REACT_APP_SPID_CIE_ENTITY_ID: '$(spid_cie_entity_id)'
               INLINE_RUNTIME_CHUNK: 'false'
               REACT_APP_URL_FE_ONBOARDING: '$(react_app_url_fe_onboarding)'
               REACT_APP_URL_FE_DASHBOARD: '$(react_app_url_fe_dashboard)'

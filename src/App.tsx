@@ -1,46 +1,57 @@
-// import { setCookie, getCookie } from "./utils/cookie";
 import Login from './pages/login/Login';
 import { storageWrite, storageRead, storageDelete } from './lib/storage-utils';
-import { ROUTE_LOGIN, ROUTE_LOGIN_SUCCESS, ROUTE_LOGOUT } from './utils/constants';
+import {
+  ROUTE_LOGIN,
+  ROUTE_LOGIN_SUCCESS,
+  ROUTE_LOGOUT,
+  STORAGE_KEY_ON_SUCCESS,
+  STORAGE_KEY_TOKEN,
+} from './utils/constants';
+import { LoginSuccess } from './pages/loginSuccess/LoginSuccess';
+import { redirectToLogin } from './utils/utils';
+import { ValidSession } from './pages/ValidSession/ValidSession';
+import { Logout } from './pages/logout/Logout';
 
-const redirectSuccessLogin = () => {
-  window.location.assign(`${process.env.REACT_APP_SPID_DASHBOARD}`);
+const onLogout = () => <Logout />;
+
+/** if exists already a session */
+const onAlreadyInSession = (sessionToken: string) => <ValidSession sessionToken={sessionToken} />;
+
+/** login request operations */
+const onLoginRequest = () => {
+  storageDelete(STORAGE_KEY_ON_SUCCESS);
+  handleLoginRequestOnSuccessRequest();
+  return <Login />;
 };
-const redirectToLogin = () => {
-  window.location.assign(ROUTE_LOGIN);
+
+const onLoginSuccess = () => <LoginSuccess />;
+
+const handleLoginRequestOnSuccessRequest = () => {
+  const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
+  if (onSuccess) {
+    storageWrite(STORAGE_KEY_ON_SUCCESS, onSuccess, 'string');
+  }
 };
 
 function App() {
-  const token = storageRead('token', 'string');
+  const token = storageRead(STORAGE_KEY_TOKEN, 'string');
+
   if (window.location.pathname === ROUTE_LOGOUT) {
-    storageDelete('token');
-    redirectToLogin();
-  }
-
-  if (token !== null && token !== undefined) {
-    redirectSuccessLogin();
-  }
-  switch (window.location.pathname) {
-    case ROUTE_LOGIN:
-      return <Login />;
-
-    case ROUTE_LOGIN_SUCCESS:
-      const { hash = '' } = window.location;
-      const urlToken = hash.replace('#token=', '');
-
-      if (urlToken !== '' && urlToken !== undefined) {
-        storageWrite('token', urlToken, 'string');
-        // TODO read and store  uid
-        redirectSuccessLogin();
-      } else {
+    return onLogout();
+  } else if (token !== null && token !== undefined) {
+    return onAlreadyInSession(token);
+  } else {
+    switch (window.location.pathname) {
+      case ROUTE_LOGIN:
+        return onLoginRequest();
+      case ROUTE_LOGIN_SUCCESS:
+        return onLoginSuccess();
+      default:
         redirectToLogin();
-      }
-      return <div></div>;
-    case '/':
-    default:
-      redirectToLogin();
-      return <div></div>;
+    }
   }
+
+  return <div />;
 }
 
 export default App;

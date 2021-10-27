@@ -17,6 +17,7 @@ import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
+import { SPID_CIE_ENTITY_ID, URL_API_LOGIN } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -35,7 +36,7 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
   const goCIE = () => {
-    window.location.replace(`localhost`);
+    window.location.assign(`${URL_API_LOGIN}/login?entityID=${SPID_CIE_ENTITY_ID}`);
   };
 
   useEffect(() => {}, []);
