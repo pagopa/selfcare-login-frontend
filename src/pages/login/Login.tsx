@@ -73,7 +73,7 @@ const Login = () => {
         </Typography>
 
         <Grid container style={{ flexGrow: 1, width: '100%' }} justifyContent={'center'}>
-          <Grid item xs={12} md={6} lg={5}>
+          <Grid item xs={6} md={6} lg={5}>
             <Paper elevation={16}>
               <Typography
                 sx={{

@@ -7,8 +7,12 @@ import 'typeface-titillium-web';
 
 const Footer = () => (
   <Box
+    component="footer"
     sx={{
-      flexGrow: 1,
+      py: '50px',
+      px: 2,
+      mt: 'auto',
+      maxHeight: '189px',
       bgcolor: '#01254C',
     }}
   >
@@ -23,7 +27,7 @@ const Footer = () => (
             sx={{
               fontWeight: 'normal',
               fontSize: '15px',
-              lineHeight: '15px',
+              lineHeight: '22,82px',
               textAlign: 'center',
               color: 'text.disabled',
             }}
@@ -41,7 +45,7 @@ const Footer = () => (
             textAlign: 'center',
             color: 'text.secondary',
 
-            padding: '20px 0px',
+            padding: '40px 0px',
           }}
           component="div"
         >
