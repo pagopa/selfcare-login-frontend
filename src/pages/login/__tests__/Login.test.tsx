@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
-import Login from '../pages/Login';
+import Login from '../Login';
 
 test('rendering test', () => {
   render(<Login />);
