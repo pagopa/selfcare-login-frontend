@@ -1,16 +1,18 @@
-import { Box, Container } from '@material-ui/core';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-
+import { Box, Container } from '@mui/material';
 import LogoPagoPa from '../assets/logo_pago_pa.svg';
 import 'typeface-titillium-web';
 
 const Footer = () => (
   <Box
+    component="footer"
     sx={{
-      flexGrow: 1,
+      py: '50px',
+      px: 2,
+      mt: 'auto',
+      maxHeight: '189px',
       bgcolor: '#01254C',
     }}
   >
@@ -22,14 +24,12 @@ const Footer = () => (
         <Grid item xs={9} md={9} lg={9}>
           <Typography
             component="div"
-            style={{
-              fontFamily: 'Titillium Web',
-              fontStyle: 'normal',
+            sx={{
               fontWeight: 'normal',
               fontSize: '15px',
-              lineHeight: '15px',
+              lineHeight: '22,82px',
               textAlign: 'center',
-              color: '#FFFFFF',
+              color: 'text.disabled',
             }}
           >
             PagoPA S.p.A. - società per azioni con socio unico - capitale sociale di euro 1,000,000
@@ -39,52 +39,43 @@ const Footer = () => (
         </Grid>
         <Typography
           style={{
-            fontFamily: 'Titillium Web',
-            fontStyle: 'normal',
             fontWeight: 'normal',
             fontSize: '15px',
             lineHeight: '15px',
             textAlign: 'center',
-            color: 'gray',
+            color: 'text.secondary',
 
-            padding: '20px 0px',
+            padding: '40px 0px',
           }}
           component="div"
         >
           <Link
             href="https://www.pagopa.gov.it/it/privacy-policy/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Privacy Policy '}{' '}
           </Link>
           <Link
             href="https://pagopa.portaleamministrazionetrasparente.it/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Società Trasparente '}{' '}
           </Link>
           <Link
             href="https://www.pagopa.it/it/lavora-con-noi/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Lavora Con Noi '}{' '}
           </Link>
           <Link
             href="https://www.pagopa.gov.it/it/privacy-policy/"
             underline="none"
-            style={{ margin: '10px' }}
+            sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Sicurezza '}{' '}
-          </Link>
-          <Link
-            href="https://www.pagopa.gov.it/it/privacy-policy/"
-            underline="none"
-            style={{ margin: '10px' }}
-          >
-            {'Privacy Policy'}{' '}
           </Link>
         </Typography>
       </Grid>

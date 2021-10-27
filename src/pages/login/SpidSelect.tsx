@@ -9,14 +9,11 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
+import { URL_API_LOGIN } from '../../utils/constants';
+
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
-    /*    window.location.assign(
-      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
-    ); */
-    window.location.assign(
-      `${process.env.REACT_APP_SPID_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`
-    );
+    window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
 
   return (
@@ -29,15 +26,13 @@ const Login = ({ onBack }: { onBack: () => void }) => {
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
-              style={{
+              sx={{
                 padding: '40px 0px',
-                fontFamily: 'Titillium Web',
-                fontStyle: 'normal',
                 fontWeight: 'bold',
                 fontSize: '32px',
                 lineHeight: '44px',
                 textAlign: 'center',
-                color: '#17324D',
+                color: 'text.primary',
               }}
               component="div"
             >
@@ -45,35 +40,26 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Grid container direction="row" justifyContent="center" spacing={2}>
+            <Grid container direction="row" justifyItems="center" spacing={2}>
               {IDPS.identityProviders.map((IP, i) => (
-                <Grid item key={IP.entityId} xs={6}>
-                  <div
-                    style={{
-                      justifyContent: i % 2 === 0 ? 'end' : 'start',
-                      display: 'flex',
-                    }}
-                  >
-                    <Button onClick={() => getSPID(IP.entityId)}>
-                      <Icon sx={{ width: '100px', height: '48px' }}>
-                        <img width="100px" src={IP.imageUrl} alt={IP.name} />
-                      </Icon>
-                    </Button>
-                  </div>
+                <Grid item key={IP.entityId} xs={6} textAlign={i % 2 === 0 ? 'end' : 'start'}>
+                  <Button onClick={() => getSPID(IP.entityId)}>
+                    <Icon sx={{ width: '100px', height: '48px' }}>
+                      <img width="100px" src={IP.imageUrl} alt={IP.name} />
+                    </Icon>
+                  </Button>
                 </Grid>
               ))}
             </Grid>
           </Grid>
           <Grid item>
             <Typography
-              style={{
-                fontFamily: 'Titillium Web',
-                fontStyle: 'normal',
+              sx={{
                 fontWeight: 'normal',
                 fontSize: '14px',
                 lineHeight: '24px',
                 textAlign: 'center',
-                color: '#17324D',
+                color: 'text.primary',
                 padding: '24px 0px',
               }}
               component="div"
@@ -82,9 +68,8 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Typography>
             <Button
               type="submit"
-              variant="contained"
-              style={{
-                background: '#0073E6',
+              variant="outlined"
+              sx={{
                 borderRadius: '4px',
                 width: '328px',
                 height: '50px',
