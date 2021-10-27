@@ -1,4 +1,4 @@
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar } from '@mui/material';
 import LogoPagoPa from '../assets/logo_pago_pa.svg';
 
 const Header = () => (
