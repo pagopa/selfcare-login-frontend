@@ -7,7 +7,7 @@ type Props = {
   sessionToken: string;
 };
 
-export const ValidSession = ({ sessionToken }: Props) => {
+const ValidateSession = ({ sessionToken }: Props) => {
   const user: User = storageRead(STORAGE_KEY_USER, 'object');
   if (!user) {
     readUserFromToken(sessionToken);
@@ -16,3 +16,5 @@ export const ValidSession = ({ sessionToken }: Props) => {
 
   return <div />;
 };
+
+export default ValidateSession;

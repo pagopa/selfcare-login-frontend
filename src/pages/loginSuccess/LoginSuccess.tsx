@@ -15,11 +15,11 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = new RegExp('[\\w/]+');
+const validOnSuccessPattern = new RegExp('^[\\w/]+$');
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageRead(STORAGE_KEY_ON_SUCCESS, 'string');
   const redirectTo =
-    onSuccess && validOnSuccessPattern.exec(onSuccess)
+    onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess
       : URL_FE_DASHBOARD;
   storageDelete(STORAGE_KEY_ON_SUCCESS);
@@ -28,7 +28,7 @@ export const redirectSuccessLogin = () => {
 };
 
 /** success login operations */
-export const LoginSuccess = () => {
+const LoginSuccess = () => {
   const { hash = '' } = window.location;
   const urlToken = hash.replace('#token=', '');
 
@@ -41,3 +41,5 @@ export const LoginSuccess = () => {
   }
   return <div />;
 };
+
+export default LoginSuccess;

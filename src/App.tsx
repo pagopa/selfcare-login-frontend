@@ -7,15 +7,17 @@ import {
   STORAGE_KEY_ON_SUCCESS,
   STORAGE_KEY_TOKEN,
 } from './utils/constants';
-import { LoginSuccess } from './pages/loginSuccess/LoginSuccess';
+import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import { redirectToLogin } from './utils/utils';
-import { ValidSession } from './pages/ValidSession/ValidSession';
-import { Logout } from './pages/logout/Logout';
+import ValidateSession from './pages/ValidateSession/ValidateSession';
+import Logout from './pages/logout/Logout';
 
 const onLogout = () => <Logout />;
 
 /** if exists already a session */
-const onAlreadyInSession = (sessionToken: string) => <ValidSession sessionToken={sessionToken} />;
+const onAlreadyInSession = (sessionToken: string) => (
+  <ValidateSession sessionToken={sessionToken} />
+);
 
 /** login request operations */
 const onLoginRequest = () => {
@@ -24,14 +26,14 @@ const onLoginRequest = () => {
   return <Login />;
 };
 
-const onLoginSuccess = () => <LoginSuccess />;
-
 const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
   if (onSuccess) {
     storageWrite(STORAGE_KEY_ON_SUCCESS, onSuccess, 'string');
   }
 };
+
+const onLoginSuccess = () => <LoginSuccess />;
 
 function App() {
   const token = storageRead(STORAGE_KEY_TOKEN, 'string');
