@@ -64,8 +64,10 @@ variables:
 trigger:
   branches:
     include:
-      - main
+      - master
       - release-*
+
+pr: none
 
 resources:
   repositories:
