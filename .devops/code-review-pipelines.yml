@@ -18,6 +18,8 @@ trigger:
   - main
   - release-*
 
+pr: *
+
 resources:
   repositories:
     - repository: pagopaCommons
