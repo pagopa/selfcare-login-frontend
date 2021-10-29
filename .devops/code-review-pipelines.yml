@@ -18,7 +18,9 @@ trigger:
   - main
   - release-*
 
-pr: *
+pr:
+  - main
+  - release-*
 
 resources:
   repositories:
