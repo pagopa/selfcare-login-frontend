@@ -1,16 +1,10 @@
-import { AppBar, Container, Grid, Toolbar } from '@mui/material';
-import LogoPagoPa from '../assets/logo_pago_pa_mini.svg';
+import { AppBar, SvgIcon, Toolbar } from '@mui/material';
+import { ReactComponent as logo } from '../assets/logo_pago_pa_mini.svg';
 
 const Header = () => (
-  <AppBar>
-    <Toolbar sx={{ bgcolor: 'main.primary' }}>
-      <Container maxWidth="lg">
-        <Grid container direction="row" spacing={4}>
-          <Grid item xs={3} md={3} lg={3}>
-            <img src={LogoPagoPa} alt="fireSpot" />
-          </Grid>
-        </Grid>
-      </Container>
+  <AppBar position="relative" sx={{ alignItems: 'center' }}>
+    <Toolbar sx={{ width: { xs: '90%', lg: '90%' } }}>
+      <SvgIcon component={logo} viewBox="0 0 81 24" sx={{ width: '80px' }} />
     </Toolbar>
   </AppBar>
 );
