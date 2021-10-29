@@ -7,7 +7,13 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => (
-  <Box>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+    }}
+  >
     <Header></Header>
     {children}
     <Footer></Footer>
