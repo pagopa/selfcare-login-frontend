@@ -54,13 +54,12 @@ const Login = () => {
     <Layout>
       <Grid container direction="column">
         {/* <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}> */}
-        <Grid container direction="row" justifyContent="flex-end">
+        <Grid container direction="row" justifyContent="flex-end" mt={6} xs={11}>
           <Grid item xs={1}>
             <IconButton
               color="primary"
               style={{
                 maxWidth: '17.42px',
-                marginTop: '50px',
               }}
               onClick={() => goBackToLandingPage()}
             >

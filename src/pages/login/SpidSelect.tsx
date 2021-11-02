@@ -22,16 +22,15 @@ const Login = ({ onBack }: { onBack: () => void }) => {
   return (
     <Fragment>
       <Grid container direction="column">
-        <Grid container direction="row" justifyContent="space-around">
+        <Grid container direction="row" justifyContent="space-around" mt={3}>
           <Grid item xs={1}>
-            <img src={SpidBig} style={{ marginTop: '24px' }} />
+            <img src={SpidBig} />
           </Grid>
           <Grid item xs={1} sx={{ textAlign: 'end' }}>
             <IconButton
               color="primary"
               style={{
                 maxWidth: '17.42px',
-                marginTop: '25px',
               }}
               onClick={() => goBackToLandingPage()}
             >
