@@ -9,30 +9,27 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN } from '../../utils/constants';
+import { URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
     window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_API_LOGIN}`);
+    window.location.assign(`${URL_FE_LANDING}`);
   };
 
   return (
     <Fragment>
       <Grid container direction="column">
         <Grid container direction="row" justifyContent="space-around">
-          <Grid item xs={2}>
-            <img src={SpidBig} style={{ marginTop: '25px' }} />
-          </Grid>
           <Grid item xs={1}>
+            <img src={SpidBig} style={{ marginTop: '24px' }} />
+          </Grid>
+          <Grid item xs={1} sx={{ textAlign: 'end' }}>
             <IconButton
               color="primary"
               style={{
-                /*  position: 'absolute',
-              top: '20px',
-              right: '196.89px', */
                 maxWidth: '17.42px',
                 marginTop: '25px',
               }}

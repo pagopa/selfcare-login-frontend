@@ -18,7 +18,7 @@ import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import { SPID_CIE_ENTITY_ID, URL_API_LOGIN } from '../../utils/constants';
+import { SPID_CIE_ENTITY_ID, URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -41,7 +41,7 @@ const Login = () => {
   };
 
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_API_LOGIN}`);
+    window.location.assign(`${URL_FE_LANDING}`);
   };
 
   useEffect(() => {}, []);
