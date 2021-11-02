@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Icon from '@mui/material/Icon';
-
+import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
@@ -15,14 +15,33 @@ const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
     window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
+  const goBackToLandingPage = () => {
+    window.location.assign(`${URL_API_LOGIN}`);
+  };
 
   return (
     <Fragment>
-      <Box style={{ width: '100%' }}>
-        <img src={SpidBig} style={{ marginLeft: '100px', marginTop: '20px' }} />
-        <Icon onClick={onBack} />
-      </Box>
-      <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}>
+      <Grid container direction="column">
+        <Grid container direction="row" justifyContent="space-around">
+          <Grid item xs={2}>
+            <img src={SpidBig} style={{ marginTop: '25px' }} />
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              color="primary"
+              style={{
+                /*  position: 'absolute',
+              top: '20px',
+              right: '196.89px', */
+                maxWidth: '17.42px',
+                marginTop: '25px',
+              }}
+              onClick={() => goBackToLandingPage()}
+            >
+              <ClearOutlinedIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
@@ -80,7 +99,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Button>
           </Grid>
         </Grid>
-      </Box>
+      </Grid>
     </Fragment>
   );
 };
