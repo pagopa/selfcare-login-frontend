@@ -41,13 +41,12 @@ const Login = ({ onBack }: { onBack: () => void }) => {
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
+              py={5}
+              px={0}
+              color="textPrimary"
+              variant="h2"
               sx={{
-                padding: '40px 0px',
-                fontWeight: 'bold',
-                fontSize: '32px',
-                lineHeight: '44px',
                 textAlign: 'center',
-                color: 'text.primary',
               }}
               component="div"
             >
@@ -69,13 +68,13 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           </Grid>
           <Grid item>
             <Typography
+              py={3}
+              px={0}
+              color="textPrimary"
+              variant="body2"
               sx={{
-                fontWeight: 'normal',
                 fontSize: '14px',
-                lineHeight: '24px',
                 textAlign: 'center',
-                color: 'text.primary',
-                padding: '24px 0px',
               }}
               component="div"
             >

@@ -53,9 +53,8 @@ const Login = () => {
   return (
     <Layout>
       <Grid container direction="column">
-        {/* <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}> */}
-        <Grid container direction="row" justifyContent="flex-end" mt={6} xs={11}>
-          <Grid item xs={1}>
+        <Grid container direction="row" justifyContent="flex-end" mt={6}>
+          <Grid item xs={2}>
             <IconButton
               color="primary"
               style={{
@@ -70,13 +69,12 @@ const Login = () => {
         <Grid container item justifyContent="center">
           <Grid item xs={4}>
             <Typography
+              variant="h2"
+              py={1}
+              px={0}
+              color="textPrimary"
               sx={{
-                padding: '10px 0px',
-                fontWeight: 'bold',
-                fontSize: '32px',
-                lineHeight: '48px',
                 textAlign: 'center',
-                color: 'text.primary',
               }}
             >
               Accedi con SPID/CIE
@@ -86,13 +84,11 @@ const Login = () => {
         <Grid container item justifyContent="center">
           <Grid item xs={6}>
             <Typography
+              variant="body2"
+              mb={7}
+              color="textPrimary"
               sx={{
-                marginBottom: '60px',
-                fontWeight: 'normal',
-                fontSize: '16px',
-                lineHeight: '24px',
                 textAlign: 'center',
-                color: 'text.primary',
               }}
             >
               Seleziona la modalità di autenticazione che preferisci e inizia il processo di
@@ -105,13 +101,13 @@ const Login = () => {
           <Grid item xs={6} md={5} lg={4} xl={3}>
             <Paper elevation={1}>
               <Typography
+                py={5}
+                px={0}
+                color="textPrimary"
+                variant="h5"
                 sx={{
-                  padding: '40px 0px',
                   fontWeight: 'bold',
-                  fontSize: '20px',
-                  lineHeight: '24px',
                   textAlign: 'center',
-                  color: 'text.primary',
                 }}
                 component="div"
               >
@@ -152,16 +148,18 @@ const Login = () => {
                 </Button>
               </Box>
 
-              <Divider variant="middle" style={{ marginTop: '32px' }} />
+              <Box mt={4}>
+                <Divider variant="middle" />
+              </Box>
 
               <Typography
+                py={3}
+                px={0}
+                color="textPrimary"
+                variant="body2"
                 sx={{
-                  fontWeight: 'normal',
                   fontSize: '14px',
-                  lineHeight: '24px',
                   textAlign: 'center',
-                  color: 'text.primary',
-                  padding: '24px 0px',
                 }}
                 component="div"
               >
@@ -174,20 +172,18 @@ const Login = () => {
         <Grid container item justifyContent="center">
           <Grid item xs={6}>
             <Typography
+              color="textPrimary"
+              py={3}
+              px={0}
               sx={{
-                fontWeight: 'normal',
                 fontSize: '14px',
-                lineHeight: '24px',
                 textAlign: 'center',
-                color: 'text.primary',
-                padding: '24px 0px',
               }}
               component="div"
             >
-              Prima di proseguire prendi visione dell &apos;{' '}
-              <Link href="#">{' Informativa sulla Privacy'}</Link>
+              Prima di proseguire prendi visione dell &apos;
+              <Link href="#">{'Informativa sulla Privacy'}</Link>
             </Typography>
-            {/* </Box> */}
           </Grid>
         </Grid>
       </Grid>
