@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Location } from 'history';
+import { IDPS } from '../../../utils/IDPS';
 import SpidSelect from '../SpidSelect';
+import { URL_API_LOGIN } from '../../../utils/constants';
 
 const oldWindowLocation = global.window.location;
-
+const idps = IDPS.identityProviders;
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
@@ -16,15 +17,15 @@ afterAll(() => {
 
 test('go to the spid url', () => {
   render(<SpidSelect onBack={() => {}} />);
-  const spidImg = screen.getByAltText(/Infocert ID/i);
-  expect(spidImg).not.toBeNull();
-  const spidSpan = spidImg.parentNode;
-  expect(spidSpan).not.toBeNull();
-  const spidButton = spidSpan.parentNode;
-  expect(spidButton).not.toBeNull();
-  expect(spidButton.nodeName).toBe('BUTTON');
-  fireEvent.click(spidButton);
-  expect(global.window.location.assign).toBeCalledWith(
-    'http://selfcare/login?entityID=infocertid&authLevel=SpidL2'
-  );
+
+  idps.forEach((element) => {
+    const spidImg = screen.getByAltText(element.name);
+    const spidSpan = spidImg.parentNode;
+    const spidButton = spidSpan.parentNode;
+    fireEvent.click(spidButton);
+    let id = element.entityId;
+    expect(global.window.location.assign).toBeCalledWith(
+      URL_API_LOGIN + '/login?entityID=' + id + '&authLevel=SpidL2'
+    );
+  });
 });
