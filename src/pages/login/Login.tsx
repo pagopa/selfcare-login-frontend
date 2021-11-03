@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import Button from '@mui/material/Button';
-
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
+import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
@@ -17,7 +18,7 @@ import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import { SPID_CIE_ENTITY_ID, URL_API_LOGIN } from '../../utils/constants';
+import { SPID_CIE_ENTITY_ID, URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -39,6 +40,10 @@ const Login = () => {
     window.location.assign(`${URL_API_LOGIN}/login?entityID=${SPID_CIE_ENTITY_ID}`);
   };
 
+  const goBackToLandingPage = () => {
+    window.location.assign(`${URL_FE_LANDING}`);
+  };
+
   useEffect(() => {}, []);
 
   if (showIDPS) {
@@ -47,62 +52,75 @@ const Login = () => {
 
   return (
     <Layout>
-      <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}>
-        <Typography
-          sx={{
-            padding: '10px 0px',
-            fontWeight: 'bold',
-            fontSize: '32px',
-            lineHeight: '48px',
-            textAlign: 'center',
-            color: 'text.primary',
-          }}
-        >
-          Accedi con SPID/CIE
-        </Typography>
-        <Typography
-          sx={{
-            marginBottom: '60px',
-            fontWeight: 'normal',
-            fontSize: '16px',
-            lineHeight: '24px',
-            textAlign: 'center',
-            color: 'text.primary',
-          }}
-        >
-          Seleziona la modalità di autenticazione che preferisci e inizia il processo di adesione
-        </Typography>
+      <Grid container direction="column">
+        <Grid container direction="row" justifyContent="flex-end" mt={6}>
+          <Grid item xs={2}>
+            <IconButton
+              color="primary"
+              style={{
+                maxWidth: '17.42px',
+              }}
+              onClick={() => goBackToLandingPage()}
+            >
+              <ClearOutlinedIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Grid container item justifyContent="center">
+          <Grid item xs={4}>
+            <Typography
+              variant="h2"
+              py={1}
+              px={0}
+              color="textPrimary"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              Accedi con SPID/CIE
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container item justifyContent="center">
+          <Grid item xs={6}>
+            <Typography
+              variant="body2"
+              mb={7}
+              color="textPrimary"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              Seleziona la modalità di autenticazione che preferisci e inizia il processo di
+              adesione
+            </Typography>
+          </Grid>
+        </Grid>
 
-        <Grid container style={{ flexGrow: 1, width: '100%' }} justifyContent={'center'}>
-          <Grid item xs={6} md={6} lg={5}>
-            <Paper elevation={16}>
+        <Grid container item justifyContent="center">
+          <Grid item xs={6} md={5} lg={4} xl={3}>
+            <Paper elevation={1}>
               <Typography
+                py={5}
+                px={0}
+                color="textPrimary"
+                variant="h5"
                 sx={{
-                  padding: '40px 0px',
                   fontWeight: 'bold',
-                  fontSize: '20px',
-                  lineHeight: '24px',
                   textAlign: 'center',
-                  color: 'text.primary',
                 }}
                 component="div"
               >
                 Login
               </Typography>
 
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                style={{
-                  padding: '16px 0px',
-                }}
-              >
+              <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   sx={{
                     borderRadius: '4px',
                     width: '70%',
                     height: '50px',
+                    marginBottom: 1,
                   }}
                   onClick={() => setShowIDPS(true)}
                   variant="contained"
@@ -113,19 +131,13 @@ const Login = () => {
                 </Button>
               </Box>
 
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                style={{
-                  padding: '16px 0px',
-                }}
-              >
+              <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   sx={{
                     borderRadius: '4px',
                     width: '70%',
                     height: '50px',
+                    marginTop: 1,
                   }}
                   variant="contained"
                   startIcon={cieIcon()}
@@ -136,16 +148,18 @@ const Login = () => {
                 </Button>
               </Box>
 
-              <Divider variant="middle" />
+              <Box mt={4}>
+                <Divider variant="middle" />
+              </Box>
 
               <Typography
+                py={3}
+                px={0}
+                color="textPrimary"
+                variant="body2"
                 sx={{
-                  fontWeight: 'normal',
                   fontSize: '14px',
-                  lineHeight: '24px',
                   textAlign: 'center',
-                  color: 'text.primary',
-                  padding: '24px 0px',
                 }}
                 component="div"
               >
@@ -155,21 +169,24 @@ const Login = () => {
             </Paper>
           </Grid>
         </Grid>
-        <Typography
-          sx={{
-            fontWeight: 'normal',
-            fontSize: '14px',
-            lineHeight: '24px',
-            textAlign: 'center',
-            color: 'text.primary',
-            padding: '24px 0px',
-          }}
-          component="div"
-        >
-          Prima di proseguire prendi visione dell &apos;{' '}
-          <Link href="#">{' Informativa sulla Privacy'}</Link>
-        </Typography>
-      </Box>
+        <Grid container item justifyContent="center">
+          <Grid item xs={6}>
+            <Typography
+              color="textPrimary"
+              py={3}
+              px={0}
+              sx={{
+                fontSize: '14px',
+                textAlign: 'center',
+              }}
+              component="div"
+            >
+              Prima di proseguire prendi visione dell &apos;
+              <Link href="#">{'Informativa sulla Privacy'}</Link>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
     </Layout>
   );
 };

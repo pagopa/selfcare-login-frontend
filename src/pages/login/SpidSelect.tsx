@@ -1,38 +1,52 @@
 import { Fragment } from 'react';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Icon from '@mui/material/Icon';
-
+import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN } from '../../utils/constants';
+import { URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
     window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
+  const goBackToLandingPage = () => {
+    window.location.assign(`${URL_FE_LANDING}`);
+  };
 
   return (
     <Fragment>
-      <Box style={{ width: '100%' }}>
-        <img src={SpidBig} style={{ marginLeft: '100px', marginTop: '20px' }} />
-        <Icon onClick={onBack} />
-      </Box>
-      <Box style={{ marginTop: '80px', marginBottom: '80px', width: '100%' }}>
+      <Grid container direction="column">
+        <Grid container direction="row" justifyContent="space-around" mt={3}>
+          <Grid item xs={1}>
+            <img src={SpidBig} />
+          </Grid>
+          <Grid item xs={1} sx={{ textAlign: 'end' }}>
+            <IconButton
+              color="primary"
+              style={{
+                maxWidth: '17.42px',
+              }}
+              onClick={() => goBackToLandingPage()}
+            >
+              <ClearOutlinedIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
+              py={5}
+              px={0}
+              color="textPrimary"
+              variant="h2"
               sx={{
-                padding: '40px 0px',
-                fontWeight: 'bold',
-                fontSize: '32px',
-                lineHeight: '44px',
                 textAlign: 'center',
-                color: 'text.primary',
               }}
               component="div"
             >
@@ -54,13 +68,13 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           </Grid>
           <Grid item>
             <Typography
+              py={3}
+              px={0}
+              color="textPrimary"
+              variant="body2"
               sx={{
-                fontWeight: 'normal',
                 fontSize: '14px',
-                lineHeight: '24px',
                 textAlign: 'center',
-                color: 'text.primary',
-                padding: '24px 0px',
               }}
               component="div"
             >
@@ -80,7 +94,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Button>
           </Grid>
         </Grid>
-      </Box>
+      </Grid>
     </Fragment>
   );
 };
