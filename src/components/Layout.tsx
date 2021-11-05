@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import Footer from './Footer';
-import Header from './Header';
+import Header from './header/Header';
 
 type Props = {
   children: any;
@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => (
       minHeight: '100vh',
     }}
   >
-    <Header></Header>
+    <Header withSecondHeader={false} onExitAction={null} />
     {children}
     <Footer></Footer>
   </Box>
