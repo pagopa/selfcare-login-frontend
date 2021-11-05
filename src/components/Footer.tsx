@@ -1,5 +1,5 @@
 import { Box, Grid, Link, SvgIcon, Typography } from '@mui/material';
-import { ReactComponent as logo } from '../assets/logo_pago_pa_mini.svg';
+import { ReactComponent as logo } from '../assets/logo_pago_pa.svg';
 
 const Footer = () => (
   <Box
@@ -7,13 +7,14 @@ const Footer = () => (
     sx={{
       py: '32px',
       mt: 'auto',
+      height: '188px',
       bgcolor: '#01254C',
       alignItems: 'center',
     }}
   >
     <Grid container justifyContent={'center'} alignItems={'center'}>
       <Box sx={{ width: '90%', display: 'flex' }}>
-        <SvgIcon component={logo} viewBox="0 0 80 24" sx={{ width: '80px' }} />
+        <SvgIcon component={logo} viewBox="0 0 120 33" sx={{ width: '119px' }} />
         <Box sx={{ textAlign: 'end', flexGrow: 1 }}>
           <Typography
             component="div"
@@ -58,20 +59,6 @@ const Footer = () => (
             sx={{ margin: '10px', color: 'text.disabled' }}
           >
             {'Società Trasparente '}{' '}
-          </Link>
-          <Link
-            href="https://www.pagopa.it/it/lavora-con-noi/"
-            underline="none"
-            sx={{ margin: '10px', color: 'text.disabled' }}
-          >
-            {'Lavora Con Noi '}{' '}
-          </Link>
-          <Link
-            href="https://www.pagopa.gov.it/it/privacy-policy/"
-            underline="none"
-            sx={{ margin: '10px', color: 'text.disabled' }}
-          >
-            {'Sicurezza '}{' '}
           </Link>
         </Typography>
       </Box>
