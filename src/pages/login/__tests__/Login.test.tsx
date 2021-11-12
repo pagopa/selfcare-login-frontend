@@ -38,8 +38,6 @@ test('renders button Autenticati con Spid', () => {
   expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
 
-// TODO dovrò mettere il vero link della CIE
-
 test('renders button Autenticati con CIE', () => {
   const login = render(<Login />);
   const ButtonCIE = screen.getByRole(/Button/i, {
