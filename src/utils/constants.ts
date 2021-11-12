@@ -7,6 +7,8 @@ export const ROUTE_LOGIN = BASE_ROUTE + '/login';
 export const ROUTE_LOGIN_SUCCESS = BASE_ROUTE + '/login/success';
 export const ROUTE_LOGOUT = BASE_ROUTE + '/logout';
 
+export const URL_FE_LOGOUT = ROUTE_LOGOUT;
+
 export const URL_FE_ONBOARDING = process.env.REACT_APP_URL_FE_ONBOARDING;
 export const URL_FE_DASHBOARD = process.env.REACT_APP_URL_FE_DASHBOARD;
 export const URL_FE_LANDING = process.env.REACT_APP_URL_FE_LANDING;
