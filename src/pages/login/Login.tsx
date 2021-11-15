@@ -181,8 +181,8 @@ const Login = () => {
               }}
               component="div"
             >
-              Prima di proseguire prendi visione dell &apos;
-              <Link href="#">{'Informativa sulla Privacy'}</Link>
+               Autenticandoti dichiari di aver letto e compreso l&apos;
+              <Link href="#">{'Informativa Privacy'}</Link> e i <Link href="#">{'Termini e condizioni d’uso'}</Link> del Portale Self Care
             </Typography>
           </Grid>
         </Grid>
