@@ -27,7 +27,7 @@ test('rendering test', () => {
 // TODO dovrò mettere il link vero della normativa sulla privacy
 test('renders react link Informativa sulla Privacy', () => {
   render(<Login />);
-  const LinkName = screen.getByText(/Informativa sulla Privacy/i);
+  const LinkName = screen.getByText(/Informativa Privacy/i);
   expect(LinkName).toHaveAttribute('href', '#');
 });
 
