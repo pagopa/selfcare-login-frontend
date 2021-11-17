@@ -180,9 +180,11 @@ const Login = () => {
                 textAlign: 'center',
               }}
               component="div"
+              variant="body2"
             >
-               Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href="#">{'Informativa Privacy'}</Link> e i <Link href="#">{'Termini e condizioni d’uso'}</Link> del Portale Self Care
+              Autenticandoti dichiari di aver letto e compreso l&apos;
+              <Link href="#">{'Informativa Privacy'}</Link> e i{' '}
+              <Link href="#">{'Termini e condizioni d’uso'}</Link> del Portale Self Care
             </Typography>
           </Grid>
         </Grid>
