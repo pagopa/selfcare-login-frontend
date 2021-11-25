@@ -18,3 +18,5 @@ export const URL_API_LOGIN = process.env.REACT_APP_URL_API_LOGIN;
 export const STORAGE_KEY_TOKEN = 'token';
 export const STORAGE_KEY_USER = 'user';
 export const STORAGE_KEY_ON_SUCCESS = 'LOGIN:onSuccess';
+
+export const PAGOPA_HELP_EMAIL = process.env.REACT_APP_PAGOPA_HELP_EMAIL;
