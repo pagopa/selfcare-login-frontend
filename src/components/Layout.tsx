@@ -14,9 +14,13 @@ const Layout = ({ children }: Props) => (
       minHeight: '100vh',
     }}
   >
-    <Header withSecondHeader={false} onExitAction={null} />
+    <Box mb={16}>
+      <Header withSecondHeader={false} onExitAction={null} />
+    </Box>
     {children}
-    <Footer></Footer>
+    <Box mt={16}>
+      <Footer />
+    </Box>
   </Box>
 );
 
