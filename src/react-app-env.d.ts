@@ -13,6 +13,9 @@ declare namespace NodeJS {
     REACT_APP_SPID_CIE_ENTITY_ID: string;
 
     REACT_APP_PAGOPA_HELP_EMAIL: string;
+
+    REACT_APP_URL_FILE_INFORMATIVA_PRIVACY: string;
+    REACT_APP_URL_FILE_TERMINI_E_CONDIZIONI: string;
   }
 }
 interface Window {
