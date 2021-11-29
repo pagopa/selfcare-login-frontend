@@ -52,7 +52,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <Grid container direction="column">
+      <Grid container direction="column" my={'auto'}>
         <Grid container direction="row" justifyContent="flex-end" mt={6}>
           <Grid item xs={2}>
             <IconButton
