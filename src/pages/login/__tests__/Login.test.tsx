@@ -24,11 +24,13 @@ test('rendering test', () => {
   );
 });
 
-// TODO dovrò mettere il link vero della normativa sulla privacy
 test('renders react link Informativa sulla Privacy', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Informativa Privacy/i);
-  expect(LinkName).toHaveAttribute('href', '#');
+  expect(LinkName).toHaveAttribute(
+    'href',
+    'https://dev.selfcare.pagopa.it/assets/InformativaPrivacy.pdf'
+  );
 });
 
 test('renders button Autenticati con Spid', () => {
