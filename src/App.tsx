@@ -2,6 +2,7 @@ import Login from './pages/login/Login';
 import { storageWrite, storageRead, storageDelete } from './lib/storage-utils';
 import {
   ROUTE_LOGIN,
+  ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
   STORAGE_KEY_ON_SUCCESS,
@@ -11,8 +12,11 @@ import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import { redirectToLogin } from './utils/utils';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
 import Logout from './pages/logout/Logout';
+import LoginError from './pages/loginError/LoginError';
 
 const onLogout = () => <Logout />;
+
+const onLoginError = () => <LoginError />;
 
 /** if exists already a session */
 const onAlreadyInSession = (sessionToken: string) => (
@@ -48,6 +52,8 @@ function App() {
         return onLoginRequest();
       case ROUTE_LOGIN_SUCCESS:
         return onLoginSuccess();
+      case ROUTE_LOGIN_ERROR:
+        return onLoginError();
       default:
         redirectToLogin();
     }
