@@ -183,11 +183,11 @@ const Login = () => {
               variant="body2"
             >
               Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href={process.env.REACT_APP_URL_FILE_INFORMATIVA_PRIVACY}>
+              <Link href={process.env.REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}>
                 {'Informativa Privacy'}
               </Link>
               {' e i '}
-              <Link href={process.env.REACT_APP_URL_FILE_TERMINI_E_CONDIZIONI}>
+              <Link href={process.env.REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}>
                 {'Termini e condizioni d’uso'}
               </Link>
               {' del Portale Self Care'}
