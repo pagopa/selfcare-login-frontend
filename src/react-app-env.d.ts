@@ -14,8 +14,8 @@ declare namespace NodeJS {
 
     REACT_APP_PAGOPA_HELP_EMAIL: string;
 
-    REACT_APP_URL_FILE_INFORMATIVA_PRIVACY: string;
-    REACT_APP_URL_FILE_TERMINI_E_CONDIZIONI: string;
+    REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: string;
+    REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: string;
   }
 }
 interface Window {
