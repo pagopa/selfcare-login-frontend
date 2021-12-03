@@ -127,7 +127,7 @@ const Login = () => {
                   startIcon={spidIcon()}
                 >
                   {' '}
-                  Autenticati con SPID
+                  Entra con SPID
                 </Button>
               </Box>
 
@@ -144,7 +144,7 @@ const Login = () => {
                   onClick={() => goCIE()}
                 >
                   {' '}
-                  Autenticati con CIE
+                  Entra con CIE
                 </Button>
               </Box>
 

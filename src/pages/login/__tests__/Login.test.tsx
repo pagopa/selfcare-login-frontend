@@ -33,17 +33,17 @@ test('renders react link Informativa sulla Privacy', () => {
   );
 });
 
-test('renders button Autenticati con Spid', () => {
+test('renders button Entra con Spid', () => {
   const login = render(<Login />);
-  const ButtonSpid = screen.getByText(/Autenticati con SPID/i);
+  const ButtonSpid = screen.getByText(/Entra con SPID/i);
   fireEvent.click(ButtonSpid);
   expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
 
-test('renders button Autenticati con CIE', () => {
+test('renders button Entra con CIE', () => {
   const login = render(<Login />);
   const ButtonCIE = screen.getByRole(/Button/i, {
-    name: 'Autenticati con CIE',
+    name: 'Entra con CIE',
   });
 
   fireEvent.click(ButtonCIE);
