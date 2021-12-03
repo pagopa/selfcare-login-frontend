@@ -29,7 +29,7 @@ test('renders react link Informativa sulla Privacy', () => {
   const LinkName = screen.getByText(/Informativa Privacy/i);
   expect(LinkName).toHaveAttribute(
     'href',
-    'https://dev.selfcare.pagopa.it/assets/InformativaPrivacy.pdf'
+    'https://dev.selfcare.pagopa.it/assets/privacy-disclaimer.pdf'
   );
 });
 
