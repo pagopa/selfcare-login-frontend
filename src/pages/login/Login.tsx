@@ -77,7 +77,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Accedi con SPID/CIE
+              Accedi con SPID o CIE
             </Typography>
           </Grid>
         </Grid>
