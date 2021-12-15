@@ -16,6 +16,8 @@ declare namespace NodeJS {
 
     REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: string;
     REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: string;
+
+    REACT_APP_ENABLE_ASSISTANCE: string;
   }
 }
 interface Window {

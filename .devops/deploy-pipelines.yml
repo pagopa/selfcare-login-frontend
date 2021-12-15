@@ -33,6 +33,7 @@ variables:
     spid_cie_entity_id: 'xx_servizicie_test'
     react_app_url_file_privacy_disclaimer: '${UAT_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}'
     react_app_url_file_terms_and_conditions: '${UAT_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}'
+    react_app_enable_assistance: 'true'
 
   ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     environment: 'PROD'
@@ -49,6 +50,7 @@ variables:
     spid_cie_entity_id: 'xx_servizicie'
     react_app_url_file_privacy_disclaimer: '${PROD_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}'
     react_app_url_file_terms_and_conditions: '${PROD_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}'
+    react_app_enable_assistance: 'false'
 
   # every branch different from past will be considered as DEV
   #  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
@@ -67,6 +69,7 @@ variables:
     spid_cie_entity_id: 'xx_servizicie_test'
     react_app_url_file_privacy_disclaimer: '${DEV_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}'
     react_app_url_file_terms_and_conditions: '${DEV_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}'
+    react_app_enable_assistance: 'true'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
@@ -149,6 +152,7 @@ stages:
               REACT_APP_URL_API_LOGIN: '$(react_app_url_api_login)'
               REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_file_privacy_disclaimer)'
               REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_file_terms_and_conditions)'
+              REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
           - bash: |
               printf "$EXECUTION_ID\n$(git name-rev --name-only FETCH_HEAD) $(git rev-parse HEAD)" > $(System.DefaultWorkingDirectory)/build/build.info
             env:
