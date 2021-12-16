@@ -20,7 +20,7 @@ export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageRead(STORAGE_KEY_ON_SUCCESS, 'string');
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
-      ? window.location.origin + '/' + onSuccess
+      ? window.location.origin + '/' + onSuccess.replace('^/', '')
       : URL_FE_DASHBOARD;
   storageDelete(STORAGE_KEY_ON_SUCCESS);
 
