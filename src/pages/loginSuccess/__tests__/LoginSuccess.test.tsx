@@ -43,6 +43,8 @@ test('test login success', () => {
 test('test login success when redirect registered', () => {
   const requestedPath = 'prova';
   testSuccessRedirect(requestedPath, true, mockedLocation.origin + '/' + requestedPath);
+
+  testSuccessRedirect(`/${requestedPath}`, true, mockedLocation.origin + '/' + requestedPath);
 });
 
 test('test login success when invalid redirect', () => {
