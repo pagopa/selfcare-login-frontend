@@ -18,7 +18,12 @@ import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import { SPID_CIE_ENTITY_ID, URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
+import {
+  SPID_CIE_ENTITY_ID,
+  URL_API_LOGIN,
+  URL_FE_LANDING,
+  DISEABLE_CTA,
+} from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -55,15 +60,17 @@ const Login = () => {
       <Grid container direction="column" my={'auto'}>
         <Grid container direction="row" justifyContent="flex-end" mt={6}>
           <Grid item xs={2}>
-            <IconButton
-              color="primary"
-              style={{
-                maxWidth: '17.42px',
-              }}
-              onClick={() => goBackToLandingPage()}
-            >
-              <ClearOutlinedIcon />
-            </IconButton>
+            {!DISEABLE_CTA && (
+              <IconButton
+                color="primary"
+                style={{
+                  maxWidth: '17.42px',
+                }}
+                onClick={() => goBackToLandingPage()}
+              >
+                <ClearOutlinedIcon />
+              </IconButton>
+            )}
           </Grid>
         </Grid>
         <Grid container item justifyContent="center">

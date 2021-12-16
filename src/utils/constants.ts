@@ -13,6 +13,7 @@ export const URL_FE_LOGOUT = ROUTE_LOGOUT;
 export const URL_FE_ONBOARDING = process.env.REACT_APP_URL_FE_ONBOARDING;
 export const URL_FE_DASHBOARD = process.env.REACT_APP_URL_FE_DASHBOARD;
 export const URL_FE_LANDING = process.env.REACT_APP_URL_FE_LANDING;
+export const DISEABLE_CTA = URL_FE_LANDING.endsWith('/auth/logout');
 
 export const URL_API_LOGIN = process.env.REACT_APP_URL_API_LOGIN;
 
