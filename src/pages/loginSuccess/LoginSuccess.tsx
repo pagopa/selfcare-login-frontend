@@ -15,7 +15,7 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = new RegExp('^[\\w/]+$');
+const validOnSuccessPattern = new RegExp('^[\\w/-]+$');
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageRead(STORAGE_KEY_ON_SUCCESS, 'string');
   const redirectTo =
