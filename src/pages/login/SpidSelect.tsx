@@ -9,7 +9,7 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN, URL_FE_LANDING } from '../../utils/constants';
+import { URL_API_LOGIN, URL_FE_LANDING, ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
@@ -27,15 +27,17 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             <img src={SpidBig} />
           </Grid>
           <Grid item xs={1} sx={{ textAlign: 'end' }}>
-            <IconButton
-              color="primary"
-              style={{
-                maxWidth: '17.42px',
-              }}
-              onClick={() => goBackToLandingPage()}
-            >
-              <ClearOutlinedIcon />
-            </IconButton>
+            {ENABLE_LANDING_REDIRECT && (
+              <IconButton
+                color="primary"
+                style={{
+                  maxWidth: '17.42px',
+                }}
+                onClick={() => goBackToLandingPage()}
+              >
+                <ClearOutlinedIcon />
+              </IconButton>
+            )}
           </Grid>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
