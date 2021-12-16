@@ -15,15 +15,16 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = new RegExp('^[\\w/]+$');
+const validOnSuccessPattern = new RegExp('^[\\w/-]+$');
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageRead(STORAGE_KEY_ON_SUCCESS, 'string');
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
-      ? window.location.origin + '/' + onSuccess
+      ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : URL_FE_DASHBOARD;
   storageDelete(STORAGE_KEY_ON_SUCCESS);
-
+  // eslint-disable-next-line no-debugger
+  debugger;
   window.location.assign(redirectTo);
 };
 
