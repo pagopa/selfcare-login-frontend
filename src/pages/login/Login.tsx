@@ -22,7 +22,7 @@ import {
   SPID_CIE_ENTITY_ID,
   URL_API_LOGIN,
   URL_FE_LANDING,
-  DISEABLE_CTA,
+  ENABLE_LANDING_REDIRECT,
 } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
@@ -60,7 +60,7 @@ const Login = () => {
       <Grid container direction="column" my={'auto'}>
         <Grid container direction="row" justifyContent="flex-end" mt={6}>
           <Grid item xs={2}>
-            {!DISEABLE_CTA && (
+            {ENABLE_LANDING_REDIRECT && (
               <IconButton
                 color="primary"
                 style={{
