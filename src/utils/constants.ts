@@ -1,4 +1,4 @@
-export const SPID_TEST_ENV_ENABLED = process.env.REACT_APP_SPID_TEST_ENV_ENABLED;
+export const SPID_TEST_ENV_ENABLED = process.env.REACT_APP_SPID_TEST_ENV_ENABLED === 'true';
 export const SPID_CIE_ENTITY_ID = process.env.REACT_APP_SPID_CIE_ENTITY_ID;
 
 export const BASE_ROUTE = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '';

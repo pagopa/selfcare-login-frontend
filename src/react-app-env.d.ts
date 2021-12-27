@@ -9,7 +9,7 @@ declare namespace NodeJS {
 
     REACT_APP_URL_API_LOGIN: string;
 
-    REACT_APP_SPID_TEST_ENV_ENABLED: boolean;
+    REACT_APP_SPID_TEST_ENV_ENABLED: string;
     REACT_APP_SPID_CIE_ENTITY_ID: string;
 
     REACT_APP_PAGOPA_HELP_EMAIL: string;
