@@ -26,7 +26,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           <Grid item xs={1}>
             <img src={SpidBig} />
           </Grid>
-          <Grid item xs={1} sx={{ textAlign: 'end' }}>
+          <Grid item xs={1} sx={{ textAlign: 'right' }}>
             {ENABLE_LANDING_REDIRECT && (
               <IconButton
                 color="primary"
