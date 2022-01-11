@@ -58,8 +58,17 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           <Grid item>
             <Grid container direction="row" justifyItems="center" spacing={2}>
               {IDPS.identityProviders.map((IP, i) => (
-                <Grid item key={IP.entityId} xs={6} textAlign={i % 2 === 0 ? 'end' : 'start'}>
-                  <Button onClick={() => getSPID(IP.entityId)}>
+                <Grid
+                  item
+                  key={IP.entityId}
+                  xs={6}
+                  textAlign={i % 2 === 0 ? 'right' : 'left'}
+                  sx={{ minWidth: '100px' }}
+                >
+                  <Button
+                    onClick={() => getSPID(IP.entityId)}
+                    sx={{ width: '100px', padding: '0' }}
+                  >
                     <Icon sx={{ width: '100px', height: '48px' }}>
                       <img width="100px" src={IP.imageUrl} alt={IP.name} />
                     </Icon>
