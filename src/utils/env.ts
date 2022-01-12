@@ -1,5 +1,4 @@
 import * as env from 'env-var';
-import { ROUTE_LOGOUT } from './constants';
 
 export const PUBLIC_URL: string = env.get('PUBLIC_URL').default('').asString();
 
@@ -13,7 +12,7 @@ export const PAGOPA_HELP_EMAIL: string = env
   .required()
   .asString();
 
-export const URL_FE_LOGOUT: string = ROUTE_LOGOUT;
+export const URL_FE_LOGOUT: string = PUBLIC_URL + '/logout';
 
 export const SPID_TEST_ENV_ENABLED: boolean = env
   .get('REACT_APP_SPID_TEST_ENV_ENABLED')
