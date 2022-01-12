@@ -27,10 +27,7 @@ test('rendering test', () => {
 test('renders react link Informativa sulla Privacy', () => {
   render(<Login />);
   const LinkName = screen.getByText(/Informativa Privacy/i);
-  expect(LinkName).toHaveAttribute(
-    'href',
-    'https://dev.selfcare.pagopa.it/assets/privacy-disclaimer.pdf'
-  );
+  expect(LinkName).toHaveAttribute('href', 'http://selfcare/assets/privacy-disclaimer.pdf');
 });
 
 test('renders button Entra con Spid', () => {
