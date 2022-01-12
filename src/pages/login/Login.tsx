@@ -16,12 +16,8 @@ import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import {
-  SPID_CIE_ENTITY_ID,
-  URL_API_LOGIN,
-  URL_FE_LANDING,
-  ENABLE_LANDING_REDIRECT,
-} from '../../utils/constants';
+import { ENV } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -40,11 +36,11 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
   const goCIE = () => {
-    window.location.assign(`${URL_API_LOGIN}/login?entityID=${SPID_CIE_ENTITY_ID}`);
+    window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`);
   };
 
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_FE_LANDING}`);
+    window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
 
   useEffect(() => {}, []);
@@ -188,13 +184,9 @@ const Login = () => {
               variant="body2"
             >
               Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href={process.env.REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}>
-                {'Informativa Privacy'}
-              </Link>
+              <Link href={ENV.URL_FILE.PRIVACY_DISCLAIMER}>{'Informativa Privacy'}</Link>
               {' e i '}
-              <Link href={process.env.REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}>
-                {'Termini e condizioni d’uso'}
-              </Link>
+              <Link href={ENV.URL_FILE.TERMS_AND_CONDITIONS}>{'Termini e condizioni d’uso'}</Link>
               {' del Portale Self Care'}
             </Typography>
           </Grid>
