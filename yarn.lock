@@ -11884,11 +11884,6 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typeface-titillium-web@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/typeface-titillium-web/-/typeface-titillium-web-1.1.13.tgz#3fb50c8c7ea0cbc3531cad7f1a23d7218aeb24be"
-  integrity sha512-R21mXf9hoqle+dgR7k6C6QUN2XElopQNsTDYI5DoU1buuYayVvzn2jd2ihKJTwM/hJsltLrlJUkyumc3FFgevA==
-
 typescript@^4.1.2:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.3.tgz#bdc5407caa2b109efd4f82fe130656f977a29324"

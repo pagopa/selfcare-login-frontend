@@ -12,8 +12,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 
-import 'typeface-titillium-web';
-
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
