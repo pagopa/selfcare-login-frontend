@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IDPS } from '../../../utils/IDPS';
 import SpidSelect from '../SpidSelect';
-import { URL_API_LOGIN } from '../../../utils/constants';
+import { URL_API_LOGIN } from '../../../utils/env';
 
 const oldWindowLocation = global.window.location;
 const idps = IDPS.identityProviders;

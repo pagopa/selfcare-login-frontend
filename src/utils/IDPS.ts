@@ -1,4 +1,4 @@
-import { SPID_TEST_ENV_ENABLED } from './constants';
+import { SPID_TEST_ENV_ENABLED } from './env';
 
 const IDPS = {
   identityProviders: [

@@ -9,7 +9,8 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN, URL_FE_LANDING, ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { URL_API_LOGIN, URL_FE_LANDING } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {

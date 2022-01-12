@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
 import Login from '../Login';
-import { URL_API_LOGIN } from '../../../utils/constants';
+import { URL_API_LOGIN } from '../../../utils/env';
 
 const oldWindowLocation = global.window.location;
 

@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ValidSession from '../ValidateSession';
 import { storageRead, storageWrite } from '../../../lib/storage-utils';
-import { STORAGE_KEY_USER, URL_FE_DASHBOARD } from '../../../utils/constants';
+import { URL_FE_DASHBOARD } from '../../../utils/env';
+import { STORAGE_KEY_USER } from '../../../utils/constants';
 import { User } from '../../../models/User';
 
 const token =

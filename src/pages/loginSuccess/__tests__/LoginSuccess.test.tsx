@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import LoginSuccess from '../LoginSuccess';
 import { storageRead, storageWrite } from '../../../lib/storage-utils';
+import { URL_FE_DASHBOARD } from '../../../utils/env';
 import {
   ROUTE_LOGIN,
   STORAGE_KEY_ON_SUCCESS,
   STORAGE_KEY_TOKEN,
   STORAGE_KEY_USER,
-  URL_FE_DASHBOARD,
 } from '../../../utils/constants';
 import { User } from '../../../models/User';
 
