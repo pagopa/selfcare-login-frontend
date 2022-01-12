@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import LoginSuccess from '../LoginSuccess';
 import { storageRead, storageWrite } from '../../../lib/storage-utils';
-import { URL_FE_DASHBOARD } from '../../../utils/env';
+import { ENV } from '../../../utils/env';
 import {
   ROUTE_LOGIN,
   STORAGE_KEY_ON_SUCCESS,
@@ -37,7 +37,7 @@ test('test login success', () => {
   expect(user.surname).toBe('Sartori');
   expect(user.email).toBe('furiovitale@martino.it');
 
-  expect(global.window.location.assign).toBeCalledWith(URL_FE_DASHBOARD);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
 
 test('test login success when redirect registered', () => {
@@ -49,7 +49,7 @@ test('test login success when redirect registered', () => {
 
 test('test login success when invalid redirect', () => {
   const requestedPath = 'prova?';
-  testSuccessRedirect(requestedPath, true, URL_FE_DASHBOARD);
+  testSuccessRedirect(requestedPath, true, ENV.URL_FE.DASHBOARD);
 });
 
 test('test login success no token', () => {

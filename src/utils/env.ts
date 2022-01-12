@@ -1,46 +1,32 @@
 import * as env from 'env-var';
 
-export const PUBLIC_URL: string = env.get('PUBLIC_URL').default('').asString();
+const PUBLIC_URL: string = env.get('PUBLIC_URL').default('').asString();
 
-export const ENABLE_ASSISTANCE: boolean = env
-  .get('REACT_APP_ENABLE_ASSISTANCE')
-  .required()
-  .asBool();
+export const ENV = {
+  PUBLIC_URL,
 
-export const PAGOPA_HELP_EMAIL: string = env
-  .get('REACT_APP_PAGOPA_HELP_EMAIL')
-  .required()
-  .asString();
+  ASSISTANCE: {
+    ENABLE: env.get('REACT_APP_ENABLE_ASSISTANCE').required().asBool(),
+    EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
+  },
 
-export const URL_FE_LOGOUT: string = PUBLIC_URL + '/logout';
+  URL_FE: {
+    LOGOUT: PUBLIC_URL + '/logout',
+    ONBOARDING: env.get('REACT_APP_URL_FE_ONBOARDING').required().asString(),
+    DASHBOARD: env.get('REACT_APP_URL_FE_DASHBOARD').required().asString(),
+    LANDING: env.get('REACT_APP_URL_FE_LANDING').required().asString(),
+  },
 
-export const SPID_TEST_ENV_ENABLED: boolean = env
-  .get('REACT_APP_SPID_TEST_ENV_ENABLED')
-  .required()
-  .asBool();
+  URL_API: {
+    LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
+  },
 
-export const SPID_CIE_ENTITY_ID: string = env
-  .get('REACT_APP_SPID_CIE_ENTITY_ID')
-  .required()
-  .asString();
+  URL_FILE: {
+    PRIVACY_DISCLAIMER: env.get('REACT_APP_URL_FILE_PRIVACY_DISCLAIMER').required().asString(),
+    TERMS_AND_CONDITIONS: env.get('REACT_APP_URL_FILE_TERMS_AND_CONDITIONS').required().asString(),
+  },
 
-export const URL_FE_ONBOARDING: string = env
-  .get('REACT_APP_URL_FE_ONBOARDING')
-  .required()
-  .asString();
+  SPID_TEST_ENV_ENABLED: env.get('REACT_APP_SPID_TEST_ENV_ENABLED').required().asBool(),
 
-export const URL_FE_DASHBOARD: string = env.get('REACT_APP_URL_FE_DASHBOARD').required().asString();
-
-export const URL_FE_LANDING: string = env.get('REACT_APP_URL_FE_LANDING').required().asString();
-
-export const URL_API_LOGIN: string = env.get('REACT_APP_URL_API_LOGIN').required().asString();
-
-export const URL_FILE_PRIVACY_DISCLAIMER: string = env
-  .get('REACT_APP_URL_FILE_PRIVACY_DISCLAIMER')
-  .required()
-  .asString();
-
-export const URL_FILE_TERMS_AND_CONDITIONS: string = env
-  .get('REACT_APP_URL_FILE_TERMS_AND_CONDITIONS')
-  .required()
-  .asString();
+  SPID_CIE_ENTITY_ID: env.get('REACT_APP_SPID_CIE_ENTITY_ID').required().asString(),
+};

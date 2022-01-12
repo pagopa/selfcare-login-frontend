@@ -1,6 +1,6 @@
 import { storageDelete, storageRead, storageWrite } from '../../lib/storage-utils';
 import { User, userFromJwtToken } from '../../models/User';
-import { URL_FE_DASHBOARD } from '../../utils/env';
+import { ENV } from '../../utils/env';
 import { STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN, STORAGE_KEY_USER } from '../../utils/constants';
 import { redirectToLogin } from '../../utils/utils';
 
@@ -17,7 +17,7 @@ export const redirectSuccessLogin = () => {
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
-      : URL_FE_DASHBOARD;
+      : ENV.URL_FE.DASHBOARD;
   storageDelete(STORAGE_KEY_ON_SUCCESS);
   // eslint-disable-next-line no-debugger
   debugger;

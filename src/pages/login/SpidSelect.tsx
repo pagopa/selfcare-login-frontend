@@ -9,15 +9,15 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN, URL_FE_LANDING } from '../../utils/env';
+import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
   const getSPID = (entityID: string) => {
-    window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
+    window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
   };
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_FE_LANDING}`);
+    window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
 
   return (

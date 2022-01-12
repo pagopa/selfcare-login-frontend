@@ -1,4 +1,4 @@
-import { SPID_TEST_ENV_ENABLED } from './env';
+import { ENV } from './env';
 
 const IDPS = {
   identityProviders: [
@@ -54,7 +54,7 @@ const IDPS = {
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };
 
-if (SPID_TEST_ENV_ENABLED) {
+if (ENV.SPID_TEST_ENV_ENABLED) {
   // eslint-disable-next-line functional/immutable-data
   IDPS.identityProviders.push({
     identifier: 'test',
