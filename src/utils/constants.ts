@@ -7,8 +7,6 @@ export const ROUTE_LOGIN_SUCCESS = BASE_ROUTE + '/login/success';
 export const ROUTE_LOGIN_ERROR = BASE_ROUTE + '/login/error';
 export const ROUTE_LOGOUT = BASE_ROUTE + '/logout';
 
-export const URL_FE_LOGOUT = ROUTE_LOGOUT;
-
 export const ENABLE_LANDING_REDIRECT = !URL_FE_LANDING.endsWith('/auth/logout');
 
 export const STORAGE_KEY_TOKEN = 'token';
