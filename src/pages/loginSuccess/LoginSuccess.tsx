@@ -1,4 +1,8 @@
-import { storageDelete, storageRead, storageWrite } from '../../lib/storage-utils';
+import {
+  storageDelete,
+  storageRead,
+  storageWrite,
+} from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
 import { STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN, STORAGE_KEY_USER } from '../../utils/constants';

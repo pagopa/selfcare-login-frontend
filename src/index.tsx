@@ -1,17 +1,15 @@
-import 'react-app-polyfill/ie11';
-import 'core-js/es/object/values';
-import 'core-js/es/promise';
-import 'core-js/es/array';
-import 'core-js/stable/string';
-import 'core-js/stable/number';
-import 'core-js/stable/url-search-params';
+import '@pagopa/selfcare-common-frontend/common-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-// import { registerLocale, setDefaultLocale } from "react-datepicker";
+import '@pagopa/selfcare-common-frontend/index.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '@pagopa/mui-italia/theme';
+import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
 import App from './App';
+import { ENV } from './utils/env';
+
+// eslint-disable-next-line functional/immutable-data
+CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

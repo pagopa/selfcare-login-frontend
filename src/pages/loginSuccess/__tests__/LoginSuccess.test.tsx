@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import LoginSuccess from '../LoginSuccess';
-import { storageRead, storageWrite } from '../../../lib/storage-utils';
+import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { ENV } from '../../../utils/env';
 import {
   ROUTE_LOGIN,
