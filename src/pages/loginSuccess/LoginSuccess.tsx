@@ -23,8 +23,6 @@ export const redirectSuccessLogin = () => {
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
   storageDelete(STORAGE_KEY_ON_SUCCESS);
-  // eslint-disable-next-line no-debugger
-  debugger;
   window.location.assign(redirectTo);
 };
 
