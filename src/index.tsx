@@ -10,6 +10,8 @@ import { ENV } from './utils/env';
 
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
+// eslint-disable-next-line functional/immutable-data
+CONFIG.URL_FE.ASSISTANCE = ENV.URL_FE.ASSISTANCE;
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
