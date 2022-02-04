@@ -7,6 +7,7 @@ import theme from '@pagopa/mui-italia/theme';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
 import App from './App';
 import { ENV } from './utils/env';
+import './consentAndAnalyticsConfiguration.ts';
 
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
