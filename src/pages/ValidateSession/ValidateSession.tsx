@@ -1,4 +1,4 @@
-import { storageRead } from '../../lib/storage-utils';
+import { storageRead } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { User } from '../../models/User';
 import { STORAGE_KEY_USER } from '../../utils/constants';
 import { readUserFromToken, redirectSuccessLogin } from '../loginSuccess/LoginSuccess';

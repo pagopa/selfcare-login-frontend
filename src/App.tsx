@@ -1,5 +1,9 @@
+import {
+  storageWrite,
+  storageRead,
+  storageDelete,
+} from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import Login from './pages/login/Login';
-import { storageWrite, storageRead, storageDelete } from './lib/storage-utils';
 import {
   ROUTE_LOGIN,
   ROUTE_LOGIN_ERROR,
