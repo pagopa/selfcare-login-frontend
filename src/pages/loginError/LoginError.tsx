@@ -1,8 +1,13 @@
 import { Dialog, Box, Typography } from '@mui/material';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { storageRead } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { STORAGE_KEY_SPID_SELECTED } from '../../utils/constants';
 import { redirectToLogin } from '../../utils/utils';
 
-const handleError = (queryParams: string) =>
-  console.error(`login unsuccessfull! query params obtained from idp: ${queryParams}`);
+const handleError = (queryParams: string) =>{
+  const spidId = storageRead(STORAGE_KEY_SPID_SELECTED, 'string');
+  trackEvent('LOGIN_FAILURE', { reason:queryParams, idp: spidId });
+  console.error(`login unsuccessfull! query params obtained from idp: ${queryParams}`);};
 
 const LoginError = () => {
   setTimeout(() => redirectToLogin(), 3000);

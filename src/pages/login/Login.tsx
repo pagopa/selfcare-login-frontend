@@ -12,12 +12,14 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 
+import { storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
-import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { ENABLE_LANDING_REDIRECT, STORAGE_KEY_SPID_SELECTED } from '../../utils/constants';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -36,14 +38,21 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
   const goCIE = () => {
+    storageWrite(STORAGE_KEY_SPID_SELECTED, ENV.SPID_CIE_ENTITY_ID, 'string');
+    trackEvent(
+      'LOGIN_IDP_SELECTED',
+      {
+        SPID_IDP_NAME: 'CIE',
+        SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID
+      }
+      // () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`);
+    );
     window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`);
   };
 
   const goBackToLandingPage = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
-
-  useEffect(() => {}, []);
 
   if (showIDPS) {
     return <SpidSelect onBack={() => setShowIDPS(false)} />;
@@ -184,9 +193,31 @@ const Login = () => {
               variant="body2"
             >
               Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href={ENV.URL_FILE.PRIVACY_DISCLAIMER}>{'Informativa Privacy'}</Link>
+              <Link
+                onClick={() => {
+                  trackEvent(
+                    'LOGIN_PRIVACY',
+                    { SPID_IDP_NAME: 'LOGIN_PRIVACY' },
+                    // () => window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER);
+                  );
+                  window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER);
+                }}
+              >
+                {'Informativa Privacy'}
+              </Link>
               {' e i '}
-              <Link href={ENV.URL_FILE.TERMS_AND_CONDITIONS}>{'Termini e condizioni d’uso'}</Link>
+              <Link
+                onClick={() => {
+                  trackEvent(
+                    'LOGIN_TOS',
+                    { SPID_IDP_NAME: 'LOGIN_TOS' },
+                    // () => window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS);
+                  );
+                  window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS);
+                }}
+              >
+                {'Termini e condizioni d’uso'}
+              </Link>
               {' del Portale Self Care'}
             </Typography>
           </Grid>

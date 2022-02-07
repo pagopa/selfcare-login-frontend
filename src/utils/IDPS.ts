@@ -1,6 +1,12 @@
 import { ENV } from './env';
+export type IdentityProvider= { 
+  identifier: string;
+  entityId: string;
+  name: string;
+  imageUrl:string;
+};
 
-const IDPS = {
+const IDPS: {identityProviders: Array<IdentityProvider>; richiediSpid:string} = {
   identityProviders: [
     {
       identifier: 'Aruba',
