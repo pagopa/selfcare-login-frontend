@@ -20,7 +20,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
     trackEvent('LOGIN_IDP_SELECTED', { 
       SPID_IDP_NAME: IDP.name,
       SPID_IDP_ID: IDP.entityId },
-      // () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`); 
+      () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`)
       );
     window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`);
   };
