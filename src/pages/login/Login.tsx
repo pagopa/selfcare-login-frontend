@@ -47,7 +47,6 @@ const Login = () => {
       },
       () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`)
     );
-    window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`);
   };
 
   const goBackToLandingPage = () => {
@@ -200,7 +199,6 @@ const Login = () => {
                     { SPID_IDP_NAME: 'LOGIN_PRIVACY' },
                     () => window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
                   );
-                  window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER);
                 }}
               >
                 {'Informativa Privacy'}
@@ -213,7 +211,6 @@ const Login = () => {
                     { SPID_IDP_NAME: 'LOGIN_TOS' },
                     () => window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
                   );
-                  window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS);
                 }}
               >
                 {'Termini e condizioni d’uso'}
