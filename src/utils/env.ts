@@ -3,6 +3,7 @@ import * as env from 'env-var';
 const PUBLIC_URL: string = env.get('PUBLIC_URL').default('').asString();
 
 export const ENV = {
+  ENV: env.get('REACT_APP_ENV').required().asString(),
   PUBLIC_URL,
 
   ASSISTANCE: {
@@ -36,6 +37,9 @@ export const ENV = {
     MOCK: env.get('REACT_APP_ANALYTICS_MOCK').default('false').asBool(),
     DEBUG: env.get('REACT_APP_ANALYTICS_DEBUG').default('false').asBool(),
     TOKEN: env.get('REACT_APP_MIXPANEL_TOKEN').required().asString(),
-    API_HOST: env.get('REACT_APP_MIXPANEL_API_HOST').default('https://api-eu.mixpanel.com').asString(),
+    API_HOST: env
+      .get('REACT_APP_MIXPANEL_API_HOST')
+      .default('https://api-eu.mixpanel.com')
+      .asString(),
   },
 };
