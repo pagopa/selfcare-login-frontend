@@ -39,7 +39,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
   trackEvent(
     'LOGIN_INTENT',
-    { target: onSuccess },
+    { target: onSuccess ?? 'dashboard' },
   );
   if (onSuccess) {
     storageWrite(STORAGE_KEY_ON_SUCCESS, onSuccess, 'string');
