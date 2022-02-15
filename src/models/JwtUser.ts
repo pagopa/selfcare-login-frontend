@@ -1,5 +1,5 @@
 export type JWTUser = {
-  uid: string; // TODO verify if this will be the correct name
+  uid: string;
   fiscal_number: string;
   name: string;
   family_name: string;

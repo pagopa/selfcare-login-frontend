@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Logout from '../Logout';
-import { storageRead, storageWrite } from '../../../lib/storage-utils';
+import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import {
   ROUTE_LOGIN,
   STORAGE_KEY_ON_SUCCESS,

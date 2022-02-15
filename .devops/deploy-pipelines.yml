@@ -18,6 +18,9 @@ variables:
 
   basePath: auth
 
+  # global variables
+  react_app_pagopa_help_email: '$(REACT_APP_ASSISTANCE_EMAIL)'
+
   ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
     environment: 'UAT'
     azure_subscription: $(UAT_AZURE_SUBSCRIPTION)
@@ -28,6 +31,7 @@ variables:
     react_app_url_fe_onboarding: '$(UAT_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_fe_landing: '$(UAT_REACT_APP_URL_FE_LANDING)'
+    react_app_url_fe_assistance: '$(UAT_REACT_APP_URL_FE_ASSISTANCE)'
     react_app_url_api_login: '$(UAT_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
@@ -45,6 +49,7 @@ variables:
     react_app_url_fe_onboarding: '$(PROD_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_fe_landing: '$(PROD_REACT_APP_URL_FE_LANDING)'
+    react_app_url_fe_assistance: '$(PROD_REACT_APP_URL_FE_ASSISTANCE)'
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'false'
     spid_cie_entity_id: 'xx_servizicie'
@@ -64,6 +69,7 @@ variables:
     react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_fe_landing: '$(DEV_REACT_APP_URL_FE_LANDING)'
+    react_app_url_fe_assistance: '$(DEV_REACT_APP_URL_FE_ASSISTANCE)'
     react_app_url_api_login: '$(DEV_REACT_APP_URL_API_LOGIN)'
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
@@ -87,6 +93,11 @@ resources:
       type: github
       name: pagopa/azure-pipeline-templates
       ref: refs/tags/v18
+      endpoint: 'io-azure-devops-github-ro'
+    - repository: selfcareCommon
+      type: github
+      name: pagopa/selfcare-common-frontend
+      ref: refs/heads/main
       endpoint: 'io-azure-devops-github-ro'
 
 pool:
@@ -133,7 +144,7 @@ stages:
     jobs:
       - job: 'make_build'
         steps:
-          - template: ./azure-templates/setup-yarn-cache.yml
+          - template: .devops/azure-templates/setup-yarn-cache.yml@selfcareCommon
           - template: templates/node-job-setup/template.yaml@pagopaCommons
             parameters:
               nodeVersion: $(NODE_VERSION)
@@ -147,10 +158,15 @@ stages:
               REACT_APP_URL_FE_ONBOARDING: '$(react_app_url_fe_onboarding)'
               REACT_APP_URL_FE_DASHBOARD: '$(react_app_url_fe_dashboard)'
               REACT_APP_URL_FE_LANDING: '$(react_app_url_fe_landing)'
+              REACT_APP_URL_FE_ASSISTANCE: '$(react_app_url_fe_assistance)'
               REACT_APP_URL_API_LOGIN: '$(react_app_url_api_login)'
               REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_file_privacy_disclaimer)'
               REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_file_terms_and_conditions)'
               REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
+              REACT_APP_PAGOPA_HELP_EMAIL: '$(react_app_pagopa_help_email)'
+              REACT_APP_ANALYTICS_ENABLE: true # TODO
+              REACT_APP_ANALYTICS_MOCK: true # TODO
+              REACT_APP_MIXPANEL_TOKEN: 'DUMMY' # TODO
           - bash: |
               printf "$EXECUTION_ID\n$(git name-rev --name-only FETCH_HEAD) $(git rev-parse HEAD)" > $(System.DefaultWorkingDirectory)/build/build.info
             env:

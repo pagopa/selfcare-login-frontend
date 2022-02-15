@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { storageRead, storageWrite } from '../lib/storage-utils';
+import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { ROUTE_LOGIN, STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN } from '../utils/constants';
 
 const oldWindowLocation = global.window.location;
