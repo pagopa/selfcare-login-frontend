@@ -1,5 +1,10 @@
+import {
+  storageWrite,
+  storageRead,
+  storageDelete,
+} from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import Login from './pages/login/Login';
-import { storageWrite, storageRead, storageDelete } from './lib/storage-utils';
 import {
   ROUTE_LOGIN,
   ROUTE_LOGIN_ERROR,
@@ -32,6 +37,10 @@ const onLoginRequest = () => {
 
 const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
+  trackEvent(
+    'LOGIN_INTENT',
+    { target: onSuccess ?? 'dashboard' },
+  );
   if (onSuccess) {
     storageWrite(STORAGE_KEY_ON_SUCCESS, onSuccess, 'string');
   }

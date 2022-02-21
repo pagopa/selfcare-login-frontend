@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IDPS } from '../../../utils/IDPS';
 import SpidSelect from '../SpidSelect';
-import { URL_API_LOGIN } from '../../../utils/constants';
+import { ENV } from '../../../utils/env';
 
 const oldWindowLocation = global.window.location;
 const idps = IDPS.identityProviders;
@@ -25,7 +25,7 @@ test('go to the spid url', () => {
     fireEvent.click(spidButton);
     let id = element.entityId;
     expect(global.window.location.assign).toBeCalledWith(
-      URL_API_LOGIN + '/login?entityID=' + id + '&authLevel=SpidL2'
+      ENV.URL_API.LOGIN + '/login?entityID=' + id + '&authLevel=SpidL2'
     );
   });
 });

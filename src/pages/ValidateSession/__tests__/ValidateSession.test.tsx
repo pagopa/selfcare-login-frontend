@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import ValidSession from '../ValidateSession';
-import { storageRead, storageWrite } from '../../../lib/storage-utils';
-import { STORAGE_KEY_USER, URL_FE_DASHBOARD } from '../../../utils/constants';
+import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { ENV } from '../../../utils/env';
+import { STORAGE_KEY_USER } from '../../../utils/constants';
 import { User } from '../../../models/User';
 
 const token =
@@ -28,7 +29,7 @@ test('test validate session', () => {
   expect(user.surname).toBe('Sartori');
   expect(user.email).toBe('furiovitale@martino.it');
 
-  expect(global.window.location.assign).toBeCalledWith(URL_FE_DASHBOARD);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
 
 test('test validate session when already user stored', () => {
@@ -39,5 +40,5 @@ test('test validate session when already user stored', () => {
   const user: User = storageRead(STORAGE_KEY_USER, 'object');
   expect(JSON.stringify(user)).toBe(JSON.stringify(expectedUser));
 
-  expect(global.window.location.assign).toBeCalledWith(URL_FE_DASHBOARD);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
