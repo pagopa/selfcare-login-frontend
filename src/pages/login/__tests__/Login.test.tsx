@@ -24,12 +24,6 @@ test('rendering test', () => {
   );
 });
 
-test('renders react link Informativa sulla Privacy', () => {
-  render(<Login />);
-  const LinkName = screen.getByText(/Informativa Privacy/i);
-  expect(LinkName).toHaveAttribute('href', 'http://selfcare/assets/privacy-disclaimer.pdf');
-});
-
 test('renders button Entra con Spid', () => {
   const login = render(<Login />);
   const ButtonSpid = screen.getByText(/Entra con SPID/i);

@@ -7,14 +7,21 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import Button from '@mui/material/Button';
-import { IDPS } from '../../utils/IDPS';
+import { storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
-import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { ENABLE_LANDING_REDIRECT, STORAGE_KEY_SPID_SELECTED } from '../../utils/constants';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
-  const getSPID = (entityID: string) => {
-    window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
+  const getSPID = (IDP: IdentityProvider) => {
+    storageWrite(STORAGE_KEY_SPID_SELECTED ,IDP.entityId , 'string');
+    trackEvent('LOGIN_IDP_SELECTED', { 
+      SPID_IDP_NAME: IDP.name,
+      SPID_IDP_ID: IDP.entityId },
+      () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`)
+      );
   };
   const goBackToLandingPage = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
@@ -58,20 +65,20 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           </Grid>
           <Grid item>
             <Grid container direction="row" justifyItems="center" spacing={2}>
-              {IDPS.identityProviders.map((IP, i) => (
+              {IDPS.identityProviders.map((IDP, i) => (
                 <Grid
                   item
-                  key={IP.entityId}
+                  key={IDP.entityId}
                   xs={6}
                   textAlign={i % 2 === 0 ? 'right' : 'left'}
                   sx={{ minWidth: '100px' }}
                 >
                   <Button
-                    onClick={() => getSPID(IP.entityId)}
+                    onClick={() => getSPID(IDP)}
                     sx={{ width: '100px', padding: '0' }}
                   >
                     <Icon sx={{ width: '100px', height: '48px' }}>
-                      <img width="100px" src={IP.imageUrl} alt={IP.name} />
+                      <img width="100px" src={IDP.imageUrl} alt={IDP.name} />
                     </Icon>
                   </Button>
                 </Grid>

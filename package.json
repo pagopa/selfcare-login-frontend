@@ -1,6 +1,6 @@
 {
-  "name": "self-care-login-frontend",
-  "version": "0.4.0",
+  "name": "selfcare-login-frontend",
+  "version": "1.0.0",
   "private": true,
   "homepage": "/auth/",
   "dependencies": {
