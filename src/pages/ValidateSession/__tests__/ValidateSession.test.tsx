@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import ValidSession from '../ValidateSession';
-import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { ENV } from '../../../utils/env';
 import { User } from '../../../models/User';
 import { storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
