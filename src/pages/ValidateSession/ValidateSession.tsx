@@ -1,6 +1,5 @@
-import { storageRead } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { User } from '../../models/User';
-import { STORAGE_KEY_USER } from '../../utils/constants';
 import { readUserFromToken, redirectSuccessLogin } from '../loginSuccess/LoginSuccess';
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
 };
 
 const ValidateSession = ({ sessionToken }: Props) => {
-  const user: User = storageRead(STORAGE_KEY_USER, 'object');
+  const user: User = storageUserOps.read();
   if (!user) {
     readUserFromToken(sessionToken);
   }

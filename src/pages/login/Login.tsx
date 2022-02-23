@@ -7,18 +7,16 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-
-import { storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
-import { ENABLE_LANDING_REDIRECT, STORAGE_KEY_SPID_SELECTED } from '../../utils/constants';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -37,7 +35,7 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
   const goCIE = () => {
-    storageWrite(STORAGE_KEY_SPID_SELECTED, ENV.SPID_CIE_ENTITY_ID, 'string');
+    storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {

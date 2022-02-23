@@ -8,8 +8,3 @@ export const ROUTE_LOGIN_ERROR = BASE_ROUTE + '/login/error';
 export const ROUTE_LOGOUT = ENV.URL_FE.LOGOUT;
 
 export const ENABLE_LANDING_REDIRECT = !ENV.URL_FE.LANDING.endsWith('/auth/logout');
-
-export const STORAGE_KEY_TOKEN = 'token';
-export const STORAGE_KEY_USER = 'user';
-export const STORAGE_KEY_ON_SUCCESS = 'LOGIN:onSuccess';
-export const STORAGE_KEY_SPID_SELECTED = 'SPID_SELECTED';
