@@ -6,13 +6,13 @@ export default {
     typographyUp: 'Login',
     button1: 'Entra con SPID',
     button2: 'Entra con CIE',
-    textWithLink1: 'Non hai SPID? <1> Scopri di più </1>',
+    textWithLink1: 'Non hai SPID?<1> Scopri di più</1>',
     textWithLink2:
       "Autenticandoti dichiari di aver letto e compreso l' <1>Informativa Privacy</1> e i <1>Termini e condizioni d’uso</1> del Portale Self Care",
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
-    textWithLink: 'Non hai SPID? <1> Scopri di più </1>',
+    textWithLink: 'Non hai SPID?<1> Scopri di più</1>',
     button: 'Annulla',
   },
   loginError: {
