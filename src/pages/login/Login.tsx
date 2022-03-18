@@ -119,7 +119,7 @@ const Login = () => {
                 }}
                 component="div"
               >
-                {t('loginPage.typographyUp')}
+                {t('loginPage.loginBox.title')}
               </Typography>
 
               <Box display="flex" justifyContent="center" alignItems="center">
@@ -134,7 +134,7 @@ const Login = () => {
                   variant="contained"
                   startIcon={spidIcon()}
                 >
-                  {t('loginPage.button1')}
+                  {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
 
@@ -150,7 +150,7 @@ const Login = () => {
                   startIcon={cieIcon()}
                   onClick={() => goCIE()}
                 >
-                  {t('loginPage.button2')}
+                  {t('loginPage.loginBox.cieLogin')}
                 </Button>
               </Box>
 
@@ -169,8 +169,8 @@ const Login = () => {
                 }}
                 component="div"
               >
-                <Trans i18nKey="textWithLink1">
-                  {'Non hai SPID?'}
+                <Trans i18nKey="hintText">
+                  Non hai SPID?
                   <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
                 </Trans>
               </Typography>
@@ -190,8 +190,8 @@ const Login = () => {
               component="div"
               variant="body2"
             >
-              <Trans i18nKey="textWithLink2">
-                {'Autenticandoti dichiari di aver letto e compreso l'}
+              <Trans i18nKey="privacyAndCondition" shouldUnescape>
+                Autenticandoti dichiari di aver letto e compreso l&apos;
                 <Link
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
@@ -202,7 +202,7 @@ const Login = () => {
                 >
                   {'Informativa Privacy'}
                 </Link>
-                {' E i '}
+                {' e i '}
                 <Link
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {

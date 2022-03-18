@@ -101,8 +101,8 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               component="div"
             >
-              <Trans i18nKey="textWithLink">
-                {'Non hai SPID?'}
+              <Trans i18nKey="hintText">
+                Non hai SPID?
                 <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
               </Trans>
             </Typography>
@@ -116,7 +116,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               onClick={onBack}
             >
-              {t('spidSelect.button')}
+              {t('spidSelect.cancelButton')}
             </Button>
           </Grid>
         </Grid>
