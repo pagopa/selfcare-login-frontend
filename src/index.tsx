@@ -8,6 +8,7 @@ import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
 import App from './App';
 import { ENV } from './utils/env';
 import './consentAndAnalyticsConfiguration.ts';
+import './locale';
 
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;

@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
 import Login from '../Login';
 import { ENV } from '../../../utils/env';
+import './../../../locale';
 
 const oldWindowLocation = global.window.location;
 

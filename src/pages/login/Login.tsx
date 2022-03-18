@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
@@ -33,6 +34,8 @@ export const cieIcon = () => (
 
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
+
+  const { t } = useTranslation();
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
@@ -83,7 +86,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Accedi con SPID o CIE
+              {t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
@@ -97,8 +100,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Seleziona la modalità di autenticazione che preferisci e inizia il processo di
-              adesione
+              {t('loginPage.description')}
             </Typography>
           </Grid>
         </Grid>
@@ -117,7 +119,7 @@ const Login = () => {
                 }}
                 component="div"
               >
-                Login
+                {t('loginPage.loginBox.title')}
               </Typography>
 
               <Box display="flex" justifyContent="center" alignItems="center">
@@ -132,8 +134,7 @@ const Login = () => {
                   variant="contained"
                   startIcon={spidIcon()}
                 >
-                  {' '}
-                  Entra con SPID
+                  {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
 
@@ -149,8 +150,7 @@ const Login = () => {
                   startIcon={cieIcon()}
                   onClick={() => goCIE()}
                 >
-                  {' '}
-                  Entra con CIE
+                  {t('loginPage.loginBox.cieLogin')}
                 </Button>
               </Box>
 
@@ -169,8 +169,10 @@ const Login = () => {
                 }}
                 component="div"
               >
-                Non hai SPID?
-                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+                <Trans i18nKey="hintText">
+                  Non hai SPID?
+                  <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+                </Trans>
               </Typography>
             </Paper>
           </Grid>
@@ -188,29 +190,31 @@ const Login = () => {
               component="div"
               variant="body2"
             >
-              Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link
-                sx={{ cursor: 'pointer' }}
-                onClick={() => {
-                  trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-                    window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
-                  );
-                }}
-              >
-                {'Informativa Privacy'}
-              </Link>
-              {' e i '}
-              <Link
-                sx={{ cursor: 'pointer' }}
-                onClick={() => {
-                  trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-                    window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
-                  );
-                }}
-              >
-                {'Termini e condizioni d’uso'}
-              </Link>
-              {' del Portale Self Care'}
+              <Trans i18nKey="privacyAndCondition" shouldUnescape>
+                Autenticandoti dichiari di aver letto e compreso l&apos;
+                <Link
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+                      window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
+                    );
+                  }}
+                >
+                  {'Informativa Privacy'}
+                </Link>
+                {' e i '}
+                <Link
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
+                      window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
+                    );
+                  }}
+                >
+                  {'Termini e condizioni d’uso'}
+                </Link>
+                {' del Portale Self Care'}
+              </Trans>
             </Typography>
           </Grid>
         </Grid>

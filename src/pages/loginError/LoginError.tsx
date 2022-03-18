@@ -1,5 +1,6 @@
 import { Dialog, Box, Typography } from '@mui/material';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
 
@@ -10,17 +11,19 @@ const handleError = (queryParams: string) => {
 };
 
 const LoginError = () => {
+  const { t } = useTranslation();
   setTimeout(() => redirectToLogin(), 3000);
 
-  const title = 'Spiacenti, qualcosa è andato storto.';
+  const title = t('loginError.title');
   const message = (
     <>
-      A causa di un errore del sistema non è possibile completare la procedura.
-      <br />
-      Ti chiediamo di riprovare più tardi.
+      <Trans i18nKey="message">
+        A causa di un errore del sistema non è possibile completare la procedura.
+        <br />
+        Ti chiediamo di riprovare più tardi.
+      </Trans>
     </>
   );
-
   handleError(window.location.search);
 
   return (

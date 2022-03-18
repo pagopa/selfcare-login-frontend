@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
 import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
@@ -14,6 +15,7 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
+  const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
     trackEvent(
@@ -65,7 +67,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               component="div"
             >
-              Scegli il tuo SPID
+              {t('spidSelect.title')}
             </Typography>
           </Grid>
           <Grid item>
@@ -99,7 +101,10 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               component="div"
             >
-              Non hai SPID? <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+              <Trans i18nKey="hintText">
+                Non hai SPID?
+                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+              </Trans>
             </Typography>
             <Button
               type="submit"
@@ -111,7 +116,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               onClick={onBack}
             >
-              Annulla
+              {t('spidSelect.cancelButton')}
             </Button>
           </Grid>
         </Grid>
