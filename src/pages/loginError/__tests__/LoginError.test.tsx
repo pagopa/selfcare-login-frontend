@@ -2,6 +2,7 @@ import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import LoginError from '../LoginError';
 import { ROUTE_LOGIN } from '../../../utils/constants';
+import './../../../locale';
 
 const oldWindowLocation = global.window.location;
 
