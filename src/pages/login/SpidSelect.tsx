@@ -5,18 +5,33 @@ import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-
 import Button from '@mui/material/Button';
-import { IDPS } from '../../utils/IDPS';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
+import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
-import { URL_API_LOGIN, URL_FE_LANDING, ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { ENV } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { storageSpidSelectedOps } from '../../utils/storage';
 
 const Login = ({ onBack }: { onBack: () => void }) => {
-  const getSPID = (entityID: string) => {
-    window.location.assign(`${URL_API_LOGIN}/login?entityID=${entityID}&authLevel=SpidL2`);
+  const { t } = useTranslation();
+  const getSPID = (IDP: IdentityProvider) => {
+    storageSpidSelectedOps.write(IDP.entityId);
+    trackEvent(
+      'LOGIN_IDP_SELECTED',
+      {
+        SPID_IDP_NAME: IDP.name,
+        SPID_IDP_ID: IDP.entityId,
+      },
+      () =>
+        window.location.assign(
+          `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`
+        )
+    );
   };
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_FE_LANDING}`);
+    window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
 
   return (
@@ -26,7 +41,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           <Grid item xs={1}>
             <img src={SpidBig} />
           </Grid>
-          <Grid item xs={1} sx={{ textAlign: 'end' }}>
+          <Grid item xs={1} sx={{ textAlign: 'right' }}>
             {ENABLE_LANDING_REDIRECT && (
               <IconButton
                 color="primary"
@@ -52,16 +67,22 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               component="div"
             >
-              Scegli il tuo SPID
+              {t('spidSelect.title')}
             </Typography>
           </Grid>
           <Grid item>
             <Grid container direction="row" justifyItems="center" spacing={2}>
-              {IDPS.identityProviders.map((IP, i) => (
-                <Grid item key={IP.entityId} xs={6} textAlign={i % 2 === 0 ? 'end' : 'start'}>
-                  <Button onClick={() => getSPID(IP.entityId)}>
+              {IDPS.identityProviders.map((IDP, i) => (
+                <Grid
+                  item
+                  key={IDP.entityId}
+                  xs={6}
+                  textAlign={i % 2 === 0 ? 'right' : 'left'}
+                  sx={{ minWidth: '100px' }}
+                >
+                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }}>
                     <Icon sx={{ width: '100px', height: '48px' }}>
-                      <img width="100px" src={IP.imageUrl} alt={IP.name} />
+                      <img width="100px" src={IDP.imageUrl} alt={IDP.name} />
                     </Icon>
                   </Button>
                 </Grid>
@@ -80,7 +101,10 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               component="div"
             >
-              Non hai SPID? <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+              <Trans i18nKey="hintText">
+                Non hai SPID?
+                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+              </Trans>
             </Typography>
             <Button
               type="submit"
@@ -92,7 +116,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               }}
               onClick={onBack}
             >
-              Annulla
+              {t('spidSelect.cancelButton')}
             </Button>
           </Grid>
         </Grid>

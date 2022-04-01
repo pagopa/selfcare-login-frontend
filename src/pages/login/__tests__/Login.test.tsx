@@ -2,7 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
 import Login from '../Login';
-import { URL_API_LOGIN } from '../../../utils/constants';
+import { ENV } from '../../../utils/env';
+import './../../../locale';
 
 const oldWindowLocation = global.window.location;
 
@@ -24,15 +25,6 @@ test('rendering test', () => {
   );
 });
 
-test('renders react link Informativa sulla Privacy', () => {
-  render(<Login />);
-  const LinkName = screen.getByText(/Informativa Privacy/i);
-  expect(LinkName).toHaveAttribute(
-    'href',
-    'https://dev.selfcare.pagopa.it/assets/privacy-disclaimer.pdf'
-  );
-});
-
 test('renders button Entra con Spid', () => {
   const login = render(<Login />);
   const ButtonSpid = screen.getByText(/Entra con SPID/i);
@@ -48,6 +40,6 @@ test('renders button Entra con CIE', () => {
 
   fireEvent.click(ButtonCIE);
   expect(global.window.location.assign).toBeCalledWith(
-    `${URL_API_LOGIN}/login?entityID=xx_servizicie_test`
+    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test`
   );
 });

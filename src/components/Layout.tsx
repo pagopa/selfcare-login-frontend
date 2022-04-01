@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
-import Footer from './footer/Footer';
-import Header from './header/Header';
+import { Footer, Header } from '@pagopa/selfcare-common-frontend';
+import { ENV } from '../utils/env';
 
 type Props = {
   children: any;
@@ -17,7 +17,7 @@ const Layout = ({ children }: Props) => (
     <Header withSecondHeader={false} onExitAction={null} />
     {children}
     <Box mt={16}>
-      <Footer />
+      <Footer assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined} />
     </Box>
   </Box>
 );

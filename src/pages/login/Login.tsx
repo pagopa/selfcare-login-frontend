@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Link from '@mui/material/Link';
@@ -8,22 +7,17 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-
-import 'typeface-titillium-web';
-
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import {
-  SPID_CIE_ENTITY_ID,
-  URL_API_LOGIN,
-  URL_FE_LANDING,
-  ENABLE_LANDING_REDIRECT,
-} from '../../utils/constants';
+import { ENV } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -41,15 +35,23 @@ export const cieIcon = () => (
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
+  const { t } = useTranslation();
+
   const goCIE = () => {
-    window.location.assign(`${URL_API_LOGIN}/login?entityID=${SPID_CIE_ENTITY_ID}`);
+    storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+    trackEvent(
+      'LOGIN_IDP_SELECTED',
+      {
+        SPID_IDP_NAME: 'CIE',
+        SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
+      },
+      () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`)
+    );
   };
 
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_FE_LANDING}`);
+    window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
-
-  useEffect(() => {}, []);
 
   if (showIDPS) {
     return <SpidSelect onBack={() => setShowIDPS(false)} />;
@@ -84,7 +86,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Accedi con SPID o CIE
+              {t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
@@ -98,8 +100,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Seleziona la modalità di autenticazione che preferisci e inizia il processo di
-              adesione
+              {t('loginPage.description')}
             </Typography>
           </Grid>
         </Grid>
@@ -118,7 +119,7 @@ const Login = () => {
                 }}
                 component="div"
               >
-                Login
+                {t('loginPage.loginBox.title')}
               </Typography>
 
               <Box display="flex" justifyContent="center" alignItems="center">
@@ -133,8 +134,7 @@ const Login = () => {
                   variant="contained"
                   startIcon={spidIcon()}
                 >
-                  {' '}
-                  Entra con SPID
+                  {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
 
@@ -150,8 +150,7 @@ const Login = () => {
                   startIcon={cieIcon()}
                   onClick={() => goCIE()}
                 >
-                  {' '}
-                  Entra con CIE
+                  {t('loginPage.loginBox.cieLogin')}
                 </Button>
               </Box>
 
@@ -170,8 +169,10 @@ const Login = () => {
                 }}
                 component="div"
               >
-                Non hai SPID?
-                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+                <Trans i18nKey="hintText">
+                  Non hai SPID?
+                  <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+                </Trans>
               </Typography>
             </Paper>
           </Grid>
@@ -189,15 +190,31 @@ const Login = () => {
               component="div"
               variant="body2"
             >
-              Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href={process.env.REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}>
-                {'Informativa Privacy'}
-              </Link>
-              {' e i '}
-              <Link href={process.env.REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}>
-                {'Termini e condizioni d’uso'}
-              </Link>
-              {' del Portale Self Care'}
+              <Trans i18nKey="privacyAndCondition" shouldUnescape>
+                Autenticandoti dichiari di aver letto e compreso l&apos;
+                <Link
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+                      window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
+                    );
+                  }}
+                >
+                  {'Informativa Privacy'}
+                </Link>
+                {' e i '}
+                <Link
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
+                      window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
+                    );
+                  }}
+                >
+                  {'Termini e condizioni d’uso'}
+                </Link>
+                {' del Portale Self Care'}
+              </Trans>
             </Typography>
           </Grid>
         </Grid>
