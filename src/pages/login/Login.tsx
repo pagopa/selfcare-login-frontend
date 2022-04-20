@@ -134,6 +134,7 @@ const Login = () => {
 
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
+                  id="spidButton"
                   sx={{
                     borderRadius: '4px',
                     width: '90%',
