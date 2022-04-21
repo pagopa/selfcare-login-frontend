@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Link from '@mui/material/Link';
@@ -8,22 +7,16 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
 import Divider from '@mui/material/Divider';
-import Paper from '@mui/material/Paper';
-
-import 'typeface-titillium-web';
-
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import {
-  SPID_CIE_ENTITY_ID,
-  URL_API_LOGIN,
-  URL_FE_LANDING,
-  ENABLE_LANDING_REDIRECT,
-} from '../../utils/constants';
+import { ENV } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -41,20 +34,32 @@ export const cieIcon = () => (
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
 
+  const { t } = useTranslation();
+
   const goCIE = () => {
-    window.location.assign(`${URL_API_LOGIN}/login?entityID=${SPID_CIE_ENTITY_ID}`);
+    storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+    trackEvent(
+      'LOGIN_IDP_SELECTED',
+      {
+        SPID_IDP_NAME: 'CIE',
+        SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
+      },
+      () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`)
+    );
   };
 
   const goBackToLandingPage = () => {
-    window.location.assign(`${URL_FE_LANDING}`);
+    window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
-
-  useEffect(() => {}, []);
 
   if (showIDPS) {
     return <SpidSelect onBack={() => setShowIDPS(false)} />;
   }
 
+  const redirectPrivacyLink = () =>
+    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+      window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
+    );
   return (
     <Layout>
       <Grid container direction="column" my={'auto'}>
@@ -84,7 +89,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Accedi con SPID o CIE
+              {t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
@@ -98,34 +103,41 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              Seleziona la modalità di autenticazione che preferisci e inizia il processo di
-              adesione
+              {t('loginPage.description')}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid container item justifyContent="center">
           <Grid item xs={6} md={5} lg={4} xl={3}>
-            <Paper elevation={1}>
+            <Box
+              sx={{
+                boxShadow:
+                  '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
+                borderRadius: '16px',
+                p: 1,
+              }}
+            >
               <Typography
-                py={5}
+                py={4}
                 px={0}
                 color="textPrimary"
-                variant="h5"
+                variant="h4"
                 sx={{
                   fontWeight: 'bold',
                   textAlign: 'center',
                 }}
                 component="div"
               >
-                Login
+                {t('loginPage.loginBox.title')}
               </Typography>
 
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
+                  id="spidButton"
                   sx={{
                     borderRadius: '4px',
-                    width: '70%',
+                    width: '90%',
                     height: '50px',
                     marginBottom: 1,
                   }}
@@ -133,8 +145,7 @@ const Login = () => {
                   variant="contained"
                   startIcon={spidIcon()}
                 >
-                  {' '}
-                  Entra con SPID
+                  {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
 
@@ -142,7 +153,7 @@ const Login = () => {
                 <Button
                   sx={{
                     borderRadius: '4px',
-                    width: '70%',
+                    width: '90%',
                     height: '50px',
                     marginTop: 1,
                   }}
@@ -150,8 +161,7 @@ const Login = () => {
                   startIcon={cieIcon()}
                   onClick={() => goCIE()}
                 >
-                  {' '}
-                  Entra con CIE
+                  {t('loginPage.loginBox.cieLogin')}
                 </Button>
               </Box>
 
@@ -163,19 +173,23 @@ const Login = () => {
                 py={3}
                 px={0}
                 color="textPrimary"
-                variant="body2"
+                variant="body1"
                 sx={{
-                  fontSize: '14px',
                   textAlign: 'center',
                 }}
                 component="div"
               >
-                Non hai SPID?
-                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
+                <Trans i18nKey="loginPage.hintText">
+                  Non hai SPID?
+                  <Link href={IDPS.richiediSpid} color="#0062C3 !important">
+                    Scopri di più
+                  </Link>
+                </Trans>
               </Typography>
-            </Paper>
+            </Box>
           </Grid>
         </Grid>
+
         <Grid container item justifyContent="center">
           <Grid item xs={6}>
             <Typography
@@ -183,21 +197,39 @@ const Login = () => {
               py={3}
               px={0}
               sx={{
-                fontSize: '14px',
                 textAlign: 'center',
               }}
               component="div"
-              variant="body2"
+              variant="body1"
             >
-              Autenticandoti dichiari di aver letto e compreso l&apos;
-              <Link href={process.env.REACT_APP_URL_FILE_PRIVACY_DISCLAIMER}>
-                {'Informativa Privacy'}
-              </Link>
-              {' e i '}
-              <Link href={process.env.REACT_APP_URL_FILE_TERMS_AND_CONDITIONS}>
-                {'Termini e condizioni d’uso'}
-              </Link>
-              {' del Portale Self Care'}
+              <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
+                Autenticandoti dichiari di aver letto e compreso l&apos;
+                <Link
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  onClick={redirectPrivacyLink}
+                >
+                  Informativa
+                </Link>
+                <br />
+                <Link
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  onClick={redirectPrivacyLink}
+                >
+                  Privacy
+                </Link>
+                {' e i '}
+                <Link
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  onClick={() => {
+                    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
+                      window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
+                    );
+                  }}
+                >
+                  {'Termini e condizioni d’uso'}
+                </Link>
+                {" dell'Area Riservata."}
+              </Trans>
             </Typography>
           </Grid>
         </Grid>

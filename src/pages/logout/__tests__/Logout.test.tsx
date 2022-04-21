@@ -1,13 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Logout from '../Logout';
-import { storageRead, storageWrite } from '../../../lib/storage-utils';
-import {
-  ROUTE_LOGIN,
-  STORAGE_KEY_ON_SUCCESS,
-  STORAGE_KEY_TOKEN,
-  STORAGE_KEY_USER,
-} from '../../../utils/constants';
+import { ROUTE_LOGIN } from '../../../utils/constants';
+import { storageOnSuccessOps } from '../../../utils/storage';
+import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
 
 const oldWindowLocation = global.window.location;
 
@@ -19,15 +15,21 @@ afterAll(() => {
 });
 
 test('test logout', () => {
-  storageWrite(STORAGE_KEY_ON_SUCCESS, 'ON_SUCCESS', 'string');
-  storageWrite(STORAGE_KEY_TOKEN, 'TOKEN', 'string');
-  storageWrite(STORAGE_KEY_USER, 'USER', 'string');
+  storageOnSuccessOps.write('ON_SUCCESS');
+  storageTokenOps.write('TOKEN');
+  storageUserOps.write({
+    uid: 'UID',
+    name: 'NAME',
+    surname: 'SURNAME',
+    email: 'EMAIL',
+    taxCode: 'TAXCODE',
+  });
 
   render(<Logout />);
 
-  expect(storageRead(STORAGE_KEY_ON_SUCCESS, 'string')).toBeUndefined();
-  expect(storageRead(STORAGE_KEY_TOKEN, 'string')).toBeUndefined();
-  expect(storageRead(STORAGE_KEY_USER, 'string')).toBeUndefined();
+  expect(storageOnSuccessOps.read()).toBeUndefined();
+  expect(storageTokenOps.read()).toBeUndefined();
+  expect(storageUserOps.read()).toBeUndefined();
 
   expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
 });

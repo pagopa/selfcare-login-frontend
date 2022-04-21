@@ -1,6 +1,12 @@
-import { SPID_TEST_ENV_ENABLED } from './constants';
+import { ENV } from './env';
+export type IdentityProvider= { 
+  identifier: string;
+  entityId: string;
+  name: string;
+  imageUrl:string;
+};
 
-const IDPS = {
+const IDPS: {identityProviders: Array<IdentityProvider>; richiediSpid:string} = {
   identityProviders: [
     {
       identifier: 'Aruba',
@@ -54,7 +60,7 @@ const IDPS = {
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };
 
-if (SPID_TEST_ENV_ENABLED) {
+if (ENV.SPID_TEST_ENV_ENABLED) {
   // eslint-disable-next-line functional/immutable-data
   IDPS.identityProviders.push({
     identifier: 'test',

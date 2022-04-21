@@ -1,15 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import LoginSuccess from '../LoginSuccess';
-import { storageRead, storageWrite } from '../../../lib/storage-utils';
-import {
-  ROUTE_LOGIN,
-  STORAGE_KEY_ON_SUCCESS,
-  STORAGE_KEY_TOKEN,
-  STORAGE_KEY_USER,
-  URL_FE_DASHBOARD,
-} from '../../../utils/constants';
+import { ENV } from '../../../utils/env';
+import { ROUTE_LOGIN } from '../../../utils/constants';
 import { User } from '../../../models/User';
+import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { storageOnSuccessOps } from '../../../utils/storage';
 
 const token =
   'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1cmlvdml0YWxlQG1hcnRpbm8uaXQiLCJmYW1pbHlfbmFtZSI6IlNhcnRvcmkiLCJmaXNjYWxfbnVtYmVyIjoiU1JUTkxNMDlUMDZHNjM1UyIsIm5hbWUiOiJBbnNlbG1vIiwiZnJvbV9hYSI6ZmFsc2UsImxldmVsIjoiTDIiLCJpYXQiOjE2MzUzNjI4MTUsImV4cCI6MTYzNTM2NjQxNSwiaXNzIjoiU1BJRCIsImp0aSI6IjAxRksxS0dGVFhGNk1IMzBLUjJFMUZFQ0hEIiwidWlkIjoiMCJ9.dJyfFPobeK7OfH43JWuhWbVxr1ukOMVsg49G2b3aV_DqMER-gn3M-0FgeqeK4ZaCHqgkQMR37N_DGWNXRSOPCuOoTTpbFBGhSp-vxDCdVJgCgvRLzX0QawlvEthigNsFVSlw0_psXe4OcQpoVWWFdetRQmY_hWa-cT2Ulefb7YVXa6WBNrVZP8Yq5M19G3y7vBs-IKHKjdRoKAvr3m0PkGTRFIVbcoQzvmbo7QpWMKOYcDUf3zapESp07EQgWx4TjpOZjETz-zdQbH-fuN0IR_aiSIISNw4H2sTT5WPtkkeEKU5RSVSkacQsXpCQm_bNEqkGHhKpFMYeIM1s0q1Siw';
@@ -27,9 +23,9 @@ afterAll(() => {
 test('test login success', () => {
   render(<LoginSuccess />);
 
-  expect(storageRead(STORAGE_KEY_TOKEN, 'string')).toBe(token);
+  expect(storageTokenOps.read()).toBe(token);
 
-  const user: User = storageRead(STORAGE_KEY_USER, 'object');
+  const user: User = storageUserOps.read();
   expect(user).not.toBeNull();
   expect(user.uid).toBe('0');
   expect(user.taxCode).toBe('SRTNLM09T06G635S');
@@ -37,7 +33,7 @@ test('test login success', () => {
   expect(user.surname).toBe('Sartori');
   expect(user.email).toBe('furiovitale@martino.it');
 
-  expect(global.window.location.assign).toBeCalledWith(URL_FE_DASHBOARD);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
 
 test('test login success when redirect registered', () => {
@@ -49,7 +45,7 @@ test('test login success when redirect registered', () => {
 
 test('test login success when invalid redirect', () => {
   const requestedPath = 'prova?';
-  testSuccessRedirect(requestedPath, true, URL_FE_DASHBOARD);
+  testSuccessRedirect(requestedPath, true, ENV.URL_FE.DASHBOARD);
 });
 
 test('test login success no token', () => {
@@ -63,11 +59,11 @@ function testSuccessRedirect(
   expectOnSuccessDelete: boolean,
   expectedPathRedirect: string
 ) {
-  storageWrite(STORAGE_KEY_ON_SUCCESS, requestedPath, 'string');
+  storageOnSuccessOps.write(requestedPath);
 
   render(<LoginSuccess />);
 
   expect(global.window.location.assign).toBeCalledWith(expectedPathRedirect);
-  if (expectOnSuccessDelete) expect(storageRead(STORAGE_KEY_ON_SUCCESS, 'string')).toBeUndefined();
-  else expect(storageRead(STORAGE_KEY_ON_SUCCESS, 'string')).toBe(requestedPath);
+  if (expectOnSuccessDelete) expect(storageOnSuccessOps.read()).toBeUndefined();
+  else expect(storageOnSuccessOps.read()).toBe(requestedPath);
 }
