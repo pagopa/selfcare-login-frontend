@@ -27,7 +27,7 @@ test('rendering test', () => {
 
 test('renders button Entra con Spid', () => {
   const login = render(<Login />);
-  const ButtonSpid = screen.getByText(/Entra con SPID/i);
+  const ButtonSpid = document.getElementById('spidButton');
   fireEvent.click(ButtonSpid);
   expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
