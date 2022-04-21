@@ -1,11 +1,11 @@
-import { storageDelete } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
-import { STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN, STORAGE_KEY_USER } from '../../utils/constants';
+import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { storageOnSuccessOps } from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
 
 const Logout = () => {
-  storageDelete(STORAGE_KEY_ON_SUCCESS);
-  storageDelete(STORAGE_KEY_TOKEN);
-  storageDelete(STORAGE_KEY_USER);
+  storageOnSuccessOps.delete();
+  storageTokenOps.delete();
+  storageUserOps.delete();
   redirectToLogin();
 
   return <div />;

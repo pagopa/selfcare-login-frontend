@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { storageRead, storageWrite } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
-import { ROUTE_LOGIN, STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN } from '../utils/constants';
+import { ROUTE_LOGIN } from '../utils/constants';
+import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { storageOnSuccessOps } from '../utils/storage';
 
 const oldWindowLocation = global.window.location;
 const mockedLocation = {
@@ -50,7 +51,7 @@ test('test Logout', () => {
 
 test('test Logout even if in session', () => {
   mockedLocation.pathname = '/logout';
-  storageWrite(STORAGE_KEY_TOKEN, 'token', 'string');
+  storageTokenOps.write('token');
   render(<App />);
   screen.getByText('LOGOUT');
   checkRedirect(false);
@@ -60,7 +61,7 @@ test('test Login', () => {
   mockedLocation.pathname = '/login';
   render(<App />);
   screen.getByText('LOGIN');
-  expect(storageRead(STORAGE_KEY_ON_SUCCESS, 'string')).toBeUndefined();
+  expect(storageOnSuccessOps.read()).toBeUndefined();
   checkRedirect(false);
 });
 
@@ -69,13 +70,13 @@ test('test Login with onSuccess', () => {
   mockedLocation.search = 'onSuccess=prova';
   render(<App />);
   screen.getByText('LOGIN');
-  expect(storageRead(STORAGE_KEY_ON_SUCCESS, 'string')).toBe('prova');
+  expect(storageOnSuccessOps.read()).toBe('prova');
   checkRedirect(false);
 });
 
 test('test ValidateSession', () => {
   mockedLocation.pathname = '/login';
-  storageWrite(STORAGE_KEY_TOKEN, 'testToken', 'string');
+  storageTokenOps.write('testToken');
   render(<App />);
   screen.getByText('VALIDATE_SESSION:testToken');
   checkRedirect(false);

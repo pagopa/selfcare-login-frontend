@@ -1,28 +1,25 @@
-import {
-  storageDelete,
-  storageRead,
-  storageWrite,
-} from '@pagopa/selfcare-common-frontend/utils/storage-utils';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
-import { STORAGE_KEY_ON_SUCCESS, STORAGE_KEY_TOKEN, STORAGE_KEY_USER } from '../../utils/constants';
 import { redirectToLogin } from '../../utils/utils';
+import { storageOnSuccessOps, storageSpidSelectedOps } from '../../utils/storage';
 
 export const readUserFromToken = (token: string) => {
   const user: User = userFromJwtToken(token);
   if (user) {
-    storageWrite(STORAGE_KEY_USER, user, 'object');
+    storageUserOps.write(user);
   }
 };
 
 const validOnSuccessPattern = new RegExp('^[\\w/-]+$');
 export const redirectSuccessLogin = () => {
-  const onSuccess: string | null = storageRead(STORAGE_KEY_ON_SUCCESS, 'string');
+  const onSuccess: string | null = storageOnSuccessOps.read();
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
-  storageDelete(STORAGE_KEY_ON_SUCCESS);
+  storageOnSuccessOps.delete();
   window.location.assign(redirectTo);
 };
 
@@ -32,7 +29,9 @@ const LoginSuccess = () => {
   const urlToken = hash.replace('#token=', '');
 
   if (urlToken !== '' && urlToken !== undefined) {
-    storageWrite(STORAGE_KEY_TOKEN, urlToken, 'string');
+    const spidId = storageSpidSelectedOps.read();
+    trackEvent('LOGIN_SUCCESS', { idp: spidId });
+    storageTokenOps.write(urlToken);
     readUserFromToken(urlToken);
     redirectSuccessLogin();
   } else {

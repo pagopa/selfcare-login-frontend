@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { width } from '@mui/system';
 import Login from '../Login';
 import { ENV } from '../../../utils/env';
+import './../../../locale';
 
 const oldWindowLocation = global.window.location;
 
@@ -24,15 +25,9 @@ test('rendering test', () => {
   );
 });
 
-test('renders react link Informativa sulla Privacy', () => {
-  render(<Login />);
-  const LinkName = screen.getByText(/Informativa Privacy/i);
-  expect(LinkName).toHaveAttribute('href', 'http://selfcare/assets/privacy-disclaimer.pdf');
-});
-
 test('renders button Entra con Spid', () => {
   const login = render(<Login />);
-  const ButtonSpid = screen.getByText(/Entra con SPID/i);
+  const ButtonSpid = document.getElementById('spidButton');
   fireEvent.click(ButtonSpid);
   expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
