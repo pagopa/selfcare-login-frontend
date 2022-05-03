@@ -40,6 +40,6 @@ test('renders button Entra con CIE', () => {
 
   fireEvent.click(ButtonCIE);
   expect(global.window.location.assign).toBeCalledWith(
-    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test`
+    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
 });
