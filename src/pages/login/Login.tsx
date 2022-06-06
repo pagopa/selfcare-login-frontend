@@ -44,7 +44,10 @@ const Login = () => {
         SPID_IDP_NAME: 'CIE',
         SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
       },
-      () => window.location.assign(`${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}`)
+      () =>
+        window.location.assign(
+          `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
+        )
     );
   };
 
