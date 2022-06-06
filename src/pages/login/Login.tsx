@@ -16,7 +16,8 @@ import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
-import { storageSpidSelectedOps } from '../../utils/storage';
+// commented following SELC-1165
+// import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -36,20 +37,21 @@ const Login = () => {
 
   const { t } = useTranslation();
 
-  const goCIE = () => {
-    storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
-    trackEvent(
-      'LOGIN_IDP_SELECTED',
-      {
-        SPID_IDP_NAME: 'CIE',
-        SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
-      },
-      () =>
-        window.location.assign(
-          `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
-        )
-    );
-  };
+  // commented following SELC-1165
+  // const goCIE = () => {
+  //   storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+  //   trackEvent(
+  //     'LOGIN_IDP_SELECTED',
+  //     {
+  //       SPID_IDP_NAME: 'CIE',
+  //       SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
+  //     },
+  //     () =>
+  //       window.location.assign(
+  //         `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
+  //       )
+  //   );
+  // };
 
   const goBackToLandingPage = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
@@ -151,7 +153,8 @@ const Login = () => {
                   {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
-
+              {/* 
+              // commented following SELC-1165
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   sx={{
@@ -166,7 +169,7 @@ const Login = () => {
                 >
                   {t('loginPage.loginBox.cieLogin')}
                 </Button>
-              </Box>
+              </Box> */}
 
               <Box mt={4}>
                 <Divider variant="middle" />
