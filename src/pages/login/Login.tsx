@@ -110,6 +110,9 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
+              {/* commented following SELC-1165 */}
+              {/* {t('loginPage.description')} */}
+
               <Trans i18nKey="loginPage.description">
                 Accedi con la tua identità digitale, inserendo le credenziali del
                 <br />
