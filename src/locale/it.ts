@@ -1,7 +1,11 @@
 export default {
   loginPage: {
-    title: 'Entra con SPID o CIE',
-    description: 'Seleziona la modalità di autenticazione che preferisci.',
+    // commented following SELC-1165
+    // title: 'Entra con SPID o CIE',
+    // description: 'Seleziona la modalità di autenticazione che preferisci.',
+    title: 'Entra con SPID',
+    description:
+      'Accedi con la tua identità digitale, inserendo le credenziali del <1/> tuo gestore.',
     loginBox: {
       title: 'Login',
       spidLogin: 'Entra con SPID',
@@ -9,7 +13,7 @@ export default {
     },
     hintText: 'Non hai SPID? <1>Scopri di più</1>',
     privacyAndCondition:
-      "Autenticandoti dichiari di aver letto e compreso l'<1>Informativa</1> <2/> <3>Privacy</3> e i <5>Termini e condizioni d’uso</5> dell'Area Riservata.",
+      "Autenticandoti dichiari di aver letto e accettato l'<1>Informativa</1> <2/> <3>Privacy</3> e i <5>Termini e condizioni d’uso</5>",
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
