@@ -7,7 +7,8 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+// commented following SELC-1165
+// import Divider from '@mui/material/Divider';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
@@ -92,6 +93,7 @@ const Login = () => {
               color="textPrimary"
               sx={{
                 textAlign: 'center',
+                fontSize: '38px',
               }}
             >
               {t('loginPage.title')}
@@ -101,14 +103,18 @@ const Login = () => {
         <Grid container item justifyContent="center">
           <Grid item xs={6}>
             <Typography
-              variant="body2"
+              variant="body1"
               mb={7}
               color="textPrimary"
               sx={{
                 textAlign: 'center',
               }}
             >
-              {t('loginPage.description')}
+              <Trans i18nKey="loginPage.description">
+                Accedi con la tua identità digitale, inserendo le credenziali del
+                <br />
+                tuo gestore.
+              </Trans>
             </Typography>
           </Grid>
         </Grid>
@@ -123,7 +129,8 @@ const Login = () => {
                 p: 1,
               }}
             >
-              <Typography
+              {/* commented following SELC-1165 */}
+              {/* <Typography
                 py={4}
                 px={0}
                 color="textPrimary"
@@ -135,9 +142,9 @@ const Login = () => {
                 component="div"
               >
                 {t('loginPage.loginBox.title')}
-              </Typography>
+              </Typography> */}
 
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <Box display="flex" justifyContent="center" alignItems="center" mt={4}>
                 <Button
                   id="spidButton"
                   sx={{
@@ -171,17 +178,19 @@ const Login = () => {
                 </Button>
               </Box> */}
 
-              <Box mt={4}>
+              {/* commented following SELC-1165 */}
+              {/* <Box mt={4}>
                 <Divider variant="middle" />
-              </Box>
+              </Box> */}
 
               <Typography
                 py={3}
                 px={0}
-                color="textPrimary"
+                color="#000000"
                 variant="body1"
                 sx={{
                   textAlign: 'center',
+                  fontWeight: '400',
                 }}
                 component="div"
               >
@@ -211,21 +220,21 @@ const Login = () => {
               <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
                 Autenticandoti dichiari di aver letto e compreso l&apos;
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
                   onClick={redirectPrivacyLink}
                 >
                   Informativa
                 </Link>
                 <br />
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
                   onClick={redirectPrivacyLink}
                 >
                   Privacy
                 </Link>
                 {' e i '}
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important' }}
+                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
                   onClick={() => {
                     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
                       window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
