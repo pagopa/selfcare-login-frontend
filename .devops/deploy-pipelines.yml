@@ -31,6 +31,9 @@ variables:
 
     react_app_url_cdn: '$(UAT_REACT_APP_URL_CDN)'
 
+    react_app_url_file_privacy_disclaimer: '$(UAT_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
+    react_app_url_file_terms_and_conditions: '$(UAT_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
+
     react_app_url_fe_onboarding: '$(UAT_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(UAT_REACT_APP_URL_FE_DASHBOARD)'
     react_app_url_fe_landing: '$(UAT_REACT_APP_URL_FE_LANDING)'
@@ -58,6 +61,9 @@ variables:
     storage_account: '$(PROD_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(PROD_REACT_APP_URL_CDN)'
+
+    react_app_url_file_privacy_disclaimer: '$(PROD_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
+    react_app_url_file_terms_and_conditions: '$(PROD_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
 
     react_app_url_fe_onboarding: '$(PROD_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(PROD_REACT_APP_URL_FE_DASHBOARD)'
@@ -88,6 +94,9 @@ variables:
     storage_account: '$(DEV_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(DEV_REACT_APP_URL_CDN)'
+
+    react_app_url_file_privacy_disclaimer: '$(DEV_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
+    react_app_url_file_terms_and_conditions: '$(DEV_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
 
     react_app_url_fe_onboarding: '$(DEV_REACT_APP_URL_FE_ONBOARDING)'
     react_app_url_fe_dashboard: '$(DEV_REACT_APP_URL_FE_DASHBOARD)'
@@ -195,8 +204,8 @@ stages:
 
               REACT_APP_URL_API_LOGIN: '$(react_app_url_api_login)'
 
-              REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_cdn)/assets/privacy-disclaimer.pdf'
-              REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_cdn)/assets/terms-conditions.pdf'
+              REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_file_privacy_disclaimer)'
+              REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_file_terms_and_conditions)'
 
               REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
               REACT_APP_PAGOPA_HELP_EMAIL: '$(react_app_pagopa_help_email)'
