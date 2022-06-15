@@ -204,8 +204,8 @@ stages:
 
               REACT_APP_URL_API_LOGIN: '$(react_app_url_api_login)'
 
-              REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_cdn)/assets/privacy-disclaimer.pdf'
-              REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_cdn)/assets/terms-conditions.pdf'
+              REACT_APP_URL_FILE_PRIVACY_DISCLAIMER: '$(react_app_url_file_privacy_disclaimer)'
+              REACT_APP_URL_FILE_TERMS_AND_CONDITIONS: '$(react_app_url_file_terms_and_conditions)'
 
               REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
               REACT_APP_PAGOPA_HELP_EMAIL: '$(react_app_pagopa_help_email)'
