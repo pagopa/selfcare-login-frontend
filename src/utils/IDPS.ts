@@ -62,7 +62,7 @@ const IDPS: { identityProviders: Array<IdentityProvider>; richiediSpid: string }
       name: 'Lepida',
       imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-lepidaid.png',
     },
-  ],
+  ].sort(() => 0.5 - Math.random()),
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };
 
