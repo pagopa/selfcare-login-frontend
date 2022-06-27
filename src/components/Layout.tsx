@@ -14,10 +14,15 @@ const Layout = ({ children }: Props) => (
       minHeight: '100vh',
     }}
   >
-    <Header withSecondHeader={false} onExitAction={null} />
+    <Header
+      withSecondHeader={false}
+      assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
+      enableLogin={false}
+      loggedUser={false}
+    />
     {children}
     <Box mt={16}>
-      <Footer assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined} />
+      <Footer loggedUser={false} />
     </Box>
   </Box>
 );
