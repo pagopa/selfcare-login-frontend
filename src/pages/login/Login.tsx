@@ -74,8 +74,9 @@ const Login = () => {
             {ENABLE_LANDING_REDIRECT && (
               <IconButton
                 color="primary"
-                style={{
+                sx={{
                   maxWidth: '17.42px',
+                  '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
               >
@@ -87,13 +88,12 @@ const Login = () => {
         <Grid container item justifyContent="center">
           <Grid item xs={4}>
             <Typography
-              variant="h2"
+              variant="h3"
               py={1}
               px={0}
               color="textPrimary"
               sx={{
                 textAlign: 'center',
-                fontSize: '38px',
               }}
             >
               {t('loginPage.title')}
@@ -104,7 +104,7 @@ const Login = () => {
           <Grid item xs={6}>
             <Typography
               variant="body1"
-              mb={7}
+              mb={8}
               color="textPrimary"
               sx={{
                 textAlign: 'center',
@@ -147,14 +147,13 @@ const Login = () => {
                 {t('loginPage.loginBox.title')}
               </Typography> */}
 
-              <Box display="flex" justifyContent="center" alignItems="center" mt={4}>
+              <Box display="flex" justifyContent="center" alignItems="center" my={3}>
                 <Button
                   id="spidButton"
                   sx={{
                     borderRadius: '4px',
                     width: '90%',
                     height: '50px',
-                    marginBottom: 1,
                   }}
                   onClick={() => setShowIDPS(true)}
                   variant="contained"
@@ -187,7 +186,7 @@ const Login = () => {
               </Box> */}
 
               <Typography
-                py={3}
+                mb={3}
                 px={0}
                 color="#000000"
                 variant="body1"
@@ -199,7 +198,7 @@ const Login = () => {
               >
                 <Trans i18nKey="loginPage.hintText">
                   Non hai SPID?
-                  <Link href={IDPS.richiediSpid} color="#0062C3 !important">
+                  <Link href={IDPS.richiediSpid} color="primary.dark">
                     Scopri di più
                   </Link>
                 </Trans>
@@ -212,7 +211,7 @@ const Login = () => {
           <Grid item xs={6}>
             <Typography
               color="textPrimary"
-              py={3}
+              mt={8}
               px={0}
               sx={{
                 textAlign: 'center',
@@ -223,21 +222,36 @@ const Login = () => {
               <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
                 Autenticandoti dichiari di aver letto e compreso l&apos;
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none !important',
+                    fontWeight: '400',
+                    color: 'primary.main',
+                  }}
                   onClick={redirectPrivacyLink}
                 >
                   Informativa
                 </Link>
                 <br />
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none !important',
+                    fontWeight: '400',
+                    color: 'primary.main',
+                  }}
                   onClick={redirectPrivacyLink}
                 >
                   Privacy
                 </Link>
                 {' e i '}
                 <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none !important', fontWeight: '400' }}
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none !important',
+                    fontWeight: '400',
+                    color: 'primary.main',
+                  }}
                   onClick={() => {
                     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
                       window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)

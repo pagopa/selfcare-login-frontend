@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@pagopa/selfcare-common-frontend/index.css';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '@pagopa/mui-italia/theme';
+import { theme } from '@pagopa/mui-italia';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
 import App from './App';
 import { ENV } from './utils/env';
