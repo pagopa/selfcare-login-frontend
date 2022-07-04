@@ -37,7 +37,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
   return (
     <Fragment>
       <Grid container direction="column">
-        <Grid container direction="row" justifyContent="space-around" mt={3}>
+        <Grid container direction="row" justifyContent="space-around" mt={3} mb={10}>
           <Grid item xs={1}>
             <img src={SpidBig} />
           </Grid>
@@ -45,8 +45,9 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             {ENABLE_LANDING_REDIRECT && (
               <IconButton
                 color="primary"
-                style={{
+                sx={{
                   maxWidth: '17.42px',
+                  '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
               >
@@ -61,7 +62,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               py={5}
               px={0}
               color="textPrimary"
-              variant="h2"
+              variant="h4"
               sx={{
                 textAlign: 'center',
               }}
