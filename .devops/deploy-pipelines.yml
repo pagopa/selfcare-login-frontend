@@ -75,7 +75,7 @@ variables:
     spid_test_env_enabled: 'false'
     spid_cie_entity_id: 'xx_servizicie'
 
-    react_app_enable_assistance: 'false'
+    react_app_enable_assistance: 'true'
 
     react_app_one_trust_base_url: '$(PROD_REACT_APP_URL_CDN)/ot'
     react_app_analytics_enabled: '$(PROD_ANALYTICS_ENABLED)'
