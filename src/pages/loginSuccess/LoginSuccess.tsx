@@ -30,7 +30,7 @@ const LoginSuccess = () => {
 
   if (urlToken !== '' && urlToken !== undefined) {
     const spidId = storageSpidSelectedOps.read();
-    trackEvent('LOGIN_SUCCESS', { idp: spidId });
+    trackEvent('LOGIN_SUCCESS', { SPID_IDP_ID: spidId });
     storageTokenOps.write(urlToken);
     readUserFromToken(urlToken);
     redirectSuccessLogin();
