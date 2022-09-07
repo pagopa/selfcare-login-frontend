@@ -6,7 +6,7 @@ import { redirectToLogin } from '../../utils/utils';
 
 const handleError = (queryParams: string) => {
   const spidId = storageSpidSelectedOps.read();
-  trackEvent('LOGIN_FAILURE', { reason: queryParams, idp: spidId });
+  trackEvent('LOGIN_FAILURE', { reason: queryParams, SPID_IDP_ID: spidId });
   console.error(`login unsuccessfull! query params obtained from idp: ${queryParams}`);
 };
 
