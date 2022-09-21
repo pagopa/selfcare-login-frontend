@@ -22,7 +22,7 @@ const Layout = ({ children }: Props) => (
     />
     {children}
     <Box mt={16}>
-      <Footer loggedUser={false} />
+      <Footer loggedUser={false} productsJsonUrl={ENV.JSON_URL.PRODUCTS} />
     </Box>
   </Box>
 );
