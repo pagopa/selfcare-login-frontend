@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import Button from '@mui/material/Button';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-// commented following SELC-1165
-// import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
@@ -17,8 +15,7 @@ import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
-// commented following SELC-1165
-// import { storageSpidSelectedOps } from '../../utils/storage';
+import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
 export const spidIcon = () => (
@@ -38,21 +35,20 @@ const Login = () => {
 
   const { t } = useTranslation();
 
-  // commented following SELC-1165
-  // const goCIE = () => {
-  //   storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
-  //   trackEvent(
-  //     'LOGIN_IDP_SELECTED',
-  //     {
-  //       SPID_IDP_NAME: 'CIE',
-  //       SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
-  //     },
-  //     () =>
-  //       window.location.assign(
-  //         `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
-  //       )
-  //   );
-  // };
+  const goCIE = () => {
+    storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+    trackEvent(
+      'LOGIN_IDP_SELECTED',
+      {
+        SPID_IDP_NAME: 'CIE',
+        SPID_IDP_ID: ENV.SPID_CIE_ENTITY_ID,
+      },
+      () =>
+        window.location.assign(
+          `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
+        )
+    );
+  };
 
   const goBackToLandingPage = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
@@ -69,7 +65,7 @@ const Login = () => {
   return (
     <Layout>
       <Grid container direction="column" my={'auto'}>
-        <Grid container direction="row" justifyContent="flex-end" mt={6}>
+        <Grid container direction="row" justifyContent="flex-end" mt={8}>
           <Grid item xs={2}>
             {ENABLE_LANDING_REDIRECT && (
               <IconButton
@@ -79,9 +75,7 @@ const Login = () => {
                   '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
-              >
-                <ClearOutlinedIcon />
-              </IconButton>
+              ></IconButton>
             )}
           </Grid>
         </Grid>
@@ -110,14 +104,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {/* commented following SELC-1165 */}
-              {/* {t('loginPage.description')} */}
-
-              <Trans i18nKey="loginPage.description">
-                Accedi con la tua identità digitale, inserendo le credenziali del
-                <br />
-                tuo gestore.
-              </Trans>
+              {t('loginPage.description')}
             </Typography>
           </Grid>
         </Grid>
@@ -132,22 +119,19 @@ const Login = () => {
                 p: 1,
               }}
             >
-              {/* commented following SELC-1165 */}
-              {/* <Typography
-                py={4}
-                px={0}
+              <Typography
+                p={4}
                 color="textPrimary"
-                variant="h4"
+                variant="h6"
                 sx={{
-                  fontWeight: 'bold',
+                  fontWeight: '600',
                   textAlign: 'center',
                 }}
                 component="div"
               >
                 {t('loginPage.loginBox.title')}
-              </Typography> */}
-
-              <Box display="flex" justifyContent="center" alignItems="center" my={3}>
+              </Typography>
+              <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   id="spidButton"
                   sx={{
@@ -162,15 +146,13 @@ const Login = () => {
                   {t('loginPage.loginBox.spidLogin')}
                 </Button>
               </Box>
-              {/* 
-              // commented following SELC-1165
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   sx={{
                     borderRadius: '4px',
                     width: '90%',
                     height: '50px',
-                    marginTop: 1,
+                    marginTop: 2,
                   }}
                   variant="contained"
                   startIcon={cieIcon()}
@@ -178,15 +160,12 @@ const Login = () => {
                 >
                   {t('loginPage.loginBox.cieLogin')}
                 </Button>
-              </Box> */}
-
-              {/* commented following SELC-1165 */}
-              {/* <Box mt={4}>
+              </Box>
+              <Box mt={4}>
                 <Divider variant="middle" />
-              </Box> */}
-
+              </Box>
               <Typography
-                mb={3}
+                m={4}
                 px={0}
                 color="#000000"
                 variant="body1"
