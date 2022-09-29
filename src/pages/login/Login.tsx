@@ -124,7 +124,7 @@ const Login = () => {
                 color="textPrimary"
                 variant="h6"
                 sx={{
-                  fontWeight: '600',
+                  fontWeight: 'bold',
                   textAlign: 'center',
                 }}
                 component="div"
