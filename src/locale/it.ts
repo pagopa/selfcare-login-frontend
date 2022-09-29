@@ -1,11 +1,7 @@
 export default {
   loginPage: {
-    // commented following SELC-1165
-    // title: 'Entra con SPID o CIE',
-    // description: 'Seleziona la modalità di autenticazione che preferisci.',
-    title: 'Entra con SPID',
-    description:
-      'Accedi con la tua identità digitale, inserendo le credenziali del <1/> tuo gestore.',
+    title: 'Entra con SPID o CIE',
+    description: 'Seleziona la modalità di autenticazione che preferisci.',
     loginBox: {
       title: 'Login',
       spidLogin: 'Entra con SPID',
