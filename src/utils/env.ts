@@ -1,14 +1,24 @@
 import * as env from 'env-var';
 
 const PUBLIC_URL: string = env.get('PUBLIC_URL').default('').asString();
+const currentEnv: string = env.get('REACT_APP_ENV').required().asString();
 
 export const ENV = {
-  ENV: env.get('REACT_APP_ENV').required().asString(),
+  ENV: currentEnv,
   PUBLIC_URL,
 
   ASSISTANCE: {
     ENABLE: env.get('REACT_APP_ENABLE_ASSISTANCE').required().asBool(),
     EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
+  },
+
+  JSON_URL: {
+    PRODUCTS:
+      currentEnv === 'PROD'
+        ? 'https://selfcare.pagopa.it/assets/products.json'
+        : currentEnv === 'UAT'
+        ? 'https://uat.selfcare.pagopa.it/assets/products.json'
+        : 'https://dev.selfcare.pagopa.it/assets/products.json',
   },
 
   URL_FE: {

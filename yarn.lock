@@ -1828,10 +1828,10 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
-"@pagopa/selfcare-common-frontend@^1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.12.1.tgz#5c8fa19b3922d322c26d1068e70437760ca876f0"
-  integrity sha512-5S7DLPbsvkkvCJdKBk2aSr3pVwm0FaYiqz542KQqkt85Y47pNLhlkgvj2BnR134LcB8x3bsylKIA9sVo35wH7Q==
+"@pagopa/selfcare-common-frontend@^1.12.9":
+  version "1.12.9"
+  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.12.9.tgz#f7eb8d4f9be9d987eaad62c027dbfc024339c5ac"
+  integrity sha512-RRikmfTfWwcqSQX5fqwC3w7DKukvqwznzZzg6VsKkW8HDkgDTiCzZIQ/6T2u+19c5JbS5ouCAEUVTkUYzH0OiA==
   dependencies:
     "@emotion/react" "^11.4.1"
     "@emotion/styled" "^11.3.0"
