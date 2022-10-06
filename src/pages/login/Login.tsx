@@ -104,7 +104,10 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {t('loginPage.description')}
+              <Trans i18nKey="loginPage.description">
+                Questo spazio è dedicato agli enti che utilizzano i prodotti di <br />
+                PagoPA.
+              </Trans>
             </Typography>
           </Grid>
         </Grid>
