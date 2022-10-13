@@ -1,7 +1,7 @@
 export default {
   loginPage: {
-    title: 'Entra con SPID o CIE',
-    description: 'Seleziona la modalità di autenticazione che preferisci.',
+    title: 'Entra nell’Area Riservata',
+    description: 'Questo spazio è dedicato agli enti che utilizzano i prodotti di <1 /> PagoPA. ',
     loginBox: {
       title: 'Login',
       spidLogin: 'Entra con SPID',
