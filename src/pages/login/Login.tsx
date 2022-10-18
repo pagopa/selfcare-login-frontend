@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -32,6 +32,17 @@ export const cieIcon = () => (
 
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
+  const [isOnboarding, setISOnboarding] = useState<boolean>();
+
+  useEffect(() => {
+    const onboardingUrl = window.location.search.indexOf('onboarding') > -1;
+
+    if (onboardingUrl) {
+      setISOnboarding(true);
+    } else {
+      setISOnboarding(false);
+    }
+  }, []);
 
   const { t } = useTranslation();
 
@@ -104,7 +115,9 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              <Trans i18nKey="loginPage.description">
+              <Trans
+                i18nKey={isOnboarding ? 'testo da confermare da copy' : 'loginPage.description'}
+              >
                 Questo spazio è dedicato agli enti che utilizzano i prodotti di <br />
                 PagoPA.
               </Trans>
