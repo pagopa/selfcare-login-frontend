@@ -41,8 +41,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           <Grid item xs={1}>
             <img src={SpidBig} />
           </Grid>
-          <Grid item xs={1} sx={{ textAlign: 'right' }}>
-            {ENABLE_LANDING_REDIRECT && (
+          {ENABLE_LANDING_REDIRECT && ( <Grid item xs={1} sx={{ textAlign: 'right' }}>
               <IconButton
                 color="primary"
                 sx={{
@@ -50,11 +49,11 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
+                aria-label={t('spidSelect.closeButton')}
               >
                 <ClearOutlinedIcon />
               </IconButton>
-            )}
-          </Grid>
+          </Grid>)}
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
