@@ -44,7 +44,7 @@ test('test login success when redirect registered', () => {
 });
 
 test('test login success when invalid redirect', () => {
-  const requestedPath = 'prova?';
+  const requestedPath = 'prova%';
   testSuccessRedirect(requestedPath, true, ENV.URL_FE.DASHBOARD);
 });
 
