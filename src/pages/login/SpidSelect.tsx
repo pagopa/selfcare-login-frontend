@@ -4,10 +4,9 @@ import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { Trans, useTranslation } from 'react-i18next';
+import {  useTranslation } from 'react-i18next';
 import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
@@ -71,7 +70,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               {t('spidSelect.title')}
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item pb={5}>
             <Grid container direction="row" justifyItems="center" spacing={2}>
               {IDPS.identityProviders.map((IDP, i) => (
                 <Grid
@@ -91,22 +90,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography
-              py={3}
-              px={0}
-              color="textPrimary"
-              variant="body2"
-              sx={{
-                fontSize: '14px',
-                textAlign: 'center',
-              }}
-              component="div"
-            >
-              <Trans i18nKey="hintText">
-                Non hai SPID?
-                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
-              </Trans>
-            </Typography>
+
             <Button
               type="submit"
               variant="outlined"

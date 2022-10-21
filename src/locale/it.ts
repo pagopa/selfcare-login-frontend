@@ -1,19 +1,20 @@
 export default {
   loginPage: {
-    title: 'Entra nell’Area Riservata',
-    description: 'Questo spazio è dedicato agli enti che utilizzano i prodotti di <1 /> PagoPA. ',
+    title: 'Accedi nell’Area Riservata',
+    description: 'Lo spazio dedicato agli enti che utilizzano i prodotti di PagoPA.',
     loginBox: {
       title: 'Login',
       spidLogin: 'Entra con SPID',
       cieLogin: 'Entra con CIE',
     },
-    hintText: 'Non hai SPID? <1>Scopri di più</1>',
     privacyAndCondition:
       "Autenticandoti dichiari di aver letto e accettato l'<1>Informativa</1> <2/> <3>Privacy</3> e i <5>Termini e condizioni d’uso</5>",
   },
+  loginPageFromOnboarding:{
+    title:'Come vuoi accedere?',
+    description:'Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di adesione al prodotto selezionato.',
+  },
   spidSelect: {
-    title: 'Scegli il tuo SPID',
-    hintText: 'Non hai SPID?<1> Scopri di più</1>',
     cancelButton: 'Annulla',
   },
   loginError: {
