@@ -15,6 +15,7 @@ export default {
     title: 'Scegli il tuo SPID',
     hintText: 'Non hai SPID?<1> Scopri di più</1>',
     cancelButton: 'Annulla',
+    closeButton: 'Esci'
   },
   loginError: {
     title: 'Spiacenti, qualcosa è andato storto.',

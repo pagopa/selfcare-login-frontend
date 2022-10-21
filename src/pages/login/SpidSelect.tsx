@@ -41,8 +41,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
           <Grid item xs={1}>
             <img src={SpidBig} />
           </Grid>
-          <Grid item xs={1} sx={{ textAlign: 'right' }}>
-            {ENABLE_LANDING_REDIRECT && (
+          {ENABLE_LANDING_REDIRECT && ( <Grid item xs={1} sx={{ textAlign: 'right' }}>
               <IconButton
                 color="primary"
                 sx={{
@@ -50,11 +49,11 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
+                aria-label={t('spidSelect.closeButton')}
               >
                 <ClearOutlinedIcon />
               </IconButton>
-            )}
-          </Grid>
+          </Grid>)}
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
@@ -81,7 +80,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   textAlign={i % 2 === 0 ? 'right' : 'left'}
                   sx={{ minWidth: '100px' }}
                 >
-                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }}>
+                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }} aria-label={IDP.name}> 
                     <Icon sx={{ width: '100px', height: '48px' }}>
                       <img width="100px" src={IDP.imageUrl} alt={IDP.name} />
                     </Icon>
