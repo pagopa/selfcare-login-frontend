@@ -32,9 +32,9 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   useEffect(() => {
-    const onboardingUrl = window.location.search.indexOf('onboarding') > -1;
+    const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
 
-    if (onboardingUrl) {
+    if (onboardingUrl && onboardingUrl.includes('onboarding')) {
       setFromOnboarding(true);
     } else {
       setFromOnboarding(false);
