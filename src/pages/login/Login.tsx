@@ -98,7 +98,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {fromOnboarding ? t('loginPageFromOnboarding.title'): t('loginPage.title')}
+              {fromOnboarding ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
@@ -111,18 +111,22 @@ const Login = () => {
               sx={{
                 textAlign: 'center',
               }}
-            >             
-                {fromOnboarding ? <Trans i18nKey="loginPageFromOnboarding.description" >
-                Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di adesione al prodotto selezionato.
-                </Trans> : t('loginPage.description')}
+            >
+              {fromOnboarding ? (
+                <Trans i18nKey="loginPageFromOnboarding.description">
+                  Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
+                  adesione al prodotto selezionato.
+                </Trans>
+              ) : (
+                t('loginPage.description')
+              )}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid container item justifyContent="center">
-          <Grid item xs={6} md={5} lg={4} xl={3} >
+          <Grid item xs={6} md={5} lg={4} xl={3}>
             <Box
-            
               sx={{
                 boxShadow:
                   '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
@@ -130,7 +134,6 @@ const Login = () => {
                 p: 4,
               }}
             >
-           
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   id="spidButton"
@@ -178,31 +181,7 @@ const Login = () => {
               variant="body1"
             >
               <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
-                Autenticandoti dichiari di aver letto e compreso l&apos;
-                <Link
-                  sx={{
-                    cursor: 'pointer',
-                    textDecoration: 'none !important',
-                    fontWeight: '400',
-                    color: 'primary.main',
-                  }}
-                  onClick={redirectPrivacyLink}
-                >
-                  Informativa
-                </Link>
-                <br />
-                <Link
-                  sx={{
-                    cursor: 'pointer',
-                    textDecoration: 'none !important',
-                    fontWeight: '400',
-                    color: 'primary.main',
-                  }}
-                  onClick={redirectPrivacyLink}
-                >
-                  Privacy
-                </Link>
-                {' e i '}
+                Accedendo accetti i
                 <Link
                   sx={{
                     cursor: 'pointer',
@@ -218,7 +197,20 @@ const Login = () => {
                 >
                   {'Termini e condizioni d’uso'}
                 </Link>
-                {" dell'Area Riservata."}
+                del servizio e
+                <br />
+                confermi di avere letto l&apos;
+                <Link
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none !important',
+                    fontWeight: '400',
+                    color: 'primary.main',
+                  }}
+                  onClick={redirectPrivacyLink}
+                >
+                  Informativa Privacy
+                </Link>
               </Trans>
             </Typography>
           </Grid>
