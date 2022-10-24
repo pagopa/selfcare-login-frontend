@@ -15,6 +15,7 @@ export default {
     description:'Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di adesione al prodotto selezionato.',
   },
   spidSelect: {
+    title: 'Scegli il tuo SPID',
     cancelButton: 'Annulla',
     closeButton: 'Esci'
   },
