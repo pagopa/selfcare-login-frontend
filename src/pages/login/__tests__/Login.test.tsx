@@ -15,7 +15,6 @@ const mockedLocation = {
 };
 jest.spyOn(URLSearchParams.prototype, 'get');
 
-
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
@@ -32,7 +31,7 @@ test('rendering test onboarding login', async () => {
   expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
 });
 
-test('renders button Entra con Spid', () => {  
+test('renders button Entra con Spid', () => {
   render(<Login />);
   const ButtonSpid = document.getElementById('spidButton');
   fireEvent.click(ButtonSpid);
@@ -42,7 +41,7 @@ test('renders button Entra con Spid', () => {
 test('renders button Entra con CIE', () => {
   render(<Login />);
   const ButtonCIE = screen.getByRole(/Button/i, {
-    name: 'Entra con CIE',
+    name: 'Accedi con CIE',
   });
 
   fireEvent.click(ButtonCIE);
