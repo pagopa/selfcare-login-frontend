@@ -12,7 +12,7 @@ export default {
   },
   loginPageFromOnboarding:{
     title:'Come vuoi accedere?',
-    description:'Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di adesione al prodotto selezionato.',
+    description: 'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione.',
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
