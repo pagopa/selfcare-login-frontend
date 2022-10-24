@@ -36,8 +36,8 @@ const Login = ({ onBack }: { onBack: () => void }) => {
   return (
     <Fragment>
       <Grid container direction="column">
-        <Grid container direction="row" justifyContent="space-around" mt={3} mb={10}>
-          <Grid item xs={1}>
+        <Grid container direction="row" justifyContent="space-around" mt={3} mb={5}>
+          <Grid item xs={2} display='flex' justifyContent='center'>
             <img src={SpidBig} />
           </Grid>
           {ENABLE_LANDING_REDIRECT && ( <Grid item xs={1} sx={{ textAlign: 'right' }}>
@@ -57,7 +57,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
-              py={5}
+              pb={5}
               px={0}
               color="textPrimary"
               variant="h4"
