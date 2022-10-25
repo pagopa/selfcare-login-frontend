@@ -4,15 +4,15 @@ export default {
     description: 'Lo spazio dedicato agli enti che utilizzano i prodotti di PagoPA.',
     loginBox: {
       title: 'Login',
-      spidLogin: 'Entra con SPID',
-      cieLogin: 'Entra con CIE',
+      spidLogin: 'Accedi con SPID',
+      cieLogin: 'Accedi con CIE',
     },
     privacyAndCondition:
-      "Autenticandoti dichiari di aver letto e accettato l'<1>Informativa</1> <2/> <3>Privacy</3> e i <5>Termini e condizioni d’uso</5>",
+      "Accedendo accetti i <1>Termini e condizioni d’uso</1> del servizio e <3 /> confermi di avere letto <5>l'Informativa Privacy</5>",
   },
   loginPageFromOnboarding:{
     title:'Come vuoi accedere?',
-    description:'Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di adesione al prodotto selezionato.',
+    description: 'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione.',
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
