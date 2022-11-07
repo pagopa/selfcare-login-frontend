@@ -27,7 +27,7 @@ afterAll(() => {
 test('rendering test onboarding login', async () => {
   mockedLocation.search = '?onSuccess=dashboard';
   render(<Login />);
-  await waitFor(() => screen.getByText('Accedi nell’Area Riservata'));
+  await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
   expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
 });
 
