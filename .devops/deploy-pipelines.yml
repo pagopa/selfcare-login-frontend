@@ -179,7 +179,7 @@ stages:
 
   # Prepare Artifact with application bundle
   - stage: Prepare_artifact
-    condition: or(eq(variables['environment'], 'DEV'), succeeded())
+    condition: or(eq(variables['environment'], 'DEV'), eq(variables['environment'], 'UAT'), eq(variables['environment'], 'PROD'))
     jobs:
       - job: 'make_build'
         steps:
@@ -225,7 +225,7 @@ stages:
 
   # Deploy bundle
   - stage: 'Deploy_to_${{ variables.environment }}'
-    condition: or(eq(variables['environment'], 'DEV'), succeeded())
+    condition: or(eq(variables['environment'], 'DEV'), eq(variables['environment'], 'UAT'), eq(variables['environment'], 'PROD'))
     jobs:
       - job: 'Deploy_to_${{ variables.environment }}'
         steps:
