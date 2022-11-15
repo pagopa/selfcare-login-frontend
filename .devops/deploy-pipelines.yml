@@ -27,7 +27,7 @@ variables:
     cdn_endpoint: '$(UAT_CDN_ENDPOINT)'
     cdn_profile: '$(UAT_CDN_PROFILE)'
     resource_group: '$(UAT_RESOURCE_GROUP)'
-    storage_account: '$(UAT_STORAGE_ACCOUNT_NAME)'
+    storage_account: '$(UAT_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(UAT_REACT_APP_URL_CDN)'
 
@@ -58,7 +58,7 @@ variables:
     cdn_endpoint: '$(PROD_CDN_ENDPOINT)'
     cdn_profile: '$(PROD_CDN_PROFILE)'
     resource_group: '$(PROD_RESOURCE_GROUP)'
-    storage_account: '$(PROD_STORAGE_ACCOUNT_NAME)'
+    storage_account: '$(PROD_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(PROD_REACT_APP_URL_CDN)'
 
@@ -179,7 +179,7 @@ stages:
 
   # Prepare Artifact with application bundle
   - stage: Prepare_artifact
-    condition: or(eq(variables['environment'], 'DEV'), eq(variables['environment'], 'UAT'), eq(variables['environment'], 'PROD'))
+    condition: or(eq(variables['environment'], 'DEV'), succeeded())
     jobs:
       - job: 'make_build'
         steps:
@@ -225,7 +225,7 @@ stages:
 
   # Deploy bundle
   - stage: 'Deploy_to_${{ variables.environment }}'
-    condition: or(eq(variables['environment'], 'DEV'), eq(variables['environment'], 'UAT'), eq(variables['environment'], 'PROD'))
+    condition: or(eq(variables['environment'], 'DEV'), succeeded())
     jobs:
       - job: 'Deploy_to_${{ variables.environment }}'
         steps:
