@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -6,11 +6,9 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
-import { IDPS } from '../../utils/IDPS';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
@@ -32,6 +30,16 @@ export const cieIcon = () => (
 
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
+  const [fromOnboarding, setFromOnboarding] = useState<boolean>();
+  useEffect(() => {
+    const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
+
+    if (onboardingUrl && onboardingUrl.includes('onboarding')) {
+      setFromOnboarding(true);
+    } else {
+      setFromOnboarding(false);
+    }
+  }, []);
 
   const { t } = useTranslation();
 
@@ -90,7 +98,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {t('loginPage.title')}
+              {fromOnboarding ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
@@ -98,16 +106,20 @@ const Login = () => {
           <Grid item xs={6}>
             <Typography
               variant="body1"
-              mb={8}
+              mb={5}
               color="textPrimary"
               sx={{
                 textAlign: 'center',
               }}
             >
-              <Trans i18nKey="loginPage.description">
-                Questo spazio è dedicato agli enti che utilizzano i prodotti di <br />
-                PagoPA.
-              </Trans>
+              {fromOnboarding ? (
+                <Trans i18nKey="loginPageFromOnboarding.description">
+                  Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
+                  adesione al prodotto selezionato.
+                </Trans>
+              ) : (
+                t('loginPage.description')
+              )}
             </Typography>
           </Grid>
         </Grid>
@@ -119,27 +131,15 @@ const Login = () => {
                 boxShadow:
                   '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
                 borderRadius: '16px',
-                p: 1,
+                p: 4,
               }}
             >
-              <Typography
-                p={4}
-                color="textPrimary"
-                variant="h6"
-                sx={{
-                  fontWeight: 'fontWeightMedium',
-                  textAlign: 'center',
-                }}
-                component="div"
-              >
-                {t('loginPage.loginBox.title')}
-              </Typography>
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   id="spidButton"
                   sx={{
                     borderRadius: '4px',
-                    width: '90%',
+                    width: '100%',
                     height: '50px',
                   }}
                   onClick={() => setShowIDPS(true)}
@@ -153,7 +153,7 @@ const Login = () => {
                 <Button
                   sx={{
                     borderRadius: '4px',
-                    width: '90%',
+                    width: '100%',
                     height: '50px',
                     marginTop: 2,
                   }}
@@ -164,27 +164,6 @@ const Login = () => {
                   {t('loginPage.loginBox.cieLogin')}
                 </Button>
               </Box>
-              <Box mt={4}>
-                <Divider variant="middle" />
-              </Box>
-              <Typography
-                m={4}
-                px={0}
-                color="#000000"
-                variant="body1"
-                sx={{
-                  textAlign: 'center',
-                  fontWeight: '400',
-                }}
-                component="div"
-              >
-                <Trans i18nKey="loginPage.hintText">
-                  Non hai SPID?
-                  <Link href={IDPS.richiediSpid} color="primary.dark">
-                    Scopri di più
-                  </Link>
-                </Trans>
-              </Typography>
             </Box>
           </Grid>
         </Grid>
@@ -193,7 +172,7 @@ const Login = () => {
           <Grid item xs={6}>
             <Typography
               color="textPrimary"
-              mt={8}
+              mt={5}
               px={0}
               sx={{
                 textAlign: 'center',
@@ -202,31 +181,7 @@ const Login = () => {
               variant="body1"
             >
               <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
-                Autenticandoti dichiari di aver letto e compreso l&apos;
-                <Link
-                  sx={{
-                    cursor: 'pointer',
-                    textDecoration: 'none !important',
-                    fontWeight: '400',
-                    color: 'primary.main',
-                  }}
-                  onClick={redirectPrivacyLink}
-                >
-                  Informativa
-                </Link>
-                <br />
-                <Link
-                  sx={{
-                    cursor: 'pointer',
-                    textDecoration: 'none !important',
-                    fontWeight: '400',
-                    color: 'primary.main',
-                  }}
-                  onClick={redirectPrivacyLink}
-                >
-                  Privacy
-                </Link>
-                {' e i '}
+                Accedendo accetti i
                 <Link
                   sx={{
                     cursor: 'pointer',
@@ -242,7 +197,20 @@ const Login = () => {
                 >
                   {'Termini e condizioni d’uso'}
                 </Link>
-                {" dell'Area Riservata."}
+                del servizio e
+                <br />
+                confermi di avere letto l&apos;
+                <Link
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none !important',
+                    fontWeight: '400',
+                    color: 'primary.main',
+                  }}
+                  onClick={redirectPrivacyLink}
+                >
+                  Informativa Privacy
+                </Link>
               </Trans>
             </Typography>
           </Grid>

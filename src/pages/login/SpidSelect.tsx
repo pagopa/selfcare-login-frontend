@@ -4,10 +4,9 @@ import Icon from '@mui/material/Icon';
 import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { Trans, useTranslation } from 'react-i18next';
+import {  useTranslation } from 'react-i18next';
 import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
@@ -37,12 +36,11 @@ const Login = ({ onBack }: { onBack: () => void }) => {
   return (
     <Fragment>
       <Grid container direction="column">
-        <Grid container direction="row" justifyContent="space-around" mt={3} mb={10}>
-          <Grid item xs={1}>
+        <Grid container direction="row" justifyContent="space-around" mt={3} mb={5}>
+          <Grid item xs={2} display='flex' justifyContent='center'>
             <img src={SpidBig} />
           </Grid>
-          <Grid item xs={1} sx={{ textAlign: 'right' }}>
-            {ENABLE_LANDING_REDIRECT && (
+          {ENABLE_LANDING_REDIRECT && ( <Grid item xs={1} sx={{ textAlign: 'right' }}>
               <IconButton
                 color="primary"
                 sx={{
@@ -50,16 +48,16 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   '&:hover': { backgroundColor: 'transparent !important' },
                 }}
                 onClick={() => goBackToLandingPage()}
+                aria-label={t('spidSelect.closeButton')}
               >
                 <ClearOutlinedIcon />
               </IconButton>
-            )}
-          </Grid>
+          </Grid>)}
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
             <Typography
-              py={5}
+              pb={5}
               px={0}
               color="textPrimary"
               variant="h4"
@@ -71,7 +69,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               {t('spidSelect.title')}
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item pb={5}>
             <Grid container direction="row" justifyItems="center" spacing={2}>
               {IDPS.identityProviders.map((IDP, i) => (
                 <Grid
@@ -81,7 +79,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   textAlign={i % 2 === 0 ? 'right' : 'left'}
                   sx={{ minWidth: '100px' }}
                 >
-                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }}>
+                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }} aria-label={IDP.name}> 
                     <Icon sx={{ width: '100px', height: '48px' }}>
                       <img width="100px" src={IDP.imageUrl} alt={IDP.name} />
                     </Icon>
@@ -91,22 +89,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography
-              py={3}
-              px={0}
-              color="textPrimary"
-              variant="body2"
-              sx={{
-                fontSize: '14px',
-                textAlign: 'center',
-              }}
-              component="div"
-            >
-              <Trans i18nKey="hintText">
-                Non hai SPID?
-                <Link href={IDPS.richiediSpid}>{' Scopri di più'}</Link>
-              </Trans>
-            </Typography>
+
             <Button
               type="submit"
               variant="outlined"
