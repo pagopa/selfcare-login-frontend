@@ -124,19 +124,23 @@ const Login = () => {
           </Grid>
         </Grid>
 
+        {/* fix added to fix production error - to be removed when will be fixed */}
         <Grid container item justifyContent="center">
-          <Grid item xs={6} md={5} lg={4}>
-            {/* fix added to fix production error - to be removed when will be fixed */}
+          <Grid item xs={7}>
             <Box display="flex" justifyContent="center" mb={5}>
               <Alert severity="error" sx={{ width: '100%' }}>
                 <Typography>
-                  Al momento non è possibile accedere al portale. <br /> Stiamo lavorando per
-                  risolvere il problema.
+                  Al momento non è possibile accedere al portale. Stiamo lavorando per risolvere il
+                  problema.
                 </Typography>
               </Alert>
             </Box>
-            {/*  */}
+          </Grid>
+        </Grid>
+        {/*  */}
 
+        <Grid container item justifyContent="center">
+          <Grid item xs={6} md={5} lg={4} xl={3}>
             <Box
               sx={{
                 boxShadow:
