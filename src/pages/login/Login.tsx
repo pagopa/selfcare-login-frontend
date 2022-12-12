@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
-import { IconButton } from '@mui/material';
+import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
@@ -125,7 +125,18 @@ const Login = () => {
         </Grid>
 
         <Grid container item justifyContent="center">
-          <Grid item xs={6} md={5} lg={4} xl={3}>
+          <Grid item xs={6} md={5} lg={4}>
+            {/* fix added to fix production error - to be removed when will be fixed */}
+            <Box display="flex" justifyContent="center" mb={5}>
+              <Alert severity="error" sx={{ width: '100%' }}>
+                <Typography>
+                  Al momento non è possibile accedere al portale. <br /> Stiamo lavorando per
+                  risolvere il problema.
+                </Typography>
+              </Alert>
+            </Box>
+            {/*  */}
+
             <Box
               sx={{
                 boxShadow:
@@ -167,7 +178,6 @@ const Login = () => {
             </Box>
           </Grid>
         </Grid>
-
         <Grid container item justifyContent="center">
           <Grid item xs={6}>
             <Typography
