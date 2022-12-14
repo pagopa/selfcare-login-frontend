@@ -130,8 +130,8 @@ const Login = () => {
             <Box display="flex" justifyContent="center" mb={5}>
               <Alert severity="error" sx={{ width: '100%' }}>
                 <Typography>
-                  Al momento non è possibile accedere al portale. Stiamo lavorando per risolvere il
-                  problema.
+                  Potresti riscontrare problemi di accesso con alcuni Gestori di Identità digitale.
+                  Stiamo lavorando per risolvere il problema.
                 </Typography>
               </Alert>
             </Box>
