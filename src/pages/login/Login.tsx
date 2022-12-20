@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
-import { Alert, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
@@ -123,21 +123,6 @@ const Login = () => {
             </Typography>
           </Grid>
         </Grid>
-
-        {/* fix added to fix production error - to be removed when will be fixed */}
-        <Grid container item justifyContent="center">
-          <Grid item xs={7}>
-            <Box display="flex" justifyContent="center" mb={5}>
-              <Alert severity="error" sx={{ width: '100%' }}>
-                <Typography>
-                  Potresti riscontrare problemi di accesso con alcuni Gestori di Identità digitale.
-                  Stiamo lavorando per risolvere il problema.
-                </Typography>
-              </Alert>
-            </Box>
-          </Grid>
-        </Grid>
-        {/*  */}
 
         <Grid container item justifyContent="center">
           <Grid item xs={6} md={5} lg={4} xl={3}>
