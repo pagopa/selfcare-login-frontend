@@ -104,27 +104,29 @@ const Login = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
-          <Grid item xs={6}>
-            <Typography
-              variant="body1"
-              mb={5}
-              color="textPrimary"
-              sx={{
-                textAlign: 'center',
-              }}
-            >
-              {fromOnboarding ? (
-                <Trans i18nKey="loginPageFromOnboarding.description">
-                  Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                  adesione al prodotto selezionato.
-                </Trans>
-              ) : (
-                t('loginPage.description')
-              )}
-            </Typography>
+        {!isPnpg && (
+          <Grid container item justifyContent="center">
+            <Grid item xs={6}>
+              <Typography
+                variant="body1"
+                mb={5}
+                color="textPrimary"
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                {fromOnboarding ? (
+                  <Trans i18nKey="loginPageFromOnboarding.description">
+                    Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
+                    adesione al prodotto selezionato.
+                  </Trans>
+                ) : (
+                  t('loginPage.description')
+                )}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
 
         <Grid container item justifyContent="center">
           <Grid item xs={6} md={5} lg={4} xl={3}>
