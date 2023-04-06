@@ -43,7 +43,7 @@ const Login = () => {
 
   const { t } = useTranslation();
 
-  const isPnpg = window.location.hostname.startsWith('pnpg');
+  const isPnpg = window.location.hostname?.startsWith('pnpg');
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
