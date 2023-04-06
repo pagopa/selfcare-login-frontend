@@ -43,6 +43,8 @@ const Login = () => {
 
   const { t } = useTranslation();
 
+  const isPnpg = window.location.hostname.startsWith('pnpg');
+
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     trackEvent(
@@ -98,7 +100,11 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {fromOnboarding ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
+              {fromOnboarding
+                ? t('loginPageFromOnboarding.title')
+                : isPnpg
+                ? t('loginPagePnpg.title')
+                : 'loginPage.title'}
             </Typography>
           </Grid>
         </Grid>
