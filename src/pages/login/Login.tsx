@@ -100,11 +100,7 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {fromOnboarding
-                ? t('loginPageFromOnboarding.title')
-                : isPnpg
-                ? t('loginPagePnpg.title')
-                : 'loginPage.title'}
+              {fromOnboarding || isPnpg ? t('loginPageFromOnboarding.title') : 'loginPage.title'}
             </Typography>
           </Grid>
         </Grid>

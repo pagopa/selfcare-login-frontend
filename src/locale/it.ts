@@ -14,9 +14,6 @@ export default {
     title: 'Come vuoi accedere?',
     description: 'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione.',
   },
-  loginPagePnpg: {
-    title: 'SEND - Login imprese',
-  },
   spidSelect: {
     title: 'Scegli il tuo SPID',
     cancelButton: 'Annulla',
