@@ -43,6 +43,8 @@ const Login = () => {
 
   const { t } = useTranslation();
 
+  const isPnpg = window.location.hostname?.startsWith('pnpg');
+
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     trackEvent(
@@ -87,7 +89,7 @@ const Login = () => {
             )}
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
+        <Grid container item justifyContent="center" mb={isPnpg ? 8 : 0}>
           <Grid item xs={4}>
             <Typography
               variant="h3"
@@ -98,31 +100,33 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {fromOnboarding ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
+              {fromOnboarding || isPnpg ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
-          <Grid item xs={6}>
-            <Typography
-              variant="body1"
-              mb={5}
-              color="textPrimary"
-              sx={{
-                textAlign: 'center',
-              }}
-            >
-              {fromOnboarding ? (
-                <Trans i18nKey="loginPageFromOnboarding.description">
-                  Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                  adesione al prodotto selezionato.
-                </Trans>
-              ) : (
-                t('loginPage.description')
-              )}
-            </Typography>
+        {!isPnpg && (
+          <Grid container item justifyContent="center">
+            <Grid item xs={6}>
+              <Typography
+                variant="body1"
+                mb={5}
+                color="textPrimary"
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                {fromOnboarding ? (
+                  <Trans i18nKey="loginPageFromOnboarding.description">
+                    Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
+                    adesione al prodotto selezionato.
+                  </Trans>
+                ) : (
+                  t('loginPage.description')
+                )}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
 
         <Grid container item justifyContent="center">
           <Grid item xs={6} md={5} lg={4} xl={3}>
