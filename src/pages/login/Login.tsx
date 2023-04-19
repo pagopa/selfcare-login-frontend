@@ -89,7 +89,7 @@ const Login = () => {
             )}
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
+        <Grid container item justifyContent="center" mb={isPnpg ? 8 : 0}>
           <Grid item xs={4}>
             <Typography
               variant="h3"
