@@ -54,8 +54,11 @@ const Login = () => {
         case '/onboarding/prod-pagopa':
           setProduct('Piattaforma pagoPA');
           break;
+        case '/onboarding/prod-cgn':
+          setProduct('Carta Giovani');
+          break;
         case '/onboarding/prod-ciban':
-          setProduct('Portale Bonus');
+          setProduct('Check-IBAN');
           break;
         default:
           setProduct('');
