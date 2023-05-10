@@ -31,11 +31,35 @@ export const cieIcon = () => (
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
+  const [product, setProduct] = useState<string>('');
+
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
 
     if (onboardingUrl && onboardingUrl.includes('onboarding')) {
       setFromOnboarding(true);
+      switch (onboardingUrl) {
+        case '/onboarding/prod-interop':
+          setProduct('Interoperabilità');
+          break;
+        case '/onboarding/prod-io':
+          setProduct('App Io');
+          break;
+        case '/onboarding/prod-io-sign':
+          setProduct('Firma con Io');
+          break;
+        case '/onboarding/prod-pn':
+          setProduct('Piattaforma Notifiche');
+          break;
+        case '/onboarding/prod-pagopa':
+          setProduct('Piattaforma pagoPA');
+          break;
+        case '/onboarding/prod-ciban':
+          setProduct('Portale Bonus');
+          break;
+        default:
+          setProduct('');
+      }
     } else {
       setFromOnboarding(false);
     }
@@ -74,6 +98,7 @@ const Login = () => {
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
+
   return (
     <Layout>
       <Grid container direction="column" my={'auto'}>
@@ -120,7 +145,7 @@ const Login = () => {
                 {fromOnboarding ? (
                   <Trans i18nKey="loginPageFromOnboarding.description">
                     Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                    adesione al prodotto selezionato.
+                    adesione al prodotto {{ nomeProdotto: product }}.
                   </Trans>
                 ) : (
                   t('loginPage.description')
