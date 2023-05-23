@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import {  useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
@@ -37,10 +37,11 @@ const Login = ({ onBack }: { onBack: () => void }) => {
     <Fragment>
       <Grid container direction="column">
         <Grid container direction="row" justifyContent="space-around" mt={3} mb={5}>
-          <Grid item xs={2} display='flex' justifyContent='center'>
+          <Grid item xs={2} display="flex" justifyContent="center">
             <img src={SpidBig} />
           </Grid>
-          {ENABLE_LANDING_REDIRECT && ( <Grid item xs={1} sx={{ textAlign: 'right' }}>
+          {ENABLE_LANDING_REDIRECT && (
+            <Grid item xs={1} sx={{ textAlign: 'right' }}>
               <IconButton
                 color="primary"
                 sx={{
@@ -52,7 +53,8 @@ const Login = ({ onBack }: { onBack: () => void }) => {
               >
                 <ClearOutlinedIcon />
               </IconButton>
-          </Grid>)}
+            </Grid>
+          )}
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing="10">
           <Grid item>
@@ -79,7 +81,12 @@ const Login = ({ onBack }: { onBack: () => void }) => {
                   textAlign={i % 2 === 0 ? 'right' : 'left'}
                   sx={{ minWidth: '100px' }}
                 >
-                  <Button onClick={() => getSPID(IDP)} sx={{ width: '100px', padding: '0' }} aria-label={IDP.name}> 
+                  <Button
+                    onClick={() => getSPID(IDP)}
+                    sx={{ width: '100px', padding: '0' }}
+                    aria-label={IDP.name}
+                    id={IDP.entityId}
+                  >
                     <Icon sx={{ width: '100px', height: '48px' }}>
                       <img width="100px" src={IDP.imageUrl} alt={IDP.name} />
                     </Icon>
@@ -89,7 +96,6 @@ const Login = ({ onBack }: { onBack: () => void }) => {
             </Grid>
           </Grid>
           <Grid item>
-
             <Button
               type="submit"
               variant="outlined"
