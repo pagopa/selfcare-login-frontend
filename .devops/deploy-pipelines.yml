@@ -30,7 +30,7 @@ variables:
     storage_account: '$(UAT_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(UAT_REACT_APP_URL_CDN)'
-    react_app_products_asset: '$(UAT_REACT_APP_URL_CDN)'
+    react_app_products_asset: '$(UAT_REACT_APP_PRODUCTS_ASSET)'
 
     react_app_url_file_privacy_disclaimer: '$(UAT_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
     react_app_url_file_terms_and_conditions: '$(UAT_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
@@ -62,7 +62,7 @@ variables:
     storage_account: '$(PROD_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(PROD_REACT_APP_URL_CDN)'
-    react_app_products_asset: '$(PROD_REACT_APP_URL_CDN)'
+    react_app_products_asset: '$(PROD_REACT_APP_PRODUCTS_ASSET)'
 
     react_app_url_file_privacy_disclaimer: '$(PROD_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
     react_app_url_file_terms_and_conditions: '$(PROD_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
@@ -96,7 +96,7 @@ variables:
     storage_account: '$(DEV_STORAGE_ACCOUNT)'
 
     react_app_url_cdn: '$(DEV_REACT_APP_URL_CDN)'
-    react_app_products_asset: '$(DEV_REACT_APP_URL_CDN)'
+    react_app_products_asset: '$(DEV_REACT_APP_PRODUCTS_ASSET)'
 
     react_app_url_file_privacy_disclaimer: '$(DEV_REACT_APP_URL_FILE_PRIVACY_DISCLAIMER)'
     react_app_url_file_terms_and_conditions: '$(DEV_REACT_APP_URL_FILE_TERMS_AND_CONDITIONS)'
