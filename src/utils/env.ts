@@ -13,12 +13,7 @@ export const ENV = {
   },
 
   JSON_URL: {
-    PRODUCTS:
-      currentEnv === 'PROD'
-        ? 'https://selfcare.pagopa.it/assets/products.json'
-        : currentEnv === 'UAT'
-        ? 'https://uat.selfcare.pagopa.it/assets/products.json'
-        : 'https://dev.selfcare.pagopa.it/assets/products.json',
+    PRODUCTS: env.get('REACT_APP_PRODUCTS_ASSET').required().asString(),
   },
 
   URL_FE: {
