@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
-import { IconButton } from '@mui/material';
+import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
@@ -102,6 +102,12 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
+  const isAlertVisible = true;
+  const severityLabel = 'info';
+  const alertMessage =
+    'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
+  const columnsOccupiedByAlert = 4;
+
   return (
     <Layout>
       <Grid container direction="column" my={'auto'}>
@@ -134,6 +140,21 @@ const Login = () => {
             </Typography>
           </Grid>
         </Grid>
+
+        {/*  */}
+        {isAlertVisible && (
+          <Grid container item justifyContent="center">
+            <Grid item xs={columnsOccupiedByAlert}>
+              <Box display="flex" justifyContent="center" mb={5}>
+                <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                  <Typography>{alertMessage}</Typography>
+                </Alert>
+              </Box>
+            </Grid>
+          </Grid>
+        )}
+        {/*  */}
+
         {!isPnpg && (
           <Grid container item justifyContent="center">
             <Grid item xs={6}>
