@@ -106,7 +106,7 @@ const Login = () => {
   const severityLabel = 'info';
   const alertMessage =
     'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
-  const columnsOccupiedByAlert = 4;
+  const columnsOccupiedByAlert = 6;
 
   return (
     <Layout>
