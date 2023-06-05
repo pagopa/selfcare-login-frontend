@@ -68,6 +68,18 @@ const IDPS: { identityProviders: Array<IdentityProvider>; richiediSpid: string }
       name: 'TeamSystem',
       imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-teamsystemid.png',
     },
+    {
+      identifier: 'EtnaHitech',
+      entityId: 'ehtid',
+      name: 'Etna Hitech S.C.p.A.',
+      imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-etnaid.png',
+    },
+    {
+      identifier: 'InfoCamere',
+      entityId: 'infocamereid',
+      name: 'InfoCamere S.C.p.A.',
+      imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-infocamereid.png',
+    },
   ].sort(() => 0.5 - Math.random()),
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };

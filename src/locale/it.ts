@@ -10,14 +10,15 @@ export default {
     privacyAndCondition:
       "Accedendo accetti i <1>Termini e condizioni d’uso</1> del servizio e <3 /> confermi di avere letto <5>l'Informativa Privacy</5>",
   },
-  loginPageFromOnboarding:{
-    title:'Come vuoi accedere?',
-    description: 'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione.',
+  loginPageFromOnboarding: {
+    title: 'Come vuoi accedere?',
+    description:
+      'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione al prodotto {{nomeProdotto}}.',
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
     cancelButton: 'Annulla',
-    closeButton: 'Esci'
+    closeButton: 'Esci',
   },
   loginError: {
     title: 'Spiacenti, qualcosa è andato storto.',

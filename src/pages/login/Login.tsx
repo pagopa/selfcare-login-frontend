@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
-import { IconButton } from '@mui/material';
+import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
@@ -31,17 +31,48 @@ export const cieIcon = () => (
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
+  const [product, setProduct] = useState<string>('');
+
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
 
     if (onboardingUrl && onboardingUrl.includes('onboarding')) {
       setFromOnboarding(true);
+      switch (onboardingUrl) {
+        case '/onboarding/prod-interop':
+          setProduct('Interoperabilità');
+          break;
+        case '/onboarding/prod-io':
+          setProduct('App Io');
+          break;
+        case '/onboarding/prod-io-sign':
+          setProduct('Firma con Io');
+          break;
+        case '/onboarding/prod-pn':
+          setProduct('Piattaforma Notifiche');
+          break;
+        case '/onboarding/prod-pagopa':
+          setProduct('Piattaforma pagoPA');
+          break;
+        case '/onboarding/prod-cgn':
+          setProduct('Carta Giovani');
+          break;
+        case '/onboarding/prod-ciban':
+          setProduct('Check-IBAN');
+          break;
+        default:
+          setProduct('');
+      }
     } else {
       setFromOnboarding(false);
     }
   }, []);
 
   const { t } = useTranslation();
+
+  const isPnpg =
+    window.location.hostname?.startsWith('pnpg') ||
+    window.location.hostname?.startsWith('notifichedigitali');
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
@@ -70,6 +101,13 @@ const Login = () => {
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
+
+  const isAlertVisible = true;
+  const severityLabel = 'info';
+  const alertMessage =
+    'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
+  const columnsOccupiedByAlert = 6;
+
   return (
     <Layout>
       <Grid container direction="column" my={'auto'}>
@@ -87,7 +125,7 @@ const Login = () => {
             )}
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
+        <Grid container item justifyContent="center" mb={isPnpg ? 8 : 0}>
           <Grid item xs={4}>
             <Typography
               variant="h3"
@@ -98,31 +136,48 @@ const Login = () => {
                 textAlign: 'center',
               }}
             >
-              {fromOnboarding ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
+              {fromOnboarding || isPnpg ? t('loginPageFromOnboarding.title') : t('loginPage.title')}
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item justifyContent="center">
-          <Grid item xs={6}>
-            <Typography
-              variant="body1"
-              mb={5}
-              color="textPrimary"
-              sx={{
-                textAlign: 'center',
-              }}
-            >
-              {fromOnboarding ? (
-                <Trans i18nKey="loginPageFromOnboarding.description">
-                  Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                  adesione al prodotto selezionato.
-                </Trans>
-              ) : (
-                t('loginPage.description')
-              )}
-            </Typography>
+
+        {/*  */}
+        {isAlertVisible && (
+          <Grid container item justifyContent="center">
+            <Grid item xs={columnsOccupiedByAlert}>
+              <Box display="flex" justifyContent="center" mb={5}>
+                <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                  <Typography>{alertMessage}</Typography>
+                </Alert>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
+        {/*  */}
+
+        {!isPnpg && (
+          <Grid container item justifyContent="center">
+            <Grid item xs={6}>
+              <Typography
+                variant="body1"
+                mb={5}
+                color="textPrimary"
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                {fromOnboarding ? (
+                  <Trans i18nKey="loginPageFromOnboarding.description">
+                    Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
+                    adesione al prodotto {{ nomeProdotto: product }}.
+                  </Trans>
+                ) : (
+                  t('loginPage.description')
+                )}
+              </Typography>
+            </Grid>
+          </Grid>
+        )}
 
         <Grid container item justifyContent="center">
           <Grid item xs={6} md={5} lg={4} xl={3}>
