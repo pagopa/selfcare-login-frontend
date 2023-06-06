@@ -33,12 +33,6 @@ const IDPS: { identityProviders: Array<IdentityProvider>; richiediSpid: string }
       imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-spiditalia.png',
     },
     {
-      identifier: 'IntesaID',
-      entityId: 'intesaid',
-      name: 'Intesa',
-      imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-intesaid.png',
-    },
-    {
       identifier: 'Sielte',
       entityId: 'sielteid',
       name: 'Sielte id',
