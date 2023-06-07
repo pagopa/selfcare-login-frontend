@@ -91,11 +91,8 @@ if (ENV.SPID_TEST_ENV_ENABLED) {
     entityId: 'xx_testenv2',
     name: 'test',
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Test-Logo.svg',
-  });
-}
-
-if (ENV.SPID_TEST_ENV_ENABLED) {
-  IDPS.identityProviders.push({
+  }, 
+  {
     identifier: 'validator',
     entityId: 'xx_validator',
     name: 'validator',
