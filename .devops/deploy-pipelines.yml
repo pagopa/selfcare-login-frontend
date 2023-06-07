@@ -74,7 +74,7 @@ variables:
 
     react_app_url_api_login: '$(PROD_REACT_APP_URL_API_LOGIN)'
 
-    spid_test_env_enabled: 'true'
+    spid_test_env_enabled: 'false'
     spid_cie_entity_id: 'xx_servizicie'
 
     react_app_enable_assistance: 'true'
