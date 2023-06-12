@@ -101,7 +101,7 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const isAlertVisible = true;
+  const isAlertVisible = false;
   const severityLabel = 'info';
   const alertMessage =
     'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
