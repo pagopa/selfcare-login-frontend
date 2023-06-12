@@ -71,8 +71,7 @@ const Login = () => {
   const { t } = useTranslation();
 
   const isPnpg =
-    window.location.hostname?.startsWith('pnpg') ||
-    window.location.hostname?.startsWith('notifichedigitali');
+    window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
@@ -102,7 +101,7 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const isAlertVisible = true;
+  const isAlertVisible = false;
   const severityLabel = 'info';
   const alertMessage =
     'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
