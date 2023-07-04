@@ -4,8 +4,8 @@ export default {
     description: 'Lo spazio dedicato agli enti che utilizzano i prodotti di PagoPA.',
     loginBox: {
       title: 'Login',
-      spidLogin: 'Accedi con SPID',
-      cieLogin: 'Accedi con CIE',
+      spidLogin: 'Entra con SPID',
+      cieLogin: 'Entra con CIE',
     },
     privacyAndCondition:
       "Accedendo accetti i <1>Termini e condizioni d’uso</1> del servizio e <3 /> confermi di avere letto <5>l'Informativa Privacy</5>",
