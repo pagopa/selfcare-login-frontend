@@ -41,7 +41,7 @@ test('renders button Entra con Spid', () => {
 test('renders button Entra con CIE', () => {
   render(<Login />);
   const ButtonCIE = screen.getByRole(/Button/i, {
-    name: 'Accedi con CIE',
+    name: 'Entra con CIE',
   });
 
   fireEvent.click(ButtonCIE);
