@@ -14,8 +14,8 @@ export const userFromJwtToken: (token: string) => User = function (token: string
   return {
     uid: jwtUser.uid,
     taxCode: jwtUser.fiscal_number,
-    name: jwtUser.name.replace(/Ã/g, 'à').replace(/\s/g, ''),
-    surname: jwtUser.family_name.replace(/Ã/g, 'à').replace(/\s/g, ''),
+    name: jwtUser.name,
+    surname: jwtUser.family_name,
     email: jwtUser.email,
   };
 };
