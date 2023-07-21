@@ -105,6 +105,9 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
+  {
+    /* TODO: SELC-2731 edit texts when will be ready */
+  }
   const isAlertVisible = ENV.BANNER.ENABLE;
   const severityLabel = 'info';
   const alertMessage =
