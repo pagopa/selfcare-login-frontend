@@ -9,7 +9,7 @@
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.2",
     "@pagopa/mui-italia": "^0.8.12",
-    "@pagopa/selfcare-common-frontend": "^1.32.0",
+    "@pagopa/selfcare-common-frontend": "^1.35.0",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
