@@ -102,7 +102,7 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const isAlertVisible = false;
+  const isAlertVisible = ENV.BANNER.ENABLE;
   const severityLabel = 'info';
   const alertMessage =
     'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
@@ -142,8 +142,8 @@ const Login = () => {
         </Grid>
 
         {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center">
+        {isAlertVisible && fromOnboarding && (
+          <Grid container item justifyContent="center" mt={2}>
             <Grid item xs={columnsOccupiedByAlert}>
               <Box display="flex" justifyContent="center" mb={5}>
                 <Alert severity={severityLabel} sx={{ width: '100%' }}>
