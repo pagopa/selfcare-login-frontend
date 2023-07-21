@@ -46,6 +46,9 @@ const Login = () => {
         case '/onboarding/prod-io':
           setProduct('App Io');
           break;
+        case '/onboarding/prod-io-premium':
+          setProduct('App Io Premium');
+          break;
         case '/onboarding/prod-io-sign':
           setProduct('Firma con Io');
           break;
@@ -142,17 +145,19 @@ const Login = () => {
         </Grid>
 
         {/*  */}
-        {isAlertVisible && fromOnboarding && (
-          <Grid container item justifyContent="center" mt={2}>
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography>{alertMessage}</Typography>
-                </Alert>
-              </Box>
+        {isAlertVisible &&
+          fromOnboarding &&
+          (product === 'App Io' || product === 'App Io Premium') && (
+            <Grid container item justifyContent="center" mt={2}>
+              <Grid item xs={columnsOccupiedByAlert}>
+                <Box display="flex" justifyContent="center" mb={5}>
+                  <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                    <Typography>{alertMessage}</Typography>
+                  </Alert>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
         {/*  */}
 
         {!isPnpg && (
