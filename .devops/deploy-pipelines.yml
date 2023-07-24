@@ -53,7 +53,7 @@ variables:
     react_app_mixpanel_token: '$(UAT_MIXPANEL_TOKEN)'
     react_app_onetrust_domain_id: '$(UAT_ONETRUST_DOMAIN_ID)'
 
-      react_app_banner_enabled: '$(UAT_BANNER_ENABLED)'
+      react_app_banner_enabled: '$(UAT_REACT_APP_BANNER_ENABLED)'
 
   ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     environment: 'PROD'
@@ -87,7 +87,7 @@ variables:
     react_app_mixpanel_token: '$(PROD_MIXPANEL_TOKEN)'
     react_app_onetrust_domain_id: '$(PROD_ONETRUST_DOMAIN_ID)'
 
-      react_app_banner_enabled: '$(PROD_BANNER_ENABLED)'
+      react_app_banner_enabled: '$(PROD_REACT_APP_BANNER_ENABLED)'
 
   # every branch different from past will be considered as DEV
   #  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
@@ -123,7 +123,7 @@ variables:
     react_app_mixpanel_token: '$(DEV_MIXPANEL_TOKEN)'
     react_app_onetrust_domain_id: '$(DEV_ONETRUST_DOMAIN_ID)'
 
-    react_app_banner_enabled: '$(DEV_BANNER_ENABLED)'
+    react_app_banner_enabled: '$(DEV_REACT_APP_BANNER_ENABLED)'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
