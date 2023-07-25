@@ -109,9 +109,9 @@ const Login = () => {
     /* TODO: SELC-2731 edit texts when will be ready */
   }
   const isAlertVisible = ENV.BANNER.ENABLE;
-  const severityLabel = 'info';
+  const severityLabel = 'warning';
   const alertMessage =
-    'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
+    'Per un aggiornamento del portale, oggi non sarà possibile aderire all’app IO.';
   const columnsOccupiedByAlert = 6;
 
   return (
