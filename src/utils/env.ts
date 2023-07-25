@@ -47,4 +47,8 @@ export const ENV = {
       .default('https://api-eu.mixpanel.com')
       .asString(),
   },
+
+  BANNER: {
+    ENABLE: env.get('REACT_APP_BANNER_ENABLE').default('false').asBool(),
+  },
 };

@@ -46,6 +46,9 @@ const Login = () => {
         case '/onboarding/prod-io':
           setProduct('App Io');
           break;
+        case '/onboarding/prod-io-premium':
+          setProduct('App Io Premium');
+          break;
         case '/onboarding/prod-io-sign':
           setProduct('Firma con Io');
           break;
@@ -102,10 +105,13 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const isAlertVisible = false;
-  const severityLabel = 'info';
+  {
+    /* TODO: SELC-2731 edit texts when will be ready */
+  }
+  const isAlertVisible = ENV.BANNER.ENABLE;
+  const severityLabel = 'warning';
   const alertMessage =
-    'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
+    'Per un aggiornamento del portale, oggi non sarà possibile aderire all’app IO.';
   const columnsOccupiedByAlert = 6;
 
   return (
@@ -142,17 +148,19 @@ const Login = () => {
         </Grid>
 
         {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center">
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography>{alertMessage}</Typography>
-                </Alert>
-              </Box>
+        {isAlertVisible &&
+          fromOnboarding &&
+          (product === 'App Io' || product === 'App Io Premium') && (
+            <Grid container item justifyContent="center" mt={2}>
+              <Grid item xs={columnsOccupiedByAlert}>
+                <Box display="flex" justifyContent="center" mb={5}>
+                  <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                    <Typography>{alertMessage}</Typography>
+                  </Alert>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
         {/*  */}
 
         {!isPnpg && (
