@@ -1,5 +1,3 @@
-import { TextDecoder } from 'util';
-
 export const parseJwt = (token: string) => {
   try {
     return JSON.parse(
