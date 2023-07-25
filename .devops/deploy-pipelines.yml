@@ -53,7 +53,7 @@ variables:
     react_app_mixpanel_token: '$(UAT_MIXPANEL_TOKEN)'
     react_app_onetrust_domain_id: '$(UAT_ONETRUST_DOMAIN_ID)'
 
-      react_app_banner_enabled: '$(UAT_REACT_APP_BANNER_ENABLED)'
+    react_app_banner_enabled: '$(UAT_REACT_APP_BANNER_ENABLED)'
 
   ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     environment: 'PROD'
