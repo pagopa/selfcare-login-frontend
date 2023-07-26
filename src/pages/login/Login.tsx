@@ -46,7 +46,7 @@ const Login = () => {
         case '/onboarding/prod-io':
           setProduct('App Io');
           break;
-        case '/onboarding/prod-io-premium':
+        case '/onboarding/prod-io/prod-io-premium':
           setProduct('App Io Premium');
           break;
         case '/onboarding/prod-io-sign':
