@@ -8,6 +8,7 @@ import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
+import { theme } from '@pagopa/mui-italia';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -44,6 +45,9 @@ const Login = () => {
           break;
         case '/onboarding/prod-io':
           setProduct('App Io');
+          break;
+        case '/onboarding/prod-io/prod-io-premium':
+          setProduct('App Io Premium');
           break;
         case '/onboarding/prod-io-sign':
           setProduct('Firma con Io');
@@ -101,15 +105,18 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const isAlertVisible = false;
-  const severityLabel = 'info';
+  {
+    /* TODO: SELC-2731 edit texts when will be ready */
+  }
+  const isAlertVisible = ENV.BANNER.ENABLE;
+  const severityLabel = 'warning';
   const alertMessage =
-    'Il portale è in manutenzione, potresti riscontrare dei disservizi temporanei';
+    'Per un aggiornamento del portale, oggi non sarà possibile aderire all’app IO.';
   const columnsOccupiedByAlert = 6;
 
   return (
     <Layout>
-      <Grid container direction="column" my={'auto'}>
+      <Grid container direction="column" my={'auto'} alignItems="center">
         <Grid container direction="row" justifyContent="flex-end" mt={8}>
           <Grid item xs={2}>
             {ENABLE_LANDING_REDIRECT && (
@@ -125,7 +132,7 @@ const Login = () => {
           </Grid>
         </Grid>
         <Grid container item justifyContent="center" mb={isPnpg ? 8 : 0}>
-          <Grid item xs={4}>
+          <Grid item xs={4} maxWidth="100%">
             <Typography
               variant="h3"
               py={1}
@@ -141,17 +148,19 @@ const Login = () => {
         </Grid>
 
         {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center">
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography>{alertMessage}</Typography>
-                </Alert>
-              </Box>
+        {isAlertVisible &&
+          fromOnboarding &&
+          (product === 'App Io' || product === 'App Io Premium') && (
+            <Grid container item justifyContent="center" mt={2}>
+              <Grid item xs={columnsOccupiedByAlert}>
+                <Box display="flex" justifyContent="center" mb={5}>
+                  <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                    <Typography>{alertMessage}</Typography>
+                  </Alert>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
         {/*  */}
 
         {!isPnpg && (
@@ -177,48 +186,51 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-
-        <Grid container item justifyContent="center">
-          <Grid item xs={6} md={5} lg={4} xl={3}>
-            <Box
+        <Grid
+          container
+          xs={6}
+          lg={3}
+          xl={3}
+          sx={{
+            boxShadow:
+              '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
+            borderRadius: '16px',
+            p: 4,
+            justifyContent: 'center',
+            width: '100%',
+            maxWidth: '100%',
+            [theme.breakpoints.down('md')]: {
+              width: '80%',
+            },
+          }}
+        >
+          <Grid item sx={{ width: '100%' }}>
+            <Button
+              id="spidButton"
               sx={{
-                boxShadow:
-                  '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
-                borderRadius: '16px',
-                p: 4,
+                borderRadius: '4px',
+                width: '100%',
               }}
+              onClick={() => setShowIDPS(true)}
+              variant="contained"
+              startIcon={spidIcon()}
             >
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Button
-                  id="spidButton"
-                  sx={{
-                    borderRadius: '4px',
-                    width: '100%',
-                    height: '50px',
-                  }}
-                  onClick={() => setShowIDPS(true)}
-                  variant="contained"
-                  startIcon={spidIcon()}
-                >
-                  {t('loginPage.loginBox.spidLogin')}
-                </Button>
-              </Box>
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Button
-                  sx={{
-                    borderRadius: '4px',
-                    width: '100%',
-                    height: '50px',
-                    marginTop: 2,
-                  }}
-                  variant="contained"
-                  startIcon={cieIcon()}
-                  onClick={() => goCIE()}
-                >
-                  {t('loginPage.loginBox.cieLogin')}
-                </Button>
-              </Box>
-            </Box>
+              {t('loginPage.loginBox.spidLogin')}
+            </Button>
+          </Grid>
+          <Grid item sx={{ width: '100%' }}>
+            <Button
+              sx={{
+                borderRadius: '4px',
+                width: '100%',
+                marginTop: 2,
+              }}
+              variant="contained"
+              startIcon={cieIcon()}
+              onClick={() => goCIE()}
+            >
+              {t('loginPage.loginBox.cieLogin')}
+            </Button>
           </Grid>
         </Grid>
         <Grid container item justifyContent="center">
