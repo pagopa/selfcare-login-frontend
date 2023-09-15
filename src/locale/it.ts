@@ -2,6 +2,7 @@ export default {
   loginPage: {
     title: 'Accedi all’Area Riservata',
     description: 'Lo spazio dedicato agli enti che utilizzano i prodotti di PagoPA.',
+    alertMessage: 'Per un aggiornamento del portale, potresti riscontrare problemi di accesso all’Area Riservata.',
     loginBox: {
       title: 'Login',
       spidLogin: 'Entra con SPID',
