@@ -146,20 +146,6 @@ const Login = () => {
           </Grid>
         </Grid>
 
-        {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center" mt={2}>
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography>{alertMessage}</Typography>
-                </Alert>
-              </Box>
-            </Grid>
-          </Grid>
-        )}
-        {/*  */}
-
         {!isPnpg && (
           <Grid container item justifyContent="center">
             <Grid item xs={6}>
@@ -183,6 +169,19 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
+        {/*  */}
+        {isAlertVisible && (
+          <Grid container item justifyContent="center" mt={2}>
+            <Grid item xs={columnsOccupiedByAlert}>
+              <Box display="flex" justifyContent="center" mb={5}>
+                <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                  <Typography>{alertMessage}</Typography>
+                </Alert>
+              </Box>
+            </Grid>
+          </Grid>
+        )}
+        {/*  */}
         <Grid
           container
           xs={6}
