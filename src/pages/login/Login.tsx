@@ -175,7 +175,7 @@ const Login = () => {
             <Grid item xs={columnsOccupiedByAlert}>
               <Box display="flex" justifyContent="center" mb={5}>
                 <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography>{alertMessage}</Typography>
+                  <Typography textAlign="center">{alertMessage}</Typography>
                 </Alert>
               </Box>
             </Grid>
