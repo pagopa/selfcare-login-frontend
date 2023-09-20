@@ -110,9 +110,8 @@ const Login = () => {
   }
   const isAlertVisible = ENV.BANNER.ENABLE;
   const severityLabel = 'warning';
-  const alertMessage =
-    'Per un aggiornamento del portale, oggi non sarà possibile aderire all’app IO.';
-  const columnsOccupiedByAlert = 6;
+  const alertMessage = t('loginPage.alertMessage');
+  const columnsOccupiedByAlert = 5;
 
   return (
     <Layout>
@@ -147,22 +146,6 @@ const Login = () => {
           </Grid>
         </Grid>
 
-        {/*  */}
-        {isAlertVisible &&
-          fromOnboarding &&
-          (product === 'App Io' || product === 'App Io Premium') && (
-            <Grid container item justifyContent="center" mt={2}>
-              <Grid item xs={columnsOccupiedByAlert}>
-                <Box display="flex" justifyContent="center" mb={5}>
-                  <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                    <Typography>{alertMessage}</Typography>
-                  </Alert>
-                </Box>
-              </Grid>
-            </Grid>
-          )}
-        {/*  */}
-
         {!isPnpg && (
           <Grid container item justifyContent="center">
             <Grid item xs={6}>
@@ -186,6 +169,19 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
+        {/*  */}
+        {isAlertVisible && (
+          <Grid container item justifyContent="center" mt={2}>
+            <Grid item xs={columnsOccupiedByAlert}>
+              <Box display="flex" justifyContent="center" mb={5}>
+                <Alert severity={severityLabel} sx={{ width: '100%' }}>
+                  <Typography textAlign="center">{alertMessage}</Typography>
+                </Alert>
+              </Box>
+            </Grid>
+          </Grid>
+        )}
+        {/*  */}
         <Grid
           container
           xs={6}
