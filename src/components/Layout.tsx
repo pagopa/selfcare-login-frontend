@@ -16,6 +16,7 @@ const Layout = ({ children }: Props) => (
   >
     <Header
       withSecondHeader={false}
+      enableAssistanceButton={ENV.ENV !== 'UAT'}
       assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
       enableLogin={false}
       loggedUser={false}
