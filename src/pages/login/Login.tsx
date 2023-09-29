@@ -53,7 +53,7 @@ const Login = () => {
           setProduct('Firma con Io');
           break;
         case '/onboarding/prod-pn':
-          setProduct('Piattaforma Notifiche');
+          setProduct('SEND - Servizio Notifiche Digitali');
           break;
         case '/onboarding/prod-pagopa':
           setProduct('Piattaforma pagoPA');
