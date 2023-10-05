@@ -105,12 +105,9 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  {
-    /* TODO: SELC-2731 edit texts when will be ready */
-  }
-  const isAlertVisible = ENV.BANNER.ENABLE;
-  const severityLabel = 'warning';
-  const alertMessage = t('loginPage.alertMessage');
+  const loginBanner = ENV.JSON_URL.ALERT;
+
+  console.log('loginBanner: ', loginBanner);
   const columnsOccupiedByAlert = 5;
 
   return (
@@ -169,18 +166,18 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-        {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center" mt={2}>
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography textAlign="center">{alertMessage}</Typography>
-                </Alert>
-              </Box>
-            </Grid>
+        {/*  login banner alert */}
+
+        <Grid container item justifyContent="center" mt={2}>
+          <Grid item xs={columnsOccupiedByAlert}>
+            <Box display="flex" justifyContent="center" mb={5}>
+              <Alert severity={'error'} sx={{ width: '100%' }}>
+                <Typography textAlign="center">{'alertMessage'}</Typography>
+              </Alert>
+            </Box>
           </Grid>
-        )}
+        </Grid>
+
         {/*  */}
         <Grid
           container
