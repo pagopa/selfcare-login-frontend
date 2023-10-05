@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
-import { isRight, toError } from 'fp-ts/lib/Either';
+import useErrorDispatcher from '@pagopa/selfcare-common-frontend/hooks/useErrorDispatcher';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -37,6 +37,7 @@ export const cieIcon = () => (
 );
 
 const Login = () => {
+  const addError = useErrorDispatcher();
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
@@ -47,13 +48,19 @@ const Login = () => {
       .then((r) => r.json())
       .then((res) => {
         console.log('res: ', res);
-        if (isRight(res)) {
-          console.log('res is right', res);
-          setBannerContent(res.right as any);
-        } else {
-          throw toError(JSON.stringify(res.left));
-        }
-      });
+        const bannerContentElements = JSON.parse(res);
+        console.log('bannerContent', bannerContent);
+        setBannerContent(bannerContentElements as Array<BannerContent>);
+      })
+      .catch((reason) =>
+        addError({
+          id: `ALERT_BANNER_NOT_FOUND`,
+          error: reason,
+          blocking: false,
+          toNotify: true,
+          techDescription: `Not found alert banners`,
+        })
+      );
   };
 
   useEffect(() => {
