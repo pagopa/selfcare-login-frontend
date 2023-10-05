@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
-import useErrorDispatcher from '@pagopa/selfcare-common-frontend/hooks/useErrorDispatcher';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -37,7 +36,6 @@ export const cieIcon = () => (
 );
 
 const Login = () => {
-  const addError = useErrorDispatcher();
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
@@ -49,18 +47,10 @@ const Login = () => {
       .then((res) => {
         console.log('res: ', res);
         const bannerContentElements = JSON.parse(res);
-        console.log('bannerContent', bannerContent);
+        console.log('bannerContent', bannerContentElements);
         setBannerContent(bannerContentElements as Array<BannerContent>);
       })
-      .catch((reason) =>
-        addError({
-          id: `ALERT_BANNER_NOT_FOUND`,
-          error: reason,
-          blocking: false,
-          toNotify: true,
-          techDescription: `Not found alert banners`,
-        })
-      );
+      .catch((reason) => console.log(reason));
   };
 
   useEffect(() => {
