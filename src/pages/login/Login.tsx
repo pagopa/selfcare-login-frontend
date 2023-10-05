@@ -43,7 +43,6 @@ const Login = () => {
 
   const mapToArray = (json: { [key: string]: BannerContent }) => {
     const mapped = Object.values(json);
-    console.log(mapped);
     setBannerContent(mapped);
   };
 
