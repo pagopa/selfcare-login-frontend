@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
+import { isRight, toError } from 'fp-ts/lib/Either';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -33,6 +34,27 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
+  const [isBannerVisible, setIsBannerVisible] = useState<boolean>();
+  const [bannerContent, setBannerContent] = useState<any>();
+
+  const alertMessage = async (loginBanner: string) => {
+    await fetch(loginBanner)
+      .then((r) => r.json())
+      .then((res) => {
+        console.log('res: ', res);
+        if (isRight(res)) {
+          console.log('res is right', res);
+          setBannerContent(res.right);
+        } else {
+          setIsBannerVisible(false);
+          throw toError(JSON.stringify(res.left));
+        }
+      });
+  };
+
+  useEffect(() => {
+    void alertMessage(ENV.JSON_URL.ALERT);
+  }, []);
 
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
@@ -105,9 +127,6 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  const loginBanner = ENV.JSON_URL.ALERT;
-
-  console.log('loginBanner: ', loginBanner);
   const columnsOccupiedByAlert = 5;
 
   return (
@@ -167,16 +186,18 @@ const Login = () => {
           </Grid>
         )}
         {/*  login banner alert */}
-
-        <Grid container item justifyContent="center" mt={2}>
-          <Grid item xs={columnsOccupiedByAlert}>
-            <Box display="flex" justifyContent="center" mb={5}>
-              <Alert severity={'error'} sx={{ width: '100%' }}>
-                <Typography textAlign="center">{'alertMessage'}</Typography>
-              </Alert>
-            </Box>
-          </Grid>
-        </Grid>
+        {bannerContent.enable ||
+          (isBannerVisible && (
+            <Grid container item justifyContent="center" mt={2}>
+              <Grid item xs={columnsOccupiedByAlert}>
+                <Box display="flex" justifyContent="center" mb={5}>
+                  <Alert severity={bannerContent.severity} sx={{ width: '100%' }}>
+                    <Typography textAlign="center">{bannerContent.description}</Typography>
+                  </Alert>
+                </Box>
+              </Grid>
+            </Grid>
+          ))}
 
         {/*  */}
         <Grid
