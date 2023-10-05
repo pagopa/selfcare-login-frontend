@@ -39,15 +39,25 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
-  const [bannerContent, setBannerContent] = useState<any>();
+  const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
+
+  const mapToArray = (json: { [key: string]: BannerContent }) => {
+    const mapped = Object.values(json);
+    console.log(mapped);
+    setBannerContent(mapped);
+  };
 
   const alertMessage = async (loginBanner: string) => {
-    await fetch(loginBanner)
-      .then((r) => r.json())
-      .then((res) => {
-        setBannerContent(res);
-      })
-      .catch((reason) => console.log(reason));
+    try {
+      const response = await fetch(loginBanner);
+      if (!response.ok) {
+        throw new Error('Not found banners');
+      }
+      const res = await response.json();
+      mapToArray(res as any);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -184,7 +194,7 @@ const Login = () => {
           </Grid>
         )}
         {bannerContent &&
-          (Array.from(bannerContent) as Array<BannerContent>).map(
+          bannerContent.map(
             (bc, index) =>
               bc.enable && (
                 <Grid container item justifyContent="center" key={index} mt={2}>
