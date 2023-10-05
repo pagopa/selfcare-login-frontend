@@ -17,6 +17,12 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
+type BannerContent = {
+  enable: boolean;
+  severity: 'warning' | 'error' | 'info' | 'success';
+  description: string;
+};
+
 export const spidIcon = () => (
   <Icon sx={{ width: '25px', height: '25px' }}>
     <img src={SpidIcon} width="25" height="25" />
@@ -33,6 +39,29 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
+  const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
+
+  const mapToArray = (json: { [key: string]: BannerContent }) => {
+    const mapped = Object.values(json);
+    setBannerContent(mapped);
+  };
+
+  const alertMessage = async (loginBanner: string) => {
+    try {
+      const response = await fetch(loginBanner);
+      if (!response.ok) {
+        throw new Error('Not found banners');
+      }
+      const res = await response.json();
+      mapToArray(res as any);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    void alertMessage(ENV.JSON_URL.ALERT);
+  }, []);
 
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
@@ -105,12 +134,6 @@ const Login = () => {
       window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
     );
 
-  {
-    /* TODO: SELC-2731 edit texts when will be ready */
-  }
-  const isAlertVisible = ENV.BANNER.ENABLE;
-  const severityLabel = 'warning';
-  const alertMessage = t('loginPage.alertMessage');
   const columnsOccupiedByAlert = 5;
 
   return (
@@ -169,19 +192,21 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-        {/*  */}
-        {isAlertVisible && (
-          <Grid container item justifyContent="center" mt={2}>
-            <Grid item xs={columnsOccupiedByAlert}>
-              <Box display="flex" justifyContent="center" mb={5}>
-                <Alert severity={severityLabel} sx={{ width: '100%' }}>
-                  <Typography textAlign="center">{alertMessage}</Typography>
-                </Alert>
-              </Box>
-            </Grid>
-          </Grid>
-        )}
-        {/*  */}
+        {bannerContent &&
+          bannerContent.map(
+            (bc, index) =>
+              bc.enable && (
+                <Grid container item justifyContent="center" key={index} mt={2}>
+                  <Grid item xs={columnsOccupiedByAlert}>
+                    <Box display="flex" justifyContent="center" mb={5}>
+                      <Alert severity={bc.severity} sx={{ width: '100%' }}>
+                        <Typography textAlign="center">{bc.description}</Typography>
+                      </Alert>
+                    </Box>
+                  </Grid>
+                </Grid>
+              )
+          )}
         <Grid
           container
           xs={6}
