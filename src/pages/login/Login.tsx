@@ -39,16 +39,13 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
-  const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
+  const [bannerContent, setBannerContent] = useState<any>();
 
   const alertMessage = async (loginBanner: string) => {
     await fetch(loginBanner)
       .then((r) => r.json())
       .then((res) => {
-        console.log('res: ', res);
-        const bannerContentElements = JSON.parse(res);
-        console.log('bannerContent', bannerContentElements);
-        setBannerContent(bannerContentElements as Array<BannerContent>);
+        setBannerContent(res);
       })
       .catch((reason) => console.log(reason));
   };
@@ -187,7 +184,7 @@ const Login = () => {
           </Grid>
         )}
         {bannerContent &&
-          bannerContent.map(
+          (Array.from(bannerContent) as Array<BannerContent>).map(
             (bc, index) =>
               bc.enable && (
                 <Grid container item justifyContent="center" key={index} mt={2}>
