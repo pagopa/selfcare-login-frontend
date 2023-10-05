@@ -18,6 +18,12 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import SpidSelect from './SpidSelect';
 
+type BannerContent = {
+  enable: boolean;
+  severity: 'warning' | 'error' | 'info' | 'success';
+  description: string;
+};
+
 export const spidIcon = () => (
   <Icon sx={{ width: '25px', height: '25px' }}>
     <img src={SpidIcon} width="25" height="25" />
@@ -34,8 +40,7 @@ const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
-  const [isBannerVisible, setIsBannerVisible] = useState<boolean>();
-  const [bannerContent, setBannerContent] = useState<any>();
+  const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
 
   const alertMessage = async (loginBanner: string) => {
     await fetch(loginBanner)
@@ -44,9 +49,8 @@ const Login = () => {
         console.log('res: ', res);
         if (isRight(res)) {
           console.log('res is right', res);
-          setBannerContent(res.right);
+          setBannerContent(res.right as any);
         } else {
-          setIsBannerVisible(false);
           throw toError(JSON.stringify(res.left));
         }
       });
@@ -185,21 +189,21 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-        {/*  login banner alert */}
-        {bannerContent.enable ||
-          (isBannerVisible && (
-            <Grid container item justifyContent="center" mt={2}>
-              <Grid item xs={columnsOccupiedByAlert}>
-                <Box display="flex" justifyContent="center" mb={5}>
-                  <Alert severity={bannerContent.severity} sx={{ width: '100%' }}>
-                    <Typography textAlign="center">{bannerContent.description}</Typography>
-                  </Alert>
-                </Box>
-              </Grid>
-            </Grid>
-          ))}
-
-        {/*  */}
+        {bannerContent &&
+          bannerContent.map(
+            (bc, index) =>
+              bc.enable && (
+                <Grid container item justifyContent="center" key={index} mt={2}>
+                  <Grid item xs={columnsOccupiedByAlert}>
+                    <Box display="flex" justifyContent="center" mb={5}>
+                      <Alert severity={bc.severity} sx={{ width: '100%' }}>
+                        <Typography textAlign="center">{bc.description}</Typography>
+                      </Alert>
+                    </Box>
+                  </Grid>
+                </Grid>
+              )
+          )}
         <Grid
           container
           xs={6}
