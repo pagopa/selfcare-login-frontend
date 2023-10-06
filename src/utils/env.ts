@@ -14,6 +14,7 @@ export const ENV = {
 
   JSON_URL: {
     PRODUCTS: env.get('REACT_APP_PRODUCTS_ASSET').required().asString(),
+    ALERT: env.get('REACT_APP_LOGIN_ALERT_BANNER').required().asString(),
   },
 
   URL_FE: {
@@ -29,8 +30,8 @@ export const ENV = {
   },
 
   URL_FILE: {
-    PRIVACY_DISCLAIMER: env.get('REACT_APP_URL_FILE_PRIVACY_DISCLAIMER').required().asString(),
-    TERMS_AND_CONDITIONS: env.get('REACT_APP_URL_FILE_TERMS_AND_CONDITIONS').required().asString(),
+    PRIVACY_DISCLAIMER: env.get('REACT_APP_URL_PRIVACY_DISCLAIMER').required().asString(),
+    TERMS_AND_CONDITIONS: env.get('REACT_APP_URL_TERMS_AND_CONDITIONS').required().asString(),
   },
 
   SPID_TEST_ENV_ENABLED: env.get('REACT_APP_SPID_TEST_ENV_ENABLED').required().asBool(),
@@ -46,9 +47,5 @@ export const ENV = {
       .get('REACT_APP_MIXPANEL_API_HOST')
       .default('https://api-eu.mixpanel.com')
       .asString(),
-  },
-
-  BANNER: {
-    ENABLE: env.get('REACT_APP_BANNER_ENABLE').default('false').asBool(),
   },
 };
