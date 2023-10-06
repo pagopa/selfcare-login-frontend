@@ -49,9 +49,6 @@ const Login = () => {
   const alertMessage = async (loginBanner: string) => {
     try {
       const response = await fetch(loginBanner);
-      if (!response.ok) {
-        throw new Error('Not found banners');
-      }
       const res = await response.json();
       mapToArray(res as any);
     } catch (error) {
