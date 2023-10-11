@@ -47,9 +47,6 @@ variables:
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
 
-    react_app_url_privacy_disclaimer: '$(UAT_REACT_APP_URL_PRIVACY_DISCLAIMER)'
-    react_app_url_terms_and_conditions: '$(UAT_REACT_APP_URL_TERMS_AND_CONDITIONS)'
-
     react_app_enable_assistance: 'true'
 
     react_app_one_trust_base_url: '$(UAT_REACT_APP_URL_CDN)/ot'
@@ -83,9 +80,6 @@ variables:
 
     spid_test_env_enabled: 'false'
     spid_cie_entity_id: 'xx_servizicie'
-
-    react_app_url_privacy_disclaimer: '$(PROD_REACT_APP_URL_PRIVACY_DISCLAIMER)'
-    react_app_url_terms_and_conditions: '$(PROD_REACT_APP_URL_TERMS_AND_CONDITIONS)'
 
     react_app_enable_assistance: 'true'
 
@@ -122,9 +116,6 @@ variables:
 
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
-
-    react_app_url_privacy_disclaimer: '$(DEV_REACT_APP_URL_PRIVACY_DISCLAIMER)'
-    react_app_url_terms_and_conditions: '$(DEV_REACT_APP_URL_TERMS_AND_CONDITIONS)'
 
     react_app_enable_assistance: 'true'
 
