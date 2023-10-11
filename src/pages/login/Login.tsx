@@ -128,7 +128,7 @@ const Login = () => {
 
   const redirectPrivacyLink = () =>
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-      window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
+      window.location.assign(ENV.PRIVACY_DISCLAIMER)
     );
 
   const columnsOccupiedByAlert = 5;
@@ -274,7 +274,7 @@ const Login = () => {
                   }}
                   onClick={() => {
                     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-                      window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
+                      window.location.assign(ENV.TERMS_AND_CONDITIONS)
                     );
                   }}
                 >
