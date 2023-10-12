@@ -24,6 +24,9 @@ afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });
 });
 
+// Mock window.open
+global.window.open = jest.fn();
+
 test('rendering test onboarding login', async () => {
   mockedLocation.search = '?onSuccess=dashboard';
   render(<Login />);
@@ -48,4 +51,14 @@ test('renders button Entra con CIE', () => {
   expect(global.window.location.assign).toBeCalledWith(
     `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
+});
+
+test('click on documentation button', () => {
+  render(<Login />);
+  const ButtonDocumentation = screen.getByRole(/Button/i, {
+    name: 'Manuale operativo',
+  });
+
+  fireEvent.click(ButtonDocumentation);
+  expect(global.window.open).toBeCalledWith(ENV.URL_DOCUMENTATION, '_blank');
 });
