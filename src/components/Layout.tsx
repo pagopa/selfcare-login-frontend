@@ -20,6 +20,9 @@ const Layout = ({ children }: Props) => (
       assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
       enableLogin={false}
       loggedUser={false}
+      onDocumentationClick={() => {
+        window.open(ENV.URL_DOCUMENTATION, '_blank');
+      }}
     />
     {children}
     <Box mt={16}>
