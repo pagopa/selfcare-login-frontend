@@ -1,5 +1,3 @@
-import { TextDecoder } from 'util';
-
 function decodeUTF8(binary: string) {
   const bytes = new Uint8Array(binary.length);
   // eslint-disable-next-line functional/no-let
