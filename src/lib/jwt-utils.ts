@@ -1,4 +1,3 @@
-import { TextDecoder } from 'util';
 
 function decodeUTF8(binary: string) {
   const bytes = new Uint8Array(binary.length);
