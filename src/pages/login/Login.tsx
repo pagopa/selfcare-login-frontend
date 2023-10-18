@@ -15,6 +15,7 @@ import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
+import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
 
 type BannerContent = {
@@ -99,9 +100,6 @@ const Login = () => {
   }, []);
 
   const { t } = useTranslation();
-
-  const isPnpg =
-    window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
