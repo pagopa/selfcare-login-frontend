@@ -74,6 +74,12 @@ const IDPS: { identityProviders: Array<IdentityProvider>; richiediSpid: string }
       name: 'InfoCamere S.C.p.A.',
       imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-infocamereid.png',
     },
+    {
+      identifier: 'Intesi Group SPID',
+      entityId: 'intesiid',
+      name: 'Intesi Group S.p.A',
+      imageUrl: 'https://assets.cdn.io.italia.it/spid/idps/spid-idp-intesigroupspid.png',
+    },
   ].sort(() => 0.5 - Math.random()),
   richiediSpid: 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/',
 };
