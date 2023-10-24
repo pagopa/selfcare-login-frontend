@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { width } from '@mui/system';
 import Login from '../Login';
 import { ENV } from '../../../utils/env';
 import './../../../locale';
@@ -27,21 +26,21 @@ afterAll(() => {
 // Mock window.open
 global.window.open = jest.fn();
 
-test('rendering test onboarding login', async () => {
+test('Test rendering onboarding login', async () => {
   mockedLocation.search = '?onSuccess=dashboard';
   render(<Login />);
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
   expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
 });
 
-test('renders button Entra con Spid', () => {
+test('Test click SPID button', () => {
   render(<Login />);
   const ButtonSpid = document.getElementById('spidButton');
   fireEvent.click(ButtonSpid);
   expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
 });
 
-test('renders button Entra con CIE', () => {
+test('test click CIE button', () => {
   render(<Login />);
   const ButtonCIE = screen.getByRole(/Button/i, {
     name: 'Entra con CIE',
@@ -53,7 +52,7 @@ test('renders button Entra con CIE', () => {
   );
 });
 
-test('click on documentation button', () => {
+test('test click documentation button', () => {
   render(<Login />);
   const ButtonDocumentation = screen.getByRole(/Button/i, {
     name: 'Manuale operativo',
@@ -61,4 +60,17 @@ test('click on documentation button', () => {
 
   fireEvent.click(ButtonDocumentation);
   expect(global.window.open).toBeCalledWith(ENV.URL_DOCUMENTATION, '_blank');
+});
+
+test('test term conditions and privacy links', () => {
+  render(<Login />);
+
+  const termsConditionLink = screen.getByText('Termini e condizioni d’uso');
+  const privacyLink = screen.getByText(/Informativa Privacy/);
+
+  fireEvent.click(termsConditionLink);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
+
+  fireEvent.click(privacyLink);
+  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.PRIVACY_DISCLAIMER);
 });
