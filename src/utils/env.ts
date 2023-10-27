@@ -7,6 +7,8 @@ export const ENV = {
   ENV: currentEnv,
   PUBLIC_URL,
 
+  ENABLED_SPID: env.get('REACT_APP_LOGIN_SPID_ENABLED').required().asBool(),
+
   ASSISTANCE: {
     ENABLE: env.get('REACT_APP_ENABLE_ASSISTANCE').required().asBool(),
     EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
