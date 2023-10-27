@@ -187,6 +187,20 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
+        <Grid container justifyContent="center" mb={5}>
+          <Grid item>
+            <Alert severity="warning">
+              {t('loginPage.temporaryLogin.alert')}
+              <Link
+                ml={4}
+                sx={{ fontWeight: 'fontWeightBold', cursor: 'pointer', textDecoration: 'none' }}
+                onClick={() => setShowIDPS(true)}
+              >
+                {t('loginPage.temporaryLogin.join')}
+              </Link>
+            </Alert>
+          </Grid>
+        </Grid>
         {bannerContent &&
           bannerContent.map(
             (bc, index) =>
