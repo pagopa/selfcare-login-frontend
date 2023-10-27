@@ -38,6 +38,7 @@ export const cieIcon = () => (
 
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
+  const [isCurrentVersion, setIsCurrentVersion] = useState(true);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
@@ -120,8 +121,18 @@ const Login = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
 
+  const onBackAction = () => {
+    setShowIDPS(false);
+    setIsCurrentVersion(true);
+  };
+
+  const onLinkClick = () => {
+    setShowIDPS(true);
+    setIsCurrentVersion(false);
+  };
+
   if (showIDPS) {
-    return <SpidSelect onBack={() => setShowIDPS(false)} />;
+    return <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} />;
   }
 
   const redirectPrivacyLink = () =>
@@ -194,7 +205,7 @@ const Login = () => {
               <Link
                 ml={4}
                 sx={{ fontWeight: 'fontWeightBold', cursor: 'pointer', textDecoration: 'none' }}
-                onClick={() => setShowIDPS(true)}
+                onClick={onLinkClick}
               >
                 {t('loginPage.temporaryLogin.join')}
               </Link>

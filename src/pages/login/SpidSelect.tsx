@@ -13,7 +13,8 @@ import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 
-const Login = ({ onBack }: { onBack: () => void }) => {
+const Login = ({ onBack, isCurrentVersion }: { onBack: () => void; isCurrentVersion: boolean }) => {
+  const basePath = isCurrentVersion ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
   const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
@@ -23,10 +24,7 @@ const Login = ({ onBack }: { onBack: () => void }) => {
         SPID_IDP_NAME: IDP.name,
         SPID_IDP_ID: IDP.entityId,
       },
-      () =>
-        window.location.assign(
-          `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`
-        )
+      () => window.location.assign(`${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2`)
     );
   };
   const goBackToLandingPage = () => {
