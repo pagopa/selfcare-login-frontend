@@ -13,10 +13,12 @@ import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 
-const Login = ({ onBack }: { onBack: () => void }) => {
+const Login = ({ onBack, isCurrentVersion }: { onBack: () => void; isCurrentVersion: boolean }) => {
+  const basePath = isCurrentVersion ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
   const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
+    const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2`;
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {
@@ -25,7 +27,9 @@ const Login = ({ onBack }: { onBack: () => void }) => {
       },
       () =>
         window.location.assign(
-          `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2`
+          IDP.entityId === 'intesiid'
+            ? redirectUrl.concat('&RelayState=selfcare_pagopa_it')
+            : redirectUrl
         )
     );
   };
