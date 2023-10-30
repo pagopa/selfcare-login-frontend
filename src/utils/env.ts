@@ -7,6 +7,8 @@ export const ENV = {
   ENV: currentEnv,
   PUBLIC_URL,
 
+  ENABLED_SPID: env.get('REACT_APP_LOGIN_SPID_ENABLED').required().asBool(),
+
   ASSISTANCE: {
     ENABLE: env.get('REACT_APP_ENABLE_ASSISTANCE').required().asBool(),
     EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
@@ -29,8 +31,9 @@ export const ENV = {
 
   URL_API: {
     LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
+    LOGIN_SPID: env.get('REACT_APP_URL_API_LOGIN_SPID').required().asString(),
   },
-  
+
   URL_FOOTER: {
     PRIVACY_DISCLAIMER: env.get('REACT_APP_URL_PRIVACY_DISCLAIMER').required().asString(),
     TERMS_AND_CONDITIONS: env.get('REACT_APP_URL_TERMS_AND_CONDITIONS').required().asString(),
