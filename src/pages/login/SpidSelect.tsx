@@ -14,7 +14,7 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 
 const Login = ({ onBack, isCurrentVersion }: { onBack: () => void; isCurrentVersion: boolean }) => {
-  const basePath = isCurrentVersion ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
+  const basePath = isCurrentVersion ? ENV.URL_API.LOGIN_SPID : ENV.URL_API.LOGIN;
   const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
