@@ -214,7 +214,8 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-        {bannerContent &&
+        {fromOnboarding &&
+          bannerContent &&
           bannerContent.map(
             (bc, index) =>
               bc.enable && (

@@ -18,13 +18,19 @@ const Login = ({ onBack, isCurrentVersion }: { onBack: () => void; isCurrentVers
   const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
+    const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2`;
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {
         SPID_IDP_NAME: IDP.name,
         SPID_IDP_ID: IDP.entityId,
       },
-      () => window.location.assign(`${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2`)
+      () =>
+        window.location.assign(
+          IDP.entityId === 'intesiid'
+            ? redirectUrl.concat('&RelayState=selfcare_pagopa_it')
+            : redirectUrl
+        )
     );
   };
   const goBackToLandingPage = () => {
