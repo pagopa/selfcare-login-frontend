@@ -25,11 +25,13 @@ export const ENV = {
     ASSISTANCE: env.get('REACT_APP_URL_FE_ASSISTANCE').required().asString(),
   },
 
+  URL_DOCUMENTATION: ' https://docs.pagopa.it/area-riservata/',
+
   URL_API: {
     LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
   },
-
-  URL_FILE: {
+  
+  URL_FOOTER: {
     PRIVACY_DISCLAIMER: env.get('REACT_APP_URL_PRIVACY_DISCLAIMER').required().asString(),
     TERMS_AND_CONDITIONS: env.get('REACT_APP_URL_TERMS_AND_CONDITIONS').required().asString(),
   },

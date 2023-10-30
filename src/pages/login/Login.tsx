@@ -15,6 +15,7 @@ import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
+import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
 
 type BannerContent = {
@@ -100,9 +101,6 @@ const Login = () => {
 
   const { t } = useTranslation();
 
-  const isPnpg =
-    window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
-
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     trackEvent(
@@ -128,7 +126,7 @@ const Login = () => {
 
   const redirectPrivacyLink = () =>
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-      window.location.assign(ENV.URL_FILE.PRIVACY_DISCLAIMER)
+      window.location.assign(ENV.URL_FOOTER.PRIVACY_DISCLAIMER)
     );
 
   const columnsOccupiedByAlert = 5;
@@ -274,7 +272,7 @@ const Login = () => {
                   }}
                   onClick={() => {
                     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-                      window.location.assign(ENV.URL_FILE.TERMS_AND_CONDITIONS)
+                      window.location.assign(ENV.URL_FOOTER.TERMS_AND_CONDITIONS)
                     );
                   }}
                 >

@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { Footer, Header } from '@pagopa/selfcare-common-frontend';
 import { ENV } from '../utils/env';
+import { isPnpg } from '../utils/utils';
 
 type Props = {
   children: any;
@@ -20,6 +21,13 @@ const Layout = ({ children }: Props) => (
       assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
       enableLogin={false}
       loggedUser={false}
+      onDocumentationClick={
+        !isPnpg
+          ? () => {
+              window.open(ENV.URL_DOCUMENTATION, '_blank');
+            }
+          : undefined
+      }
     />
     {children}
     <Box mt={16}>
