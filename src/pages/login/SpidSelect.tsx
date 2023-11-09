@@ -27,7 +27,7 @@ const Login = ({
   const getSPID = (IDP: IdentityProvider) => {
     const providerStatus = idpStatus && idpStatus.find((p) => IDP.entityId === p.idp && p.migrated);
     const basePath =
-      isCurrentVersion && !providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
+      isCurrentVersion || !providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
     storageSpidSelectedOps.write(IDP.entityId);
     const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(
