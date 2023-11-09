@@ -18,6 +18,13 @@ import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
 
+type MapContent = 'alertBanner' | 'idpStatus';
+
+export type IdpStatus = {
+  idp: string;
+  migrated: boolean;
+};
+
 type BannerContent = {
   enable: boolean;
   severity: 'warning' | 'error' | 'info' | 'success';
@@ -42,17 +49,26 @@ const Login = () => {
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
+  const [idpStatus, setIdpStatus] = useState<Array<IdpStatus>>();
 
-  const mapToArray = (json: { [key: string]: BannerContent }) => {
-    const mapped = Object.values(json);
-    setBannerContent(mapped);
+  const mapToArray = (content: MapContent, json: { [key: string]: BannerContent | IdpStatus }) => {
+    if (content === 'alertBanner') {
+      const mapped = Object.values(json);
+      setBannerContent(mapped as Array<BannerContent>);
+    } else {
+      const mapped = Object.keys(json).map((idp) => ({
+        idp,
+        migrated: (json[idp] as any).migrated,
+      }));
+      setIdpStatus(mapped as Array<IdpStatus>);
+    }
   };
 
   const alertMessage = async (loginBanner: string) => {
     try {
       const response = await fetch(loginBanner);
       const res = await response.json();
-      mapToArray(res as any);
+      mapToArray('alertBanner', res as any);
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +77,22 @@ const Login = () => {
   useEffect(() => {
     void alertMessage(ENV.JSON_URL.ALERT);
   }, []);
+
+  const retrieveIdpStatus = async (idpStatus: string) => {
+    try {
+      const response = await fetch(idpStatus);
+      const res = await response.json();
+      mapToArray('idpStatus', res as any);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (showIDPS && isCurrentVersion) {
+      void retrieveIdpStatus(ENV.JSON_URL.IDP_STATUS);
+    }
+  }, [showIDPS, isCurrentVersion]);
 
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
@@ -132,7 +164,9 @@ const Login = () => {
   };
 
   if (showIDPS) {
-    return <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} />;
+    return (
+      <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} idpStatus={idpStatus} />
+    );
   }
 
   const redirectPrivacyLink = () =>

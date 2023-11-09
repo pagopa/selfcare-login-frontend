@@ -45,6 +45,7 @@ variables:
 
     react_app_login_alert_banner: '$(UAT_REACT_APP_LOGIN_ALERT_BANNER)'
 
+    react_app_login_spid_idp_status: '$(UAT_REACT_APP_LOGIN_SPID_IDP_STATUS)'
     react_app_login_spid_enabled: '$(UAT_REACT_APP_LOGIN_SPID_ENABLED)'
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
@@ -81,6 +82,7 @@ variables:
 
     react_app_login_alert_banner: '$(PROD_REACT_APP_LOGIN_ALERT_BANNER)'
 
+    react_app_login_spid_idp_status: '$(PROD_REACT_APP_LOGIN_SPID_IDP_STATUS)'
     react_app_login_spid_enabled: '$(PROD_REACT_APP_LOGIN_SPID_ENABLED)'
     spid_test_env_enabled: 'false'
     spid_cie_entity_id: 'xx_servizicie'
@@ -119,6 +121,7 @@ variables:
 
     react_app_login_alert_banner: '$(DEV_REACT_APP_LOGIN_ALERT_BANNER)'
 
+    react_app_login_spid_idp_status: '$(DEV_REACT_APP_LOGIN_SPID_IDP_STATUS)'
     react_app_login_spid_enabled: '$(DEV_REACT_APP_LOGIN_SPID_ENABLED)'
     spid_test_env_enabled: 'true'
     spid_cie_entity_id: 'xx_servizicie_test'
@@ -222,6 +225,7 @@ stages:
 
               REACT_APP_URL_API_LOGIN: '$(react_app_url_api_login)'
               REACT_APP_URL_API_LOGIN_SPID: '$(react_app_url_api_login_spid)'
+              REACT_APP_LOGIN_SPID_IDP_STATUS: '$(react_app_login_spid_idp_status)'
               REACT_APP_LOGIN_SPID_ENABLED: '$(react_app_login_spid_enabled)'
 
               REACT_APP_URL_PRIVACY_DISCLAIMER: '$(react_app_url_privacy_disclaimer)'

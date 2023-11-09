@@ -17,6 +17,7 @@ export const ENV = {
   JSON_URL: {
     PRODUCTS: env.get('REACT_APP_PRODUCTS_ASSET').required().asString(),
     ALERT: env.get('REACT_APP_LOGIN_ALERT_BANNER').required().asString(),
+    IDP_STATUS: env.get('REACT_APP_LOGIN_SPID_IDP_STATUS').required().asString(),
   },
 
   URL_FE: {
