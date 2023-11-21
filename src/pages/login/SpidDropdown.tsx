@@ -56,7 +56,7 @@ const SpidDropdown = ({ idpStatus, isCurrentVersion }: Props) => {
   };
 
   return (
-    <Grid container xs={12}>
+    <Grid container xs={12} sx={{ height: '50px' }}>
       <Button
         id="spidButton"
         ref={buttonRef}
@@ -89,6 +89,7 @@ const SpidDropdown = ({ idpStatus, isCurrentVersion }: Props) => {
             key="spid-idp-menu"
             sx={{
               position: 'relative',
+              zIndex: 1,
               backgroundColor: '#FFFFFF',
               left: '8px',
               bottom: '12px',
