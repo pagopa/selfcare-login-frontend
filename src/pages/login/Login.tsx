@@ -17,6 +17,7 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
+import SpidDropdown from './SpidDropdown';
 
 type MapContent = 'alertBanner' | 'idpStatus';
 
@@ -283,18 +284,7 @@ const Login = () => {
           }}
         >
           <Grid item sx={{ width: '100%' }}>
-            <Button
-              id="spidButton"
-              sx={{
-                borderRadius: '4px',
-                width: '100%',
-              }}
-              onClick={() => setShowIDPS(true)}
-              variant="contained"
-              startIcon={spidIcon()}
-            >
-              {t('loginPage.loginBox.spidLogin')}
-            </Button>
+            <SpidDropdown idpStatus={idpStatus} isCurrentVersion={isCurrentVersion} />
           </Grid>
           <Grid item sx={{ width: '100%' }}>
             <Button

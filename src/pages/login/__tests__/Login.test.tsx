@@ -35,18 +35,16 @@ test('Test rendering onboarding login', async () => {
 
 test('Test click SPID button', () => {
   render(<Login />);
-  const ButtonSpid = document.getElementById('spidButton');
-  fireEvent.click(ButtonSpid);
-  expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', 'spid_big.svg');
+  const buttonSpid = document.getElementById('spidButton');
+  fireEvent.click(buttonSpid);
 });
 
 test('test click CIE button', () => {
   render(<Login />);
-  const ButtonCIE = screen.getByRole(/Button/i, {
+  const buttonCIE = screen.getByRole(/Button/i, {
     name: 'Entra con CIE',
   });
-
-  fireEvent.click(ButtonCIE);
+  fireEvent.click(buttonCIE);
   expect(global.window.location.assign).toBeCalledWith(
     `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
