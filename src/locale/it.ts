@@ -18,7 +18,7 @@ export default {
   loginPageFromOnboarding: {
     title: 'Come vuoi accedere?',
     description:
-      'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione al prodotto {{nomeProdotto}}.',
+      'Seleziona la modalità che preferisci e inizia il processo di <1 /> adesione al prodotto <3>{{nomeProdotto}}<3/>.',
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
