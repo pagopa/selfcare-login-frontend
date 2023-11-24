@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Icon from '@mui/material/Icon';
 import { Alert, IconButton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Icon from '@mui/material/Icon';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
-import Layout from '../../components/Layout';
-import SpidIcon from '../../assets/SpidIcon.svg';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import { ENV } from '../../utils/env';
+import SpidIcon from '../../assets/SpidIcon.svg';
+import Layout from '../../components/Layout';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { ENV } from '../../utils/env';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
-import SpidSelect from './SpidSelect';
 import SpidDropdown from './SpidDropdown';
+import SpidSelect from './SpidSelect';
 
 type MapContent = 'alertBanner' | 'idpStatus';
 
@@ -124,6 +124,9 @@ const Login = () => {
           break;
         case '/onboarding/prod-ciban':
           setProduct('Check-IBAN');
+          break;
+        case '/onboarding/prod-idpay':
+          setProduct('IDPay');
           break;
         default:
           setProduct('');
