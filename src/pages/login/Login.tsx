@@ -1,23 +1,23 @@
-import { Alert, IconButton } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Icon from '@mui/material/Icon';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { theme } from '@pagopa/mui-italia';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Icon from '@mui/material/Icon';
+import { Alert, IconButton } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
-import CIEIcon from '../../assets/CIEIcon.svg';
-import SpidIcon from '../../assets/SpidIcon.svg';
+import { theme } from '@pagopa/mui-italia';
 import Layout from '../../components/Layout';
-import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import SpidIcon from '../../assets/SpidIcon.svg';
+import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
+import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
-import SpidDropdown from './SpidDropdown';
 import SpidSelect from './SpidSelect';
+import SpidDropdown from './SpidDropdown';
 
 type MapContent = 'alertBanner' | 'idpStatus';
 
@@ -46,7 +46,6 @@ export const cieIcon = () => (
 
 const Login = () => {
   const [showIDPS, setShowIDPS] = useState(false);
-  const [isCurrentVersion, setIsCurrentVersion] = useState(true);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
@@ -90,10 +89,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (showIDPS && isCurrentVersion) {
-      void retrieveIdpStatus(ENV.JSON_URL.IDP_STATUS);
-    }
-  }, [showIDPS, isCurrentVersion]);
+    void retrieveIdpStatus(ENV.JSON_URL.IDP_STATUS);
+  }, []);
 
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
@@ -124,9 +121,6 @@ const Login = () => {
           break;
         case '/onboarding/prod-ciban':
           setProduct('Check-IBAN');
-          break;
-        case '/onboarding/prod-idpay':
-          setProduct('IDPay');
           break;
         default:
           setProduct('');
@@ -159,18 +153,14 @@ const Login = () => {
 
   const onBackAction = () => {
     setShowIDPS(false);
-    setIsCurrentVersion(true);
   };
 
   const onLinkClick = () => {
     setShowIDPS(true);
-    setIsCurrentVersion(false);
   };
 
   if (showIDPS) {
-    return (
-      <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} idpStatus={idpStatus} />
-    );
+    return <SpidSelect onBack={onBackAction} />;
   }
 
   const redirectPrivacyLink = () =>
@@ -227,7 +217,7 @@ const Login = () => {
                 {fromOnboarding ? (
                   <Trans i18nKey="loginPageFromOnboarding.description">
                     Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                    adesione al prodotto <b>{{ nomeProdotto: product }}</b>.
+                    adesione al prodotto {{ nomeProdotto: product }}.
                   </Trans>
                 ) : (
                   t('loginPage.description')
@@ -287,7 +277,7 @@ const Login = () => {
           }}
         >
           <Grid item sx={{ width: '100%' }}>
-            <SpidDropdown idpStatus={idpStatus} isCurrentVersion={isCurrentVersion} />
+            <SpidDropdown idpStatus={idpStatus} />
           </Grid>
           <Grid item sx={{ width: '100%' }}>
             <Button
