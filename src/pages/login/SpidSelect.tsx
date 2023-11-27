@@ -12,24 +12,12 @@ import SpidBig from '../../assets/spid_big.svg';
 import { ENV } from '../../utils/env';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
-import { IdpStatus } from './Login';
 
-const Login = ({
-  onBack,
-  isCurrentVersion,
-  idpStatus,
-}: {
-  onBack: () => void;
-  isCurrentVersion: boolean;
-  idpStatus?: Array<IdpStatus>;
-}) => {
+const Login = ({ onBack }: { onBack: () => void }) => {
   const { t } = useTranslation();
   const getSPID = (IDP: IdentityProvider) => {
-    const providerStatus = idpStatus && idpStatus.find((p) => IDP.entityId === p.idp && p.migrated);
-    const basePath =
-      isCurrentVersion || !providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
     storageSpidSelectedOps.write(IDP.entityId);
-    const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
+    const redirectUrl = `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {

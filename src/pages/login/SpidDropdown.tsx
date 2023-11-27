@@ -18,10 +18,9 @@ import { IdpStatus, spidIcon } from './Login';
 
 type Props = {
   idpStatus?: Array<IdpStatus>;
-  isCurrentVersion: boolean;
 };
 
-const SpidDropdown = ({ idpStatus, isCurrentVersion }: Props) => {
+const SpidDropdown = ({ idpStatus }: Props) => {
   const { t } = useTranslation();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,8 +30,7 @@ const SpidDropdown = ({ idpStatus, isCurrentVersion }: Props) => {
 
   const getSPID = (IDP: IdentityProvider) => {
     const providerStatus = idpStatus && idpStatus.find((p) => IDP.entityId === p.idp && p.migrated);
-    const basePath =
-      isCurrentVersion || !providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
+    const basePath = providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
     storageSpidSelectedOps.write(IDP.entityId);
     const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(
