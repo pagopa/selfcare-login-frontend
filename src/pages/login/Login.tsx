@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Icon from '@mui/material/Icon';
 import { Alert, IconButton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Icon from '@mui/material/Icon';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
-import Layout from '../../components/Layout';
-import SpidIcon from '../../assets/SpidIcon.svg';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import CIEIcon from '../../assets/CIEIcon.svg';
-import { ENV } from '../../utils/env';
+import SpidIcon from '../../assets/SpidIcon.svg';
+import Layout from '../../components/Layout';
 import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import { ENV } from '../../utils/env';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
+import SpidDropdown from './SpidDropdown';
 import SpidSelect from './SpidSelect';
+
+type MapContent = 'alertBanner' | 'idpStatus';
+
+export type IdpStatus = {
+  idp: string;
+  migrated: boolean;
+};
 
 type BannerContent = {
   enable: boolean;
@@ -42,17 +50,26 @@ const Login = () => {
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
+  const [idpStatus, setIdpStatus] = useState<Array<IdpStatus>>();
 
-  const mapToArray = (json: { [key: string]: BannerContent }) => {
-    const mapped = Object.values(json);
-    setBannerContent(mapped);
+  const mapToArray = (content: MapContent, json: { [key: string]: BannerContent | IdpStatus }) => {
+    if (content === 'alertBanner') {
+      const mapped = Object.values(json);
+      setBannerContent(mapped as Array<BannerContent>);
+    } else {
+      const mapped = Object.keys(json).map((idp) => ({
+        idp,
+        migrated: (json[idp] as any).migrated,
+      }));
+      setIdpStatus(mapped as Array<IdpStatus>);
+    }
   };
 
   const alertMessage = async (loginBanner: string) => {
     try {
       const response = await fetch(loginBanner);
       const res = await response.json();
-      mapToArray(res as any);
+      mapToArray('alertBanner', res as any);
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +78,22 @@ const Login = () => {
   useEffect(() => {
     void alertMessage(ENV.JSON_URL.ALERT);
   }, []);
+
+  const retrieveIdpStatus = async (idpStatus: string) => {
+    try {
+      const response = await fetch(idpStatus);
+      const res = await response.json();
+      mapToArray('idpStatus', res as any);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (showIDPS && isCurrentVersion) {
+      void retrieveIdpStatus(ENV.JSON_URL.IDP_STATUS);
+    }
+  }, [showIDPS, isCurrentVersion]);
 
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
@@ -91,6 +124,9 @@ const Login = () => {
           break;
         case '/onboarding/prod-ciban':
           setProduct('Check-IBAN');
+          break;
+        case '/onboarding/prod-idpay':
+          setProduct('IDPay');
           break;
         default:
           setProduct('');
@@ -132,7 +168,9 @@ const Login = () => {
   };
 
   if (showIDPS) {
-    return <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} />;
+    return (
+      <SpidSelect onBack={onBackAction} isCurrentVersion={isCurrentVersion} idpStatus={idpStatus} />
+    );
   }
 
   const redirectPrivacyLink = () =>
@@ -189,7 +227,7 @@ const Login = () => {
                 {fromOnboarding ? (
                   <Trans i18nKey="loginPageFromOnboarding.description">
                     Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                    adesione al prodotto {{ nomeProdotto: product }}.
+                    adesione al prodotto <b>{{ nomeProdotto: product }}</b>.
                   </Trans>
                 ) : (
                   t('loginPage.description')
@@ -249,18 +287,7 @@ const Login = () => {
           }}
         >
           <Grid item sx={{ width: '100%' }}>
-            <Button
-              id="spidButton"
-              sx={{
-                borderRadius: '4px',
-                width: '100%',
-              }}
-              onClick={() => setShowIDPS(true)}
-              variant="contained"
-              startIcon={spidIcon()}
-            >
-              {t('loginPage.loginBox.spidLogin')}
-            </Button>
+            <SpidDropdown idpStatus={idpStatus} isCurrentVersion={isCurrentVersion} />
           </Grid>
           <Grid item sx={{ width: '100%' }}>
             <Button
