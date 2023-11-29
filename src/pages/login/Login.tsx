@@ -142,7 +142,7 @@ const Login = () => {
       },
       () =>
         window.location.assign(
-          `${ENV.URL_API.LOGIN}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
+          `${ENV.URL_API.LOGIN_SPID}/login?entityID=${ENV.SPID_CIE_ENTITY_ID}&authLevel=SpidL2`
         )
     );
   };
