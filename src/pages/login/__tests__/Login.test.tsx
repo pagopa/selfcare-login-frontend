@@ -46,7 +46,7 @@ test('test click CIE button', () => {
   });
   fireEvent.click(buttonCIE);
   expect(global.window.location.assign).toBeCalledWith(
-    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
+    `${ENV.URL_API.LOGIN_SPID}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
 });
 
