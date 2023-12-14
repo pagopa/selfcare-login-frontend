@@ -64,7 +64,7 @@ test('test term conditions and privacy links', () => {
   render(<Login />);
 
   const termsConditionLink = screen.getByText('Termini e condizioni d’uso');
-  const privacyLink = screen.getByText(/Informativa Privacy/);
+  const privacyLink = screen.getByText("Informativa Privacy");
 
   fireEvent.click(termsConditionLink);
   expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
