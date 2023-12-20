@@ -46,7 +46,7 @@ test('test click CIE button', () => {
   });
   fireEvent.click(buttonCIE);
   expect(global.window.location.assign).toBeCalledWith(
-    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
+    `${ENV.URL_API.LOGIN_SPID}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
 });
 
@@ -64,7 +64,7 @@ test('test term conditions and privacy links', () => {
   render(<Login />);
 
   const termsConditionLink = screen.getByText('Termini e condizioni d’uso');
-  const privacyLink = screen.getByText("Informativa Privacy");
+  const privacyLink = screen.getAllByText(/Informativa Privacy/)[0];
 
   fireEvent.click(termsConditionLink);
   expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);

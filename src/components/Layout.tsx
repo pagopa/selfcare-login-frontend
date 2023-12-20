@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { Footer, Header } from '@pagopa/selfcare-common-frontend';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { ENV } from '../utils/env';
 import { isPnpg } from '../utils/utils';
 
@@ -24,6 +25,9 @@ const Layout = ({ children }: Props) => (
       onDocumentationClick={
         !isPnpg
           ? () => {
+              trackEvent('OPEN_OPERATIVE_MANUAL', {
+                from: 'login',
+              });
               window.open(ENV.URL_DOCUMENTATION, '_blank');
             }
           : undefined
