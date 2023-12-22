@@ -41,7 +41,7 @@ test('Test click SPID button', () => {
 
 test('test click CIE button', () => {
   render(<Login />);
-  const buttonCIE = screen.getByRole(/Button/i, {
+  const buttonCIE = screen.getByRole('button', {
     name: 'Entra con CIE',
   });
   fireEvent.click(buttonCIE);
@@ -52,11 +52,11 @@ test('test click CIE button', () => {
 
 test('test click documentation button', () => {
   render(<Login />);
-  const ButtonDocumentation = screen.getByRole(/Button/i, {
+  const documentationButton = screen.getByRole('button', {
     name: 'Manuale operativo',
   });
 
-  fireEvent.click(ButtonDocumentation);
+  fireEvent.click(documentationButton);
   expect(global.window.open).toBeCalledWith(ENV.URL_DOCUMENTATION, '_blank');
 });
 
