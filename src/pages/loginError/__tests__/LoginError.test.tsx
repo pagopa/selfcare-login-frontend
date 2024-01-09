@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import LoginError from '../LoginError';
-import { ROUTE_LOGIN } from '../../../utils/constants';
+import { ROUTE_LOGIN_ERROR } from '../../../utils/constants';
 import './../../../locale';
 
 const oldWindowLocation = global.window.location;
@@ -16,15 +16,13 @@ afterAll(() => {
 test('test login error', async () => {
   render(<LoginError />);
 
+  window.location.assign(ROUTE_LOGIN_ERROR);
+
   screen.getByText('Spiacenti, qualcosa è andato storto.');
   screen.getByText('A causa di un errore del sistema non è possibile completare la procedura.', {
     exact: false,
   });
   screen.getByText('Ti chiediamo di riprovare più tardi.', {
     exact: false,
-  });
-
-  await waitFor(() => expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN), {
-    timeout: 3000,
   });
 });

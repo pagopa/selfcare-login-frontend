@@ -215,9 +215,12 @@ const Login = () => {
                 }}
               >
                 {fromOnboarding ? (
-                  <Trans i18nKey="loginPageFromOnboarding.description">
-                    Seleziona la modalità di accesso che preferisci e inizia il <br /> processo di
-                    adesione al prodotto {{ nomeProdotto: product }}.
+                  <Trans
+                    i18nKey="loginPageFromOnboarding.description"
+                    values={{ nomeProdotto: product }}
+                    components={{ 3: <strong /> }}
+                  >
+                    {`Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di  adesione al prodotto <3>{{nomeProdotto}}<3/>.`}
                   </Trans>
                 ) : (
                   t('loginPage.description')
