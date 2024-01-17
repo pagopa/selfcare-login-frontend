@@ -1,9 +1,4 @@
-#onetrust-pc-sdk {
-  font-family: 'Titillium Web', sans-serif !important;
-  height: 600px;
-}
-
-#onetrust-banner-sdk {
+#onetrust-consent-sdk #onetrust-banner-sdk {
   font-family: 'Titillium Web', sans-serif !important;
 }
 
