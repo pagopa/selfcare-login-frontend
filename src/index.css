@@ -1,3 +1,7 @@
-.MuiTypography-root{
+body {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.MuiTypography-root {
   line-height: 1.5 !important;
 }
