@@ -1,3 +1,8 @@
-.MuiTypography-root{
+#onetrust-consent-sdk {
+  font-family: 'Titillium Web', sans-serif !important;
+}
+/*
+.MuiTypography-root {
   line-height: 1.5 !important;
 }
+*/
