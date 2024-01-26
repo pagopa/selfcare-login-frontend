@@ -22,6 +22,7 @@ export default {
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
+    modalTitle: 'Scegli il tuo Identity Provider',
     cancelButton: 'Annulla',
     closeButton: 'Esci',
   },

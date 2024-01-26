@@ -17,7 +17,7 @@ import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
-import SpidDropdown from './SpidDropdown';
+import SpidModal from './SpidModal';
 
 type MapContent = 'alertBanner' | 'idpStatus';
 
@@ -50,6 +50,7 @@ const Login = () => {
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
   const [idpStatus, setIdpStatus] = useState<Array<IdpStatus>>();
+  const [openSpidModal, setOpenSpidModal] = useState(false);
 
   const mapToArray = (content: MapContent, json: { [key: string]: BannerContent | IdpStatus }) => {
     if (content === 'alertBanner') {
@@ -279,8 +280,34 @@ const Login = () => {
             },
           }}
         >
+          <SpidModal
+            idpStatus={idpStatus}
+            openSpidModal={openSpidModal}
+            setOpenSpidModal={setOpenSpidModal}
+          />
           <Grid item sx={{ width: '100%' }}>
-            <SpidDropdown idpStatus={idpStatus} />
+            <Button
+              id="spidButton"
+              sx={{
+                borderRadius: '4px',
+                width: '100%',
+                marginBottom: '5px',
+              }}
+              onClick={() => setOpenSpidModal(true)}
+              variant="contained"
+              disableElevation
+              startIcon={spidIcon()}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 'fontWeightMedium',
+                  textAlign: 'center',
+                  color: theme.palette.primary.contrastText,
+                }}
+              >
+                {t('loginPage.loginBox.spidLogin')}
+              </Typography>
+            </Button>
           </Grid>
           <Grid item sx={{ width: '100%' }}>
             <Button
