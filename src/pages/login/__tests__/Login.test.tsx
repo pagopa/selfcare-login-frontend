@@ -41,7 +41,7 @@ test('Test click SPID button', () => {
 
 test('test click CIE button', () => {
   render(<Login />);
-  const buttonCIE = screen.getByRole(/Button/i, {
+  const buttonCIE = screen.getByRole('button', {
     name: 'Entra con CIE',
   });
   fireEvent.click(buttonCIE);
@@ -52,11 +52,11 @@ test('test click CIE button', () => {
 
 test('test click documentation button', () => {
   render(<Login />);
-  const ButtonDocumentation = screen.getByRole(/Button/i, {
+  const documentationButton = screen.getByRole('button', {
     name: 'Manuale operativo',
   });
 
-  fireEvent.click(ButtonDocumentation);
+  fireEvent.click(documentationButton);
   expect(global.window.open).toBeCalledWith(ENV.URL_DOCUMENTATION, '_blank');
 });
 
@@ -64,7 +64,7 @@ test('test term conditions and privacy links', () => {
   render(<Login />);
 
   const termsConditionLink = screen.getByText('Termini e condizioni d’uso');
-  const privacyLink = screen.getByText(/Informativa Privacy/);
+  const privacyLink = screen.getAllByText(/Informativa Privacy/)[0];
 
   fireEvent.click(termsConditionLink);
   expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
