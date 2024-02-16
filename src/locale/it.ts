@@ -19,6 +19,8 @@ export default {
     title: 'Come vuoi accedere?',
     description:
       'Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di  adesione al prodotto <3>{{nomeProdotto}}<3/>.',
+    ptDescription:
+      'Seleziona la modalità che preferisci per accedere e registrarti <1 /> come Partner tecnologico per il prodotto <3>{{nomeProdotto}}<3/>.',
   },
   spidSelect: {
     title: 'Scegli il tuo SPID',
