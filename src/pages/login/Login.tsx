@@ -105,7 +105,7 @@ const Login = () => {
 
     const onboardingUrlWithoutInstitution = onboardingUrl?.split('?')[0];
 
-    if (onboardingUrlWithoutInstitution && onboardingUrlWithoutInstitution.includes('onboarding')) {
+    if (onboardingUrl?.includes('onboarding') && !onboardingUrl?.includes('confirm')) {
       setFromOnboarding(true);
       switch (onboardingUrlWithoutInstitution) {
         case '/onboarding/prod-interop':
