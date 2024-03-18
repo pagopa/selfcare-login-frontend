@@ -1,8 +1,7 @@
 import { Box } from '@mui/material';
-import { Footer, Header } from '@pagopa/selfcare-common-frontend';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { Footer } from '@pagopa/selfcare-common-frontend';
 import { ENV } from '../utils/env';
-import { isPnpg } from '../utils/utils';
+import { LoginHeader } from './LoginHeader';
 
 type Props = {
   children: any;
@@ -16,23 +15,7 @@ const Layout = ({ children }: Props) => (
       minHeight: '100vh',
     }}
   >
-    <Header
-      withSecondHeader={false}
-      enableAssistanceButton={ENV.ENV !== 'UAT'}
-      assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
-      enableLogin={false}
-      loggedUser={false}
-      onDocumentationClick={
-        !isPnpg
-          ? () => {
-              trackEvent('OPEN_OPERATIVE_MANUAL', {
-                from: 'login',
-              });
-              window.open(ENV.URL_DOCUMENTATION, '_blank');
-            }
-          : undefined
-      }
-    />
+    <LoginHeader />
     {children}
     <Box mt={16}>
       <Footer loggedUser={false} productsJsonUrl={ENV.JSON_URL.PRODUCTS} />
