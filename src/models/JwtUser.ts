@@ -4,4 +4,5 @@ export type JWTUser = {
   name: string;
   family_name: string;
   email: string;
+  exp: string;
 };
