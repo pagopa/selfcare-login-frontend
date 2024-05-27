@@ -3,16 +3,10 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Login from '../Login';
 import { ENV } from '../../../utils/env';
 import './../../../locale';
+import { productId2ProductTitle } from '@pagopa/selfcare-common-frontend/utils/productId2ProductTitle';
+import { MemoryRouter } from 'react-router-dom';
 
 const oldWindowLocation = global.window.location;
-const mockedLocation = {
-  assign: jest.fn(),
-  pathname: '',
-  origin: 'MOCKED_ORIGIN',
-  search: '',
-  hash: '',
-};
-jest.spyOn(URLSearchParams.prototype, 'get');
 
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
@@ -23,23 +17,76 @@ afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });
 });
 
-// Mock window.open
+jest.spyOn(URLSearchParams.prototype, 'get');
+
 global.window.open = jest.fn();
 
-test('Test rendering onboarding login', async () => {
-  mockedLocation.search = '?onSuccess=dashboard';
-  render(<Login />);
+test('Test: Session not found while trying to access dashboard: "Selfcare" Login is displayed', async () => {
+  render(
+    <MemoryRouter initialEntries={[{ pathname: '/', search: '?onSuccess=dashboard' }]}>
+      <Login />
+    </MemoryRouter>
+  );
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
   expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
 });
 
-test('Test click SPID button', () => {
+test('Test: Session not found while trying to access at onboarding flow product: "Onboarding" Login is displayed', async () => {
+  const productIds = [
+    'prod-interop',
+    'prod-io',
+    'prod-io-premium',
+    'prod-io-sign',
+    'prod-pn',
+    'prod-pagopa',
+    'prod-cgn',
+    'prod-ciban',
+  ];
+
+  productIds.map(async (pid) => {
+    const productTitle = productId2ProductTitle(pid);
+    const expectedCalledTimes = pid === 'prod-io-premium' ? 2 : 1;
+    const search =
+      pid === 'prod-io-premium'
+        ? `?onSuccess=onboarding/prod-io/${pid}`
+        : `?onSuccess=onboarding/${pid}`;
+    await waitFor(() =>
+      render(
+        <MemoryRouter initialEntries={[{ pathname: '/', search }]}>
+          <Login />
+        </MemoryRouter>
+      )
+    );
+    await waitFor(() => {
+      screen.getByText('Come vuoi accedere?');
+      expect(productTitle).toBeDefined();
+    });
+
+    expect(URLSearchParams.prototype.get).toBeCalledTimes(expectedCalledTimes);
+  });
+});
+
+test('Test: Session not found while trying to access at upload contract flow: "Selfcare" Login is displayed', async () => {
+  const mockedJwt = 'mockJwt';
+  render(
+    <MemoryRouter
+      initialEntries={[{ pathname: '/', search: `?onSuccess=onboarding/confirm?jwt=${mockedJwt}` }]}
+    >
+      <Login />
+    </MemoryRouter>
+  );
+  await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
+
+  expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
+});
+
+test('Test: Trying to access the login with SPID', () => {
   render(<Login />);
   const buttonSpid = document.getElementById('spidButton');
   fireEvent.click(buttonSpid);
 });
 
-test('test click CIE button', () => {
+test('Test: Trying to access the login with CIE', () => {
   render(<Login />);
   const buttonCIE = screen.getByRole('button', {
     name: 'Entra con CIE',
@@ -50,7 +97,7 @@ test('test click CIE button', () => {
   );
 });
 
-test('test click documentation button', () => {
+test('Test: Access to operative manual', () => {
   render(<Login />);
   const documentationButton = screen.getByRole('button', {
     name: 'Manuale operativo',
@@ -60,7 +107,7 @@ test('test click documentation button', () => {
   expect(global.window.open).toBeCalledWith(ENV.URL_DOCUMENTATION, '_blank');
 });
 
-test('test term conditions and privacy links', () => {
+test('Test: Click in the conditions and privacy links below the login methods', () => {
   render(<Login />);
 
   const termsConditionLink = screen.getByText('Termini e condizioni d’uso');

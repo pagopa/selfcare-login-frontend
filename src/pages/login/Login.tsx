@@ -51,6 +51,7 @@ const Login = () => {
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
   const [idpStatus, setIdpStatus] = useState<Array<IdpStatus>>();
   const [openSpidModal, setOpenSpidModal] = useState(false);
+  const [isPT, setIsPT] = useState(false);
 
   const mapToArray = (content: MapContent, json: { [key: string]: BannerContent | IdpStatus }) => {
     if (content === 'alertBanner') {
@@ -96,9 +97,17 @@ const Login = () => {
   useEffect(() => {
     const onboardingUrl = new URLSearchParams(window.location.search).get('onSuccess');
 
-    if (onboardingUrl && onboardingUrl.includes('onboarding')) {
+    if (onboardingUrl && onboardingUrl.includes('institutionType=PT')) {
+      setIsPT(true);
+    } else {
+      setIsPT(false);
+    }
+
+    const onboardingUrlWithoutInstitution = onboardingUrl?.split('?')[0];
+
+    if (onboardingUrl?.includes('onboarding') && !onboardingUrl?.includes('confirm')) {
       setFromOnboarding(true);
-      switch (onboardingUrl) {
+      switch (onboardingUrlWithoutInstitution) {
         case '/onboarding/prod-interop':
           setProduct('Interoperabilità');
           break;
@@ -217,11 +226,17 @@ const Login = () => {
               >
                 {fromOnboarding ? (
                   <Trans
-                    i18nKey="loginPageFromOnboarding.description"
+                    i18nKey={
+                      isPT
+                        ? 'loginPageFromOnboarding.descriptionPT'
+                        : 'loginPageFromOnboarding.description'
+                    }
                     values={{ nomeProdotto: product }}
-                    components={{ 3: <strong /> }}
+                    components={{ 1: <br />, 3: <strong /> }}
                   >
-                    {`Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di  adesione al prodotto <3>{{nomeProdotto}}<3/>.`}
+                    {isPT
+                      ? 'Seleziona la modalità che preferisci per accedere e registrarti <1 /> come Partner tecnologico per il prodotto <3>{{nomeProdotto}}<3/>.'
+                      : `Seleziona la modalità di accesso che preferisci e inizia il <1 /> processo di  adesione al prodotto <3>{{nomeProdotto}}<3/>.`}
                   </Trans>
                 ) : (
                   t('loginPage.description')
