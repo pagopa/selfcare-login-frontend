@@ -5,7 +5,6 @@ import { IllusError } from '@pagopa/mui-italia';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { ENV } from '../../utils/env';
 import { redirectToLogin } from '../../utils/utils';
-// import { redirectToLogin } from '../../utils/utils';
 
 const handleError = (errorCode: string | null) => {
   const spidId = storageSpidSelectedOps.read();
