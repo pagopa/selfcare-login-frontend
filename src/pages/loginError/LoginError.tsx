@@ -8,7 +8,7 @@ import { redirectToLogin } from '../../utils/utils';
 
 const LoginError = () => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [title, setTitle] = useState<string | React.ReactElement>();
   const [description, setDescription] = useState<string | React.ReactElement>();
   const [haveRetryButton, setHaveRetryButton] = useState<boolean>();
@@ -116,8 +116,6 @@ const LoginError = () => {
     const spidId = storageSpidSelectedOps.read();
     trackEvent('LOGIN_FAILURE', { reason: errorCode, SPID_IDP_ID: spidId });
     console.error(`login unsuccessfull! error code obtained from idp: ${errorCode}`);
-
-    setLoading(false);
   };
 
   return loading ? (
