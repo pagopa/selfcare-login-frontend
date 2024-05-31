@@ -1,10 +1,11 @@
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
-import { EndingPage, LoadingOverlay } from '@pagopa/selfcare-common-frontend';
+import { EndingPage } from '@pagopa/selfcare-common-frontend';
 import { IllusError } from '@pagopa/mui-italia';
 import { useEffect, useState } from 'react';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
+import { LoadingOverlay } from '../../components/LoadingOverlay';
 
 const LoginError = () => {
   const { t } = useTranslation();
@@ -23,7 +24,6 @@ const LoginError = () => {
 
   const handleError = (errorCode: string) => {
     setLoading(true);
-
     switch (errorCode) {
       case '19': {
         setTitle(
@@ -116,10 +116,11 @@ const LoginError = () => {
     const spidId = storageSpidSelectedOps.read();
     trackEvent('LOGIN_FAILURE', { reason: errorCode, SPID_IDP_ID: spidId });
     console.error(`login unsuccessfull! error code obtained from idp: ${errorCode}`);
+    setLoading(false);
   };
 
   return loading ? (
-    <LoadingOverlay />
+    <LoadingOverlay loadingText="" />
   ) : (
     <EndingPage
       minHeight={'100vh'}
