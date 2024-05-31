@@ -29,8 +29,16 @@ export default {
     closeButton: 'Esci',
   },
   loginError: {
-    title: 'Spiacenti, qualcosa è andato storto.',
-    message:
-      'A causa di un errore del sistema non è possibile completare la procedura.<1 />Ti chiediamo di riprovare più tardi.',
+    errors: {
+      generic:{
+        title: 'Spiacenti, qualcosa è andato storto.',
+        description: 'A causa di un errore del sistema non è possibile completare la procedura.<1 /> Ti chiediamo di riprovare più tardi.'
+      },
+      suspendedOrRevoked: {
+        title: 'Identità sospesa o revocata',
+        message: 'La tua identità SPID risulta sospesa o revocata. Per maggiori <1/>informazioni, contatta il tuo fornitore di identità SPID.',
+        close: 'Chiudi',
+      }
+    }
   },
 };
