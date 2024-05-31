@@ -50,7 +50,6 @@ export default {
     suspendedOrRevoked: {
       title: 'Identità sospesa o revocata',
       message: 'La tua identità SPID risulta sospesa o revocata. Per maggiori <1/>informazioni, contatta il tuo fornitore di identità SPID.',
-      close: 'Chiudi',
     },
     canceledbyUser: {
       title: 'Hai annullato l’accesso',
