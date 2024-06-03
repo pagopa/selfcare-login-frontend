@@ -19,13 +19,6 @@ import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
 import SpidModal from './SpidModal';
 
-type MapContent = 'alertBanner' | 'idpStatus';
-
-export type IdpStatus = {
-  idp: string;
-  migrated: boolean;
-};
-
 type BannerContent = {
   enable: boolean;
   severity: 'warning' | 'error' | 'info' | 'success';
@@ -49,28 +42,19 @@ const Login = () => {
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
-  const [idpStatus, setIdpStatus] = useState<Array<IdpStatus>>();
   const [openSpidModal, setOpenSpidModal] = useState(false);
   const [isPT, setIsPT] = useState(false);
 
-  const mapToArray = (content: MapContent, json: { [key: string]: BannerContent | IdpStatus }) => {
-    if (content === 'alertBanner') {
-      const mapped = Object.values(json);
-      setBannerContent(mapped as Array<BannerContent>);
-    } else {
-      const mapped = Object.keys(json).map((idp) => ({
-        idp,
-        migrated: (json[idp] as any).migrated,
-      }));
-      setIdpStatus(mapped as Array<IdpStatus>);
-    }
+  const mapToArray = (json: { [key: string]: BannerContent }) => {
+    const mapped = Object.values(json);
+    setBannerContent(mapped as Array<BannerContent>);
   };
 
   const alertMessage = async (loginBanner: string) => {
     try {
       const response = await fetch(loginBanner);
       const res = await response.json();
-      mapToArray('alertBanner', res as any);
+      mapToArray(res as any);
     } catch (error) {
       console.error(error);
     }
@@ -78,20 +62,6 @@ const Login = () => {
 
   useEffect(() => {
     void alertMessage(ENV.JSON_URL.ALERT);
-  }, []);
-
-  const retrieveIdpStatus = async (idpStatus: string) => {
-    try {
-      const response = await fetch(idpStatus);
-      const res = await response.json();
-      mapToArray('idpStatus', res as any);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    void retrieveIdpStatus(ENV.JSON_URL.IDP_STATUS);
   }, []);
 
   useEffect(() => {
@@ -295,11 +265,7 @@ const Login = () => {
             },
           }}
         >
-          <SpidModal
-            idpStatus={idpStatus}
-            openSpidModal={openSpidModal}
-            setOpenSpidModal={setOpenSpidModal}
-          />
+          <SpidModal openSpidModal={openSpidModal} setOpenSpidModal={setOpenSpidModal} />
           <Grid item sx={{ width: '100%' }}>
             <Button
               id="spidButton"
