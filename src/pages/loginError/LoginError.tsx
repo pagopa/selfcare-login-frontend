@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
 import { LoadingOverlay } from '../../components/LoadingOverlay';
+import Layout from '../../components/Layout';
 
 const LoginError = () => {
   const { t } = useTranslation();
@@ -122,21 +123,23 @@ const LoginError = () => {
   return loading ? (
     <LoadingOverlay loadingText="" />
   ) : (
-    <EndingPage
-      minHeight={'100vh'}
-      icon={<IllusError size={60} />}
-      variantTitle="h4"
-      variantDescription="body1"
-      title={title}
-      description={description}
-      variantFirstButton={haveRetryButton ? 'outlined' : 'contained'}
-      variantSecondButton="contained"
-      buttonLabel={t('loginError.close')}
-      secondButtonLabel={t('loginError.retry')}
-      onButtonClick={redirectToLogin}
-      onSecondButtonClick={() => history.go(-1)}
-      haveTwoButtons={haveRetryButton}
-    />
+    <Layout>
+      <EndingPage
+        minHeight={'100vh'}
+        icon={<IllusError size={60} />}
+        variantTitle="h4"
+        variantDescription="body1"
+        title={title}
+        description={description}
+        variantFirstButton={haveRetryButton ? 'outlined' : 'contained'}
+        variantSecondButton="contained"
+        buttonLabel={t('loginError.close')}
+        secondButtonLabel={t('loginError.retry')}
+        onButtonClick={redirectToLogin}
+        onSecondButtonClick={() => history.go(-1)}
+        haveTwoButtons={haveRetryButton}
+      />
+    </Layout>
   );
 };
 
