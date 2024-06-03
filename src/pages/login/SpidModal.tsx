@@ -4,22 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { IDPS, IdentityProvider } from '../../utils/IDPS';
 import { ENV } from '../../utils/env';
 import { storageSpidSelectedOps } from '../../utils/storage';
-import { IdpStatus } from './Login';
 
 type Props = {
-  idpStatus?: Array<IdpStatus>;
   openSpidModal: boolean;
   setOpenSpidModal: (openDialog: boolean) => void;
 };
 
-const SpidModal = ({ idpStatus, openSpidModal, setOpenSpidModal }: Props) => {
+const SpidModal = ({ openSpidModal, setOpenSpidModal }: Props) => {
   const { t } = useTranslation();
 
   const getSPID = (IDP: IdentityProvider) => {
-    const providerStatus = idpStatus && idpStatus.find((p) => IDP.entityId === p.idp && p.migrated);
-    const basePath = providerStatus?.migrated ? ENV.URL_API.LOGIN : ENV.URL_API.LOGIN_SPID;
     storageSpidSelectedOps.write(IDP.entityId);
-    const redirectUrl = `${basePath}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
+    const redirectUrl = `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {
