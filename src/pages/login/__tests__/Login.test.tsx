@@ -28,7 +28,7 @@ test('Test: Session not found while trying to access dashboard: "Selfcare" Login
     </MemoryRouter>
   );
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
-  expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
+  expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
 test('Test: Session not found while trying to access at onboarding flow product: "Onboarding" Login is displayed', async () => {
@@ -77,7 +77,7 @@ test('Test: Session not found while trying to access at upload contract flow: "S
   );
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
 
-  expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
+  expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
 test('Test: Trying to access the login with SPID', () => {
@@ -93,7 +93,7 @@ test('Test: Trying to access the login with CIE', () => {
   });
   fireEvent.click(buttonCIE);
   expect(global.window.location.assign).toBeCalledWith(
-    `${ENV.URL_API.LOGIN_SPID}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
+    `${ENV.URL_API.LOGIN}/login?entityID=xx_servizicie_test&authLevel=SpidL2`
   );
 });
 
