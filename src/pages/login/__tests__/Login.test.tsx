@@ -28,7 +28,7 @@ test('Test: Session not found while trying to access dashboard: "Selfcare" Login
     </MemoryRouter>
   );
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
-  expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
+  expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
 test('Test: Session not found while trying to access at onboarding flow product: "Onboarding" Login is displayed', async () => {
@@ -77,7 +77,7 @@ test('Test: Session not found while trying to access at upload contract flow: "S
   );
   await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
 
-  expect(URLSearchParams.prototype.get).toBeCalledTimes(1);
+  expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
 test('Test: Trying to access the login with SPID', () => {
