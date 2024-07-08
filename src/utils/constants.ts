@@ -5,8 +5,8 @@ export const BASE_ROUTE = ENV.PUBLIC_URL;
 export const ROUTE_LOGIN = BASE_ROUTE + '/login';
 export const ROUTE_LOGIN_SUCCESS = BASE_ROUTE + '/login/success';
 export const ROUTE_LOGIN_ERROR = BASE_ROUTE + '/login/error';
-export const ROUTE_TERMS_AND_CONDITION = BASE_ROUTE.replace('/auth', '') + '/termini-di-servizio';
-export const ROUTE_PRIVACY_DISCLAIMER = BASE_ROUTE.replace('/auth', '') + '/informativa-privacy';
+export const ROUTE_TERMS_AND_CONDITION = BASE_ROUTE + '/termini-di-servizio';
+export const ROUTE_PRIVACY_DISCLAIMER = BASE_ROUTE + '/informativa-privacy';
 export const ROUTE_LOGOUT = ENV.URL_FE.LOGOUT;
 
 export const ENABLE_LANDING_REDIRECT = !ENV.URL_FE.LANDING.endsWith('/auth/logout');
