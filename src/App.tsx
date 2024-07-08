@@ -6,6 +6,7 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
+  ROUTE_PRIVACY_DISCLAIMER,
   ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
@@ -14,8 +15,17 @@ import Logout from './pages/logout/Logout';
 import LoginError from './pages/loginError/LoginError';
 import { storageOnSuccessOps } from './utils/storage';
 
-const onTos = () => {
+const onTermsAndCondition = () => {
   const el = document.getElementById('otnotice-6f92cced-3bd1-4859-9295-baecfc74c64a');
+  if (el) {
+    // eslint-disable-next-line functional/immutable-data
+    el.style.display = 'block';
+  }
+  return <></>;
+};
+
+const onPrivacyDisclaimer = () => {
+  const el = document.getElementById('otnotice-26403d01-dc46-4c89-be70-4894839cf639');
   if (el) {
     // eslint-disable-next-line functional/immutable-data
     el.style.display = 'block';
@@ -65,7 +75,11 @@ function App() {
       case ROUTE_LOGIN_ERROR:
         return onLoginError();
       case ROUTE_TERMS_AND_CONDITION:
-        return onTos();
+        return onTermsAndCondition();
+      case ROUTE_PRIVACY_DISCLAIMER:
+        return onPrivacyDisclaimer();
+      default:
+        return <></>;
     }
   }
 

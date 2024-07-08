@@ -13,7 +13,11 @@ import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
-import { ENABLE_LANDING_REDIRECT, ROUTE_TERMS_AND_CONDITION } from '../../utils/constants';
+import {
+  ENABLE_LANDING_REDIRECT,
+  ROUTE_PRIVACY_DISCLAIMER,
+  ROUTE_TERMS_AND_CONDITION,
+} from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
@@ -42,6 +46,7 @@ const Login = () => {
 
   const [showIDPS, setShowIDPS] = useState(false);
   const [showTos, setShowTos] = useState(false);
+  const [showPrivacyDisclaimer, setShowPrivacyDisclaimer] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
@@ -122,6 +127,14 @@ const Login = () => {
     }
   }, [showTos]);
 
+  useEffect(() => {
+    if (showPrivacyDisclaimer) {
+      trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+        window.open(ROUTE_PRIVACY_DISCLAIMER, '_blank')
+      );
+    }
+  }, [showPrivacyDisclaimer]);
+
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     trackEvent(
@@ -153,10 +166,6 @@ const Login = () => {
     return <SpidSelect onBack={onBackAction} />;
   }
 
-  const redirectPrivacyLink = () =>
-    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-      window.location.assign(ENV.URL_FOOTER.PRIVACY_DISCLAIMER)
-    );
   const columnsOccupiedByAlert = 5;
 
   return (
@@ -349,7 +358,7 @@ const Login = () => {
                     fontWeight: '400',
                     color: 'primary.main',
                   }}
-                  onClick={redirectPrivacyLink}
+                  onClick={() => setShowPrivacyDisclaimer(true)}
                 >
                   Informativa Privacy
                 </Link>
