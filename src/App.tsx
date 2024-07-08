@@ -78,6 +78,8 @@ function App() {
         return onTermsAndCondition();
       case ROUTE_PRIVACY_DISCLAIMER:
         return onPrivacyDisclaimer();
+      default:
+        return <></>;
     }
   }
 
