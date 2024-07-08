@@ -6,13 +6,22 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
+  ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
-import { redirectToLogin } from './utils/utils';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
 import Logout from './pages/logout/Logout';
 import LoginError from './pages/loginError/LoginError';
 import { storageOnSuccessOps } from './utils/storage';
+
+const onTos = () => {
+  const el = document.getElementById('otnotice-6f92cced-3bd1-4859-9295-baecfc74c64a');
+  if (el) {
+    // eslint-disable-next-line functional/immutable-data
+    el.style.display = 'block';
+  }
+  return <></>;
+};
 
 const onLogout = () => <Logout />;
 
@@ -55,8 +64,8 @@ function App() {
         return onLoginSuccess();
       case ROUTE_LOGIN_ERROR:
         return onLoginError();
-      default:
-        redirectToLogin();
+      case ROUTE_TERMS_AND_CONDITION:
+        return onTos();
     }
   }
 
