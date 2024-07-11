@@ -4,30 +4,36 @@ import { Button, Grid, Link, Stack } from '@mui/material';
 import { Breadcrumbs } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme } from '@pagopa/mui-italia';
+import { ENV } from '../utils/env';
 
 export function PrivacyPolicyPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const base = document.querySelector('base');
+
+    if (base) {
+      base.href = '/auth/informativa-privacy';
+      base.target = '_self';
+    }
+  }, []);
+
+  useEffect(() => {
     const script = document.createElement('script');
-    script.src =
-      'https://privacyportalde-cdn.onetrust.com/privacy-notice-scripts/otnotice-1.0.min.js';
+
+    script.src = ENV.OT.SRC;
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings =
-      'eyJjYWxsYmFja1VybCI6Imh0dHBzOi8vcHJpdmFjeXBvcnRhbC1kZS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9wcml2YWN5Tm90aWNlcy9zdGF0cy92aWV3cyJ9';
+    (script as any).settings = ENV.OT.TOKEN;
 
     document.body.appendChild(script);
 
-    console.log('window.Service:', (window as any).OneTrust);
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([
-          'https://privacyportalde-cdn.onetrust.com/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/26403d01-dc46-4c89-be70-4894839cf639.json',
-        ]);
+        (window as any).OneTrust.NoticeApi.LoadNotices([ENV.OT.REACT_APP_OT_TOS_RESOURCE]);
       });
     };
 

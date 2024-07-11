@@ -3,29 +3,27 @@ import { useEffect, useRef } from 'react';
 import { Breadcrumbs, Button, Grid, Link, Stack } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme } from '@pagopa/mui-italia';
+import { ENV } from '../utils/env';
 
 export function TermsAndConditionsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src =
-      'https://privacyportalde-cdn.onetrust.com/privacy-notice-scripts/otnotice-1.0.min.js';
+
+    script.src = ENV.OT.SRC;
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings =
-      'eyJjYWxsYmFja1VybCI6Imh0dHBzOi8vcHJpdmFjeXBvcnRhbC1kZS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9wcml2YWN5Tm90aWNlcy9zdGF0cy92aWV3cyJ9';
+    (script as any).settings = ENV.OT.TOKEN;
 
     document.body.appendChild(script);
 
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([
-          'https://privacyportalde-cdn.onetrust.com/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/6f92cced-3bd1-4859-9295-baecfc74c64a.json',
-        ]);
+        (window as any).OneTrust.NoticeApi.LoadNotices([ENV.OT.RESOURCE_TERMS_AND_CONDITION]);
       });
     };
 
