@@ -1,10 +1,10 @@
-import '@pagopa/selfcare-common-frontend/common-polyfill';
+import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import '@pagopa/selfcare-common-frontend/index.css';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '@pagopa/mui-italia';
-import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
+import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import App from './App';
 import { ENV } from './utils/env';
 import './consentAndAnalyticsConfiguration.ts';

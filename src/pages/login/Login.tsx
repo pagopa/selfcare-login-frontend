@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
 import Layout from '../../components/Layout';
@@ -121,7 +121,7 @@ const Login = () => {
   useEffect(() => {
     if (showTos) {
       trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-        window.open(ROUTE_TERMS_AND_CONDITION, '_blank')
+        window.location.assign(ROUTE_TERMS_AND_CONDITION)
       );
       setShowTos(false);
     }
@@ -130,7 +130,7 @@ const Login = () => {
   useEffect(() => {
     if (showPrivacyDisclaimer) {
       trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-        window.open(ROUTE_PRIVACY_DISCLAIMER, '_blank')
+        window.location.assign(ROUTE_PRIVACY_DISCLAIMER)
       );
     }
   }, [showPrivacyDisclaimer]);

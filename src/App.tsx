@@ -1,5 +1,5 @@
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
+import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import Login from './pages/login/Login';
 import {
   ROUTE_LOGIN,
@@ -14,24 +14,12 @@ import ValidateSession from './pages/ValidateSession/ValidateSession';
 import Logout from './pages/logout/Logout';
 import LoginError from './pages/loginError/LoginError';
 import { storageOnSuccessOps } from './utils/storage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 
-const onTermsAndCondition = () => {
-  const el = document.getElementById('otnotice-6f92cced-3bd1-4859-9295-baecfc74c64a');
-  if (el) {
-    // eslint-disable-next-line functional/immutable-data
-    el.style.display = 'block';
-  }
-  return <></>;
-};
+const onTermsAndCondition = () => <TermsAndConditionsPage />;
 
-const onPrivacyDisclaimer = () => {
-  const el = document.getElementById('otnotice-26403d01-dc46-4c89-be70-4894839cf639');
-  if (el) {
-    // eslint-disable-next-line functional/immutable-data
-    el.style.display = 'block';
-  }
-  return <></>;
-};
+const onPrivacyDisclaimer = () => <PrivacyPolicyPage />;
 
 const onLogout = () => <Logout />;
 
