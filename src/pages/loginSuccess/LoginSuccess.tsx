@@ -1,5 +1,8 @@
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
+import {
+  storageTokenOps,
+  storageUserOps,
+} from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
 import { redirectToLogin } from '../../utils/utils';

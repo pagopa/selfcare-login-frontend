@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
 import Layout from '../../components/Layout';
@@ -45,8 +45,6 @@ const Login = () => {
   const { t } = useTranslation();
 
   const [showIDPS, setShowIDPS] = useState(false);
-  const [showTos, setShowTos] = useState(false);
-  const [showPrivacyDisclaimer, setShowPrivacyDisclaimer] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
@@ -118,22 +116,17 @@ const Login = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (showTos) {
-      trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-        window.open(ROUTE_TERMS_AND_CONDITION, '_blank')
-      );
-      setShowTos(false);
-    }
-  }, [showTos]);
+  const handleTosRedirect = () => {
+    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
+      window.location.assign(ROUTE_TERMS_AND_CONDITION)
+    );
+  };
 
-  useEffect(() => {
-    if (showPrivacyDisclaimer) {
-      trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-        window.open(ROUTE_PRIVACY_DISCLAIMER, '_blank')
-      );
-    }
-  }, [showPrivacyDisclaimer]);
+  const handlePrivacyRedirect = () => {
+    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+      window.location.assign(ROUTE_PRIVACY_DISCLAIMER)
+    );
+  };
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
@@ -344,7 +337,7 @@ const Login = () => {
                     fontWeight: '400',
                     color: 'primary.main',
                   }}
-                  onClick={() => setShowTos(true)}
+                  onClick={handleTosRedirect}
                 >
                   {'Termini e condizioni d’uso'}
                 </Link>
@@ -358,7 +351,7 @@ const Login = () => {
                     fontWeight: '400',
                     color: 'primary.main',
                   }}
-                  onClick={() => setShowPrivacyDisclaimer(true)}
+                  onClick={handlePrivacyRedirect}
                 >
                   Informativa Privacy
                 </Link>

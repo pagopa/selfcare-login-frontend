@@ -1,6 +1,6 @@
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
-import { EndingPage } from '@pagopa/selfcare-common-frontend';
+import { EndingPage } from '@pagopa/selfcare-common-frontend/lib';
 import { IllusError } from '@pagopa/mui-italia';
 import { useEffect, useState } from 'react';
 import { storageSpidSelectedOps } from '../../utils/storage';
