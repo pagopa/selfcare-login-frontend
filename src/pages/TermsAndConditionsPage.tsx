@@ -24,7 +24,9 @@ export function TermsAndConditionsPage() {
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([process.env.RESOURCE_TERMS_AND_CONDITION]);
+        (window as any).OneTrust.NoticeApi.LoadNotices([
+          process.env.REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE,
+        ]);
       });
     };
 
