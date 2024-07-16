@@ -20,10 +20,6 @@ variables:
 
   # global variables
   react_app_pagopa_help_email: '$(REACT_APP_ASSISTANCE_EMAIL)'
-  react_app_ot_src: '$(REACT_APP_OT_SRC)'
-  react_app_ot_token: '$(REACT_APP_OT_TOKEN)'
-  react_app_ot_terms_condition_resource: '$(REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE)'
-  react_app_ot_tos_resource: '(REACT_APP_OT_TOS_RESOURCE)'
 
   ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release-uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')) }}:
     environment: 'UAT'
