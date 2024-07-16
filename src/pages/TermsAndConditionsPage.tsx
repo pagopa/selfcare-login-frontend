@@ -12,8 +12,7 @@ export function TermsAndConditionsPage() {
   useEffect(() => {
     const script = document.createElement('script');
 
-    script.src =
-      'https://privacyportalde-cdn.onetrust.com/privacy-notice-scripts/otnotice-1.0.min.js';
+    script.src = process.env.REACT_APP_OT_SRC ?? '';
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
