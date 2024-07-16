@@ -5,11 +5,7 @@ import { useEffect, useState } from 'react';
 import { ENV } from '../utils/env';
 import { isPnpg } from '../utils/utils';
 
-type Props = {
-  withSecondHeader?: boolean;
-};
-
-export const LoginHeader = ({ withSecondHeader }: Props) => {
+export const LoginHeader = () => {
   const [showDocBtn, setShowDocBtn] = useState(false);
 
   useEffect(() => {
@@ -22,7 +18,7 @@ export const LoginHeader = ({ withSecondHeader }: Props) => {
 
   return (
     <Header
-      withSecondHeader={withSecondHeader ?? false}
+      withSecondHeader={false}
       enableAssistanceButton={ENV.ENV !== 'UAT'}
       assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
       enableLogin={false}
