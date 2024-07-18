@@ -3,7 +3,10 @@ import { render } from '@testing-library/react';
 import Logout from '../Logout';
 import { ROUTE_LOGIN } from '../../../utils/constants';
 import { storageOnSuccessOps } from '../../../utils/storage';
-import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import {
+  storageTokenOps,
+  storageUserOps,
+} from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 
 const oldWindowLocation = global.window.location;
 

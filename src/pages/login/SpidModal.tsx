@@ -1,5 +1,5 @@
 import { Button, Dialog, Grid, Icon, Typography } from '@mui/material';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { useTranslation } from 'react-i18next';
 import { IDPS, IdentityProvider } from '../../utils/IDPS';
 import { ENV } from '../../utils/env';

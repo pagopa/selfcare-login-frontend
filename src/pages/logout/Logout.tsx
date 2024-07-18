@@ -1,4 +1,7 @@
-import { storageTokenOps, storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import {
+  storageTokenOps,
+  storageUserOps,
+} from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { storageOnSuccessOps } from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
 

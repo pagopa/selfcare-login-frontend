@@ -5,7 +5,7 @@ import { IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { useTranslation } from 'react-i18next';
 import { IdentityProvider, IDPS } from '../../utils/IDPS';
 import SpidBig from '../../assets/spid_big.svg';

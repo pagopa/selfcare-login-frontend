@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import ValidSession from '../ValidateSession';
 import { ENV } from '../../../utils/env';
 import { User } from '../../../models/User';
-import { storageUserOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 const { TextDecoder } = require('util');
 
 global.TextDecoder = TextDecoder;
