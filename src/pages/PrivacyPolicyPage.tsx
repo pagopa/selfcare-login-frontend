@@ -4,9 +4,10 @@ import { Button, Grid, Link, Stack } from '@mui/material';
 import { Breadcrumbs } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme } from '@pagopa/mui-italia';
-import { ENV } from '../utils/env';
+import { useTranslation } from 'react-i18next';
 
 export function PrivacyPolicyPage() {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,19 +22,19 @@ export function PrivacyPolicyPage() {
   useEffect(() => {
     const script = document.createElement('script');
 
-    script.src = ENV.OT.SRC;
+    script.src = process.env.REACT_APP_OT_SRC ?? '';
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings = ENV.OT.TOKEN;
+    (script as any).settings = process.env.REACT_APP_OT_TOKEN;
 
     document.body.appendChild(script);
 
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([ENV.OT.REACT_APP_OT_TOS_RESOURCE]);
+        (window as any).OneTrust.NoticeApi.LoadNotices([process.env.REACT_APP_OT_TOS_RESOURCE]);
       });
     };
 
@@ -61,11 +62,11 @@ export function PrivacyPolicyPage() {
             accessKey="b"
             onClick={goBack}
           >
-            Indietro
+            {t('breadCrumb.back')}
           </Button>
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="none" color={theme.palette.text.disabled} sx={{ cursor: 'default' }}>
-              Privacy Policy
+              {t('breadCrumb.privacyPolicy')}
             </Link>
           </Breadcrumbs>
         </Grid>
