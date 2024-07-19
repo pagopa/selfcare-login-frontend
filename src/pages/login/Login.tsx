@@ -6,14 +6,18 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import { Alert, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
 import { ENV } from '../../utils/env';
-import { ENABLE_LANDING_REDIRECT } from '../../utils/constants';
+import {
+  ENABLE_LANDING_REDIRECT,
+  ROUTE_PRIVACY_DISCLAIMER,
+  ROUTE_TERMS_AND_CONDITION,
+} from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
 import SpidSelect from './SpidSelect';
@@ -38,6 +42,8 @@ export const cieIcon = () => (
 );
 
 const Login = () => {
+  const { t } = useTranslation();
+
   const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
@@ -110,7 +116,17 @@ const Login = () => {
     }
   }, []);
 
-  const { t } = useTranslation();
+  const handleTosRedirect = () => {
+    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
+      window.location.assign(ROUTE_TERMS_AND_CONDITION)
+    );
+  };
+
+  const handlePrivacyRedirect = () => {
+    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
+      window.location.assign(ROUTE_PRIVACY_DISCLAIMER)
+    );
+  };
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
@@ -142,11 +158,6 @@ const Login = () => {
   if (showIDPS) {
     return <SpidSelect onBack={onBackAction} />;
   }
-
-  const redirectPrivacyLink = () =>
-    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-      window.location.assign(ENV.URL_FOOTER.PRIVACY_DISCLAIMER)
-    );
 
   const columnsOccupiedByAlert = 5;
 
@@ -326,11 +337,7 @@ const Login = () => {
                     fontWeight: '400',
                     color: 'primary.main',
                   }}
-                  onClick={() => {
-                    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-                      window.location.assign(ENV.URL_FOOTER.TERMS_AND_CONDITIONS)
-                    );
-                  }}
+                  onClick={handleTosRedirect}
                 >
                   {'Termini e condizioni d’uso'}
                 </Link>
@@ -344,7 +351,7 @@ const Login = () => {
                     fontWeight: '400',
                     color: 'primary.main',
                   }}
-                  onClick={redirectPrivacyLink}
+                  onClick={handlePrivacyRedirect}
                 >
                   Informativa Privacy
                 </Link>

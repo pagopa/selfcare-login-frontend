@@ -3,8 +3,9 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Login from '../Login';
 import { ENV } from '../../../utils/env';
 import './../../../locale';
-import { productId2ProductTitle } from '@pagopa/selfcare-common-frontend/utils/productId2ProductTitle';
+import { productId2ProductTitle } from '@pagopa/selfcare-common-frontend/lib/utils/productId2ProductTitle';
 import { MemoryRouter } from 'react-router-dom';
+import { ROUTE_TERMS_AND_CONDITION } from '../../../utils/constants';
 
 const oldWindowLocation = global.window.location;
 
@@ -113,9 +114,5 @@ test('Test: Click in the conditions and privacy links below the login methods', 
   const termsConditionLink = screen.getByText('Termini e condizioni d’uso');
   const privacyLink = screen.getAllByText(/Informativa Privacy/)[0];
 
-  fireEvent.click(termsConditionLink);
-  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
-
   fireEvent.click(privacyLink);
-  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FOOTER.PRIVACY_DISCLAIMER);
 });

@@ -1,18 +1,25 @@
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
+import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import Login from './pages/login/Login';
 import {
   ROUTE_LOGIN,
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
+  ROUTE_PRIVACY_DISCLAIMER,
+  ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
-import { redirectToLogin } from './utils/utils';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
 import Logout from './pages/logout/Logout';
 import LoginError from './pages/loginError/LoginError';
 import { storageOnSuccessOps } from './utils/storage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
+
+const onTermsAndCondition = () => <TermsAndConditionsPage />;
+
+const onPrivacyDisclaimer = () => <PrivacyPolicyPage />;
 
 const onLogout = () => <Logout />;
 
@@ -55,8 +62,12 @@ function App() {
         return onLoginSuccess();
       case ROUTE_LOGIN_ERROR:
         return onLoginError();
+      case ROUTE_TERMS_AND_CONDITION:
+        return onTermsAndCondition();
+      case ROUTE_PRIVACY_DISCLAIMER:
+        return onPrivacyDisclaimer();
       default:
-        redirectToLogin();
+        return <></>;
     }
   }
 

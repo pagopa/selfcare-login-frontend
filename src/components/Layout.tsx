@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { Footer } from '@pagopa/selfcare-common-frontend';
+import { Footer } from '@pagopa/selfcare-common-frontend/lib';
 import { ENV } from '../utils/env';
 import { LoginHeader } from './LoginHeader';
 
