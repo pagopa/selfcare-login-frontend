@@ -52,6 +52,10 @@ function App() {
 
   if (window.location.pathname === ROUTE_LOGOUT) {
     return onLogout();
+  } else if (window.location.pathname === ROUTE_TERMS_AND_CONDITION) {
+    return onTermsAndCondition();
+  } else if (window.location.pathname === ROUTE_PRIVACY_DISCLAIMER) {
+    return onPrivacyDisclaimer();
   } else if (token !== null && token !== undefined) {
     return onAlreadyInSession(token);
   } else {
