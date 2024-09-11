@@ -9,10 +9,10 @@ locals {
   repo_name = "selfcare-login-frontend"
 
   tags = {
-    CostCenter     = "TS310 - PAGAMENTI & SERVIZI"
-    CreatedBy      = "Terraform"
-    Environment    = "Dev"
-    Owner          = "SelfCare"
-    Source         = "https://github.com/pagopa/selfcare-login-frontend/blob/main/infra/identity/prod"
+    CostCenter  = "TS310 - PAGAMENTI & SERVIZI"
+    CreatedBy   = "Terraform"
+    Environment = "Dev"
+    Owner       = "SelfCare"
+    Source      = "https://github.com/pagopa/selfcare-login-frontend/blob/main/infra/identity/prod"
   }
 }

@@ -17,6 +17,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_federated_identities"></a> [federated\_identities](#module\_federated\_identities) | github.com/pagopa/dx//infra/modules/azure_federated_identity_with_github | main |
+| <a name="module_github_environments"></a> [github\_environments](#module\_github\_environments) | ../../modules/github_environments | n/a |
 
 ## Resources
 

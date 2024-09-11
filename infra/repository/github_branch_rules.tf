@@ -47,7 +47,7 @@ resource "github_branch_protection" "protection_release_dev" {
   pattern       = "release-dev"
 
   require_conversation_resolution = false
-  required_linear_history = true
+  required_linear_history         = true
 
   #tfsec:ignore:github-branch_protections-require_signed_commits
   require_signed_commits = false

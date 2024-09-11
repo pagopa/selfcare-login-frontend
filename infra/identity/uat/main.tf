@@ -36,9 +36,9 @@ module "github_environments" {
   source = "../../modules/github_environments"
 
   environment = local.env
-  repository = local.repo_name
-  prefix = local.prefix
-  reviewers = ["selfcare-admin", "selfcare-contributors", "engineering-team-cloud-eng"]
+  repository  = local.repo_name
+  prefix      = local.prefix
+  reviewers   = ["selfcare-admin", "selfcare-contributors", "engineering-team-cloud-eng"]
 
-  depends_on = [ module.federated_identities ]
+  depends_on = [module.federated_identities]
 }
