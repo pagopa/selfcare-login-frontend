@@ -117,15 +117,21 @@ const Login = () => {
   }, []);
 
   const handleTosRedirect = () => {
-    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () =>
-      window.location.assign(ROUTE_TERMS_AND_CONDITION)
-    );
+    trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () => {
+      const tosRoute = isPnpg
+        ? ROUTE_TERMS_AND_CONDITION.replace('/auth/', '/')
+        : ROUTE_TERMS_AND_CONDITION;
+      window.location.assign(tosRoute);
+    });
   };
 
   const handlePrivacyRedirect = () => {
-    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () =>
-      window.location.assign(ROUTE_PRIVACY_DISCLAIMER)
-    );
+    trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () => {
+      const privacyRoute = isPnpg
+        ? ROUTE_PRIVACY_DISCLAIMER.replace('/auth/', '/')
+        : ROUTE_PRIVACY_DISCLAIMER;
+      window.location.assign(privacyRoute);
+    });
   };
 
   const goCIE = () => {

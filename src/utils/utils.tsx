@@ -5,4 +5,4 @@ export const redirectToLogin = () => {
 };
 
 export const isPnpg =
-window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
+  window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
