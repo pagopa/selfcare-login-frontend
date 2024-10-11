@@ -125,7 +125,7 @@ jobs:
     # needs:
     # - release
     runs-on: ubuntu-22.04
-    if: inputs.environment == 'DEV' || success()
+    # if: inputs.environment == 'DEV' || success()
 
     steps:
     - name: Check-out code
