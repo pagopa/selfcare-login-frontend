@@ -122,8 +122,8 @@ jobs:
   #           $([[ "${{ inputs.release_semver }}" == "prerelease" ]] && echo "--prerelease")
       
   build:
-    needs:
-    - release
+    # needs:
+    # - release
     runs-on: ubuntu-22.04
     if: inputs.environment == 'DEV' || success()
 
@@ -195,7 +195,7 @@ jobs:
 
   deploy:
     needs:
-      - release
+      # - release
       - build
     if: ${{ needs.build.outputs.success == 'true' }}
     runs-on: 'ubuntu-22.04'
@@ -303,7 +303,7 @@ jobs:
 
   test7:
     needs:
-      - release 
+      # - release
       - build
     runs-on: ubuntu-latest
     if: success()
