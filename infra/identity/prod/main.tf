@@ -19,6 +19,10 @@ provider "azurerm" {
   }
 }
 
+provider "github" {
+  owner = "pagopa"
+}
+
 module "federated_identities" {
   source = "github.com/pagopa/dx//infra/modules/azure_federated_identity_with_github?ref=main"
 
