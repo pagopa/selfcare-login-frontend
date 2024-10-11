@@ -1,6 +1,9 @@
 name: Release and Deploy
 
 on:
+  push:
+    branches:
+      - devops-to-github-action
   workflow_dispatch:
     inputs:
       release_semver:
