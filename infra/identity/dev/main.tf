@@ -19,6 +19,10 @@ provider "azurerm" {
   }
 }
 
+provider "github" {
+  owner = "pagopa"
+}
+
 module "federated_identities" {
   source = "github.com/pagopa/dx//infra/modules/azure_federated_identity_with_github?ref=main"
 
@@ -38,7 +42,7 @@ module "github_environments" {
   environment = local.env
   repository  = local.repo_name
   prefix      = local.prefix
-  reviewers   = ["selfcare-admin", "selfcare-contributors", "engineering-team-cloud-eng"]
+  reviewers   = ["selfcare-admin", "selfcare-contributors"]
 
   depends_on = [module.federated_identities]
 }
