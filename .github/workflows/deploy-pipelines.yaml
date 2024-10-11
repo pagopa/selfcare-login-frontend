@@ -175,7 +175,7 @@ jobs:
         retention-days: 7
 
   deploy:
-    if: ${{ !github.event.act }}
+    if: success()
     needs: [make-build]
     runs-on: 'ubuntu-22.04'
     environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
