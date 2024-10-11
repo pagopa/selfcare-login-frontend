@@ -44,88 +44,85 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # release:
-  #   if: github.ref == format('refs/heads/{0}', inputs.default_branch) || startsWith(github.ref, 'refs/tags/v') && endsWith(github.ref, '-RELEASE')
-  #   runs-on: ubuntu-22.04
-  #   permissions:
-  #     id-token: write
-  #     contents: write
-  #     actions: write
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    if: github.ref == format('refs/heads/{0}', inputs.default_branch) || startsWith(github.ref, 'refs/tags/v') && endsWith(github.ref, '-RELEASE')
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+      actions: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  #   steps:
-  #     - name: Check-out code
-  #       uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    steps:
+      - name: Check-out code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
-  #       with:
-  #         node-version-file: ".node-version"
-  #         cache: "yarn"
-  #         cache-dependency-path: "yarn.lock"
+      - name: Setup Node.js
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version-file: ".node-version"
+          cache: "yarn"
+          cache-dependency-path: "yarn.lock"
 
-  #     - name: Install dependencies
-  #       run: |
-  #         yarn install
+      - name: Install dependencies
+        run: |
+          yarn install
 
-  #     - name: Get latest release version
-  #       id: get_latest_release
-  #       run: |
-  #         latest_release=$(gh api repos/${{ github.repository }}/releases/latest --jq .tag_name)
-  #         echo "Latest release: $latest_release"
-  #         echo "latest_release=$latest_release" >> $GITHUB_OUTPUT
+      - name: Get latest release version
+        id: get_latest_release
+        run: |
+          latest_release=$(gh api repos/${{ github.repository }}/releases/latest --jq .tag_name)
+          echo "Latest release: $latest_release"
+          echo "latest_release=$latest_release" >> $GITHUB_OUTPUT
 
-  #     - name: Bump version
-  #       id: bump_version
-  #       run: |
-  #         # Install semver tool
-  #         npm install -g semver
+      - name: Bump version
+        id: bump_version
+        run: |
+          # Install semver tool
+          npm install -g semver
           
-  #         # Extract the version number from the tag (remove 'v' if present)
-  #         current_version=${{ steps.get_latest_release.outputs.latest_release }}
-  #         if [[ $current_version == v* ]]; then
-  #           current_version=${current_version:1}
-  #         fi
+          # Extract the version number from the tag (remove 'v' if present)
+          current_version=${{ steps.get_latest_release.outputs.latest_release }}
+          if [[ $current_version == v* ]]; then
+            current_version=${current_version:1}
+          fi
           
-  #         # Bump the version according to the release_semver input
-  #         new_version=$(semver $current_version -i ${{ inputs.release_semver }})
+          # Bump the version according to the release_semver input
+          new_version=$(semver $current_version -i ${{ inputs.release_semver }})
 
-  #         echo "New version: $new_version"
-  #         echo "new_version=$new_version" >> $GITHUB_OUTPUT
+          echo "New version: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
 
-  #     - name: Configure git
-  #       run: |
-  #         git config --global user.email "${{ env.GIT_MAIL }}"
-  #         git config --global user.name "${{ env.GIT_USERNAME }}"
-  #       env:
-  #         GIT_MAIL: devops-pagopa-github-bot@pagopa.it
-  #         GIT_USERNAME: devops-pagopa-github-bot
+      - name: Configure git
+        run: |
+          git config --global user.email "${{ env.GIT_MAIL }}"
+          git config --global user.name "${{ env.GIT_USERNAME }}"
+        env:
+          GIT_MAIL: devops-pagopa-github-bot@pagopa.it
+          GIT_USERNAME: devops-pagopa-github-bot
 
-  #     - name: Commit version bump
-  #       run: |
-  #         yarn version --new-version ${{ steps.bump_version.outputs.new_version }}
-  #         git push origin ${{ inputs.default_branch }} --tags
+      - name: Commit version bump
+        run: |
+          yarn version --new-version ${{ steps.bump_version.outputs.new_version }}
+          git push origin ${{ inputs.default_branch }} --tags
 
-  #     - name: Generate changelog
-  #       id: changelog
-  #       run: |
-  #         echo "## Changes:" > CHANGELOG.md
-  #         echo "Auto-generated release for ${{ github.ref }}" >> CHANGELOG.md
-  #         echo "$(git log refs/tags/${{ steps.get_latest_release.outputs.latest_release }}..HEAD --pretty=format:"* %h %s" --abbrev-commit --no-merges)" >> CHANGELOG.md
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "## Changes:" > CHANGELOG.md
+          echo "Auto-generated release for ${{ github.ref }}" >> CHANGELOG.md
+          echo "$(git log refs/tags/${{ steps.get_latest_release.outputs.latest_release }}..HEAD --pretty=format:"* %h %s" --abbrev-commit --no-merges)" >> CHANGELOG.md
 
-  #     - name: Create GitHub Release
-  #       run: |
-  #         gh release create v${{ steps.bump_version.outputs.new_version }} \
-  #           --title "v${{ steps.bump_version.outputs.new_version }}" \
-  #           --notes-file CHANGELOG.md \
-  #           $([[ "${{ inputs.release_semver }}" == "prerelease" ]] && echo "--prerelease")
+      - name: Create GitHub Release
+        run: |
+          gh release create v${{ steps.bump_version.outputs.new_version }} \
+            --title "v${{ steps.bump_version.outputs.new_version }}" \
+            --notes-file CHANGELOG.md \
+            $([[ "${{ inputs.release_semver }}" == "prerelease" ]] && echo "--prerelease")
       
   build:
-    # needs:
-    # - release
     runs-on: ubuntu-22.04
-    # if: inputs.environment == 'DEV' || success()
 
     steps:
     - name: Check-out code
@@ -179,25 +176,11 @@ jobs:
       run: |
         echo "success=true" >> $GITHUB_OUTPUT
 
-  test1:
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ needs.build.outputs.success == 'true' }}
-    steps:
-      - uses: actions/checkout@v3
-
-  test2:
-    runs-on: ubuntu-latest
-    needs: build
-    if: success()
-    steps:
-      - uses: actions/checkout@v3
 
   deploy:
     needs:
-      # - release
       - build
-    if: ${{ needs.build.outputs.success == 'true' }}
+    if: success()
     runs-on: 'ubuntu-22.04'
     environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
     permissions:
@@ -270,43 +253,3 @@ jobs:
           ENDPOINT_NAME: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-endpoint
           RESOURCE_GROUP: selc-${{ steps.set-env.outputs.env_short }}-checkout-fe-rg
           BASE_PATH: auth
-
-  test3:
-    runs-on: ubuntu-latest
-    needs: build
-    if: always()
-    steps:
-      - uses: actions/checkout@v3
-
-  test4:
-    runs-on: ubuntu-latest
-    needs: build
-    if: always() && success()
-    steps:
-      - uses: actions/checkout@v3
-
-  test5:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          echo "success: ${{ needs.build.outputs.success }}"
-
-  test6:
-    needs: build
-    runs-on: ubuntu-latest
-    if: success()
-    steps:
-      - name: Deploy step
-        run: echo "Deploying..."
-
-  test7:
-    needs:
-      # - release
-      - build
-    runs-on: ubuntu-latest
-    if: success()
-    steps:
-      - name: Deploy step
-        run: echo "Deploying..."
