@@ -175,14 +175,15 @@ jobs:
         retention-days: 7
 
   deploy:
-    needs:
-    - build
-    if: needs.build.result == 'success'
+    # needs:
+    # - build
+    # if: needs.build.result == 'success'
     runs-on: 'ubuntu-22.04'
     environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
     permissions:
       id-token: write
       contents: read
+      actions: read
 
     steps:
       - name: checkout
