@@ -1,9 +1,6 @@
 name: Release and Deploy
 
 on:
-  push:
-    branches:
-      - devops-to-github-action
   workflow_dispatch:
     inputs:
       release_semver:
@@ -140,6 +137,10 @@ jobs:
         node-version-file: ".node-version"
         cache: "yarn"
         cache-dependency-path: "yarn.lock"
+
+    - name: Install dependencies
+      run: yarn install --immutable
+      working-directory: .
 
     - name: Build files
       env:
