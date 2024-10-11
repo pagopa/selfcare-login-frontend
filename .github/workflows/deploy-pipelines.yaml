@@ -224,28 +224,16 @@ jobs:
             exit 1
           fi
       
-      # - name: CDN Code Deploy
-      #   uses: pagopa/dx/.github/actions/cdn_code_deploy@main
-      #   with:
-      #     sync_dir_name: ${{ env.BUNDLE_NAME }}
-      #     resource_group_name: ${{ env.RESOURCE_GROUP }}
-      #     storage_account_name: ${{ env.STORAGE_ACCOUNT_NAME }}
-      #     profile_name: ${{ env.CDN_PROFILE }}
-      #     endpoint_name: ${{ env.ENDPOINT_NAME }}
-      #     blob_container_name: ${{ env.BLOB_CONTAINER_NAME }}
-      #     selective_purge_paths: "/${{ env.BASE_PATH }} /${{ env.BASE_PATH }}/*"
-      #   env:
-      #     BLOB_CONTAINER_NAME: "$web"
-      #     STORAGE_ACCOUNT_NAME: "selc${{ steps.set-env.outputs.env_short }}checkoutsa"
-      #     CDN_PROFILE: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-profile
-      #     ENDPOINT_NAME: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-endpoint
-      #     RESOURCE_GROUP: selc-${{ steps.set-env.outputs.env_short }}-checkout-fe-rg
-      #     BASE_PATH: auth
-
-      - name: Test Code Deploy
-        run: |
-          az storage blob list -c '${{ env.BLOB_CONTAINER_NAME }}' --account-name ${{ env.STORAGE_ACCOUNT_NAME }}
-          az cdn endpoint list -g ${{ env.RESOURCE_GROUP }} --profile-name ${{ env.CDN_PROFILE }}
+      - name: CDN Code Deploy
+        uses: pagopa/dx/.github/actions/cdn_code_deploy@main
+        with:
+          sync_dir_name: ${{ env.BUNDLE_NAME }}
+          resource_group_name: ${{ env.RESOURCE_GROUP }}
+          storage_account_name: ${{ env.STORAGE_ACCOUNT_NAME }}
+          profile_name: ${{ env.CDN_PROFILE }}
+          endpoint_name: ${{ env.ENDPOINT_NAME }}
+          blob_container_name: ${{ env.BLOB_CONTAINER_NAME }}
+          selective_purge_paths: "/${{ env.BASE_PATH }} /${{ env.BASE_PATH }}/*"
         env:
           BLOB_CONTAINER_NAME: "$web"
           STORAGE_ACCOUNT_NAME: "selc${{ steps.set-env.outputs.env_short }}checkoutsa"
