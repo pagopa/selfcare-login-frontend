@@ -174,11 +174,16 @@ jobs:
         if-no-files-found: error
         retention-days: 7
 
+    - name: Success
+      id: success
+      run: |
+        echo "success=true" >> $GITHUB_OUTPUT
+
   deploy:
     needs:
       - release
       - build
-    if: needs.build.result == 'success'
+    if:  ${{ needs.build.outputs.success == 'true' }}
     runs-on: 'ubuntu-22.04'
     environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
     permissions:
