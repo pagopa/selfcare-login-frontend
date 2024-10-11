@@ -175,9 +175,10 @@ jobs:
         retention-days: 7
 
   deploy:
-    # needs:
-    # - build
-    # if: needs.build.result == 'success'
+    needs:
+      - release
+      - build
+    if: needs.build.result == 'success'
     runs-on: 'ubuntu-22.04'
     environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
     permissions:
@@ -241,7 +242,7 @@ jobs:
 
       - name: Test Code Deploy
         run: |
-          az storage blob list -c ${{ env.BLOB_CONTAINER_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }}
+          az storage blob list -c '${{ env.BLOB_CONTAINER_NAME }}' --account-name ${{ env.STORAGE_ACCOUNT_NAME }}
           az cdn endpoint list -g ${{ env.RESOURCE_GROUP }} --profile-name ${{ env.CDN_PROFILE }}
         env:
           BLOB_CONTAINER_NAME: "$web"
