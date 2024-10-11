@@ -1,0 +1,246 @@
+name: Release and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_semver:
+        required: false
+        description: When packing a release, define the version bump to apply
+        type: choice
+        default: minor
+        options:
+          - major
+          - minor
+          - patch
+          - prerelease
+      default_branch:
+        required: false
+        description: The default branch to use
+        type: string
+        default: main
+      environment:
+        required: true
+        description: The environment to use
+        type: choice
+        default: DEV
+        options:
+          - DEV
+          - PROD
+          - UAT
+
+env:
+  BUNDLE_NAME: bundle
+  ENV_FILE: ${{ inputs.environment }}.env
+  REACT_APP_ASSISTANCE_EMAIL: areariservata@assistenza.pagopa.it
+  REACT_APP_OT_SRC: https://privacyportalde-cdn.onetrust.com/privacy-notice-scripts/otnotice-1.0.min.js
+  REACT_APP_OT_TERMS_CONDITION_RESOURCE: https://privacyportalde-cdn.onetrust.com/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/6f92cced-3bd1-4859-9295-baecfc74c64a.json
+  REACT_APP_OT_TOKEN: eyJjYWxsYmFja1VybCI6Imh0dHBzOi8vcHJpdmFjeXBvcnRhbC1kZS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9wcml2YWN5Tm90aWNlcy9zdGF0cy92aWV3cyJ9
+  REACT_APP_OT_TOS_RESOURCE: https://privacyportalde-cdn.onetrust.com/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/26403d01-dc46-4c89-be70-4894839cf639.json
+  REACT_APP_ENABLE_ASSISTANCE: "true"
+  REACT_APP_PAGOPA_HELP_EMAIL: "areariservata@assistenza.pagopa.it"
+
+concurrency:
+  group: ${{ github.workflow }}-cd
+  cancel-in-progress: false
+
+jobs:
+  make-release:
+    if: github.ref == format('refs/heads/{0}', inputs.default_branch) || startsWith(github.ref, 'refs/tags/v') && endsWith(github.ref, '-RELEASE')
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+      actions: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check-out code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version-file: ".node-version"
+          cache: "yarn"
+          cache-dependency-path: "yarn.lock"
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Get latest release version
+        id: get_latest_release
+        run: |
+          latest_release=$(gh api repos/${{ github.repository }}/releases/latest --jq .tag_name)
+          echo "Latest release: $latest_release"
+          echo "latest_release=$latest_release" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        id: bump_version
+        run: |
+          # Install semver tool
+          npm install -g semver
+          
+          # Extract the version number from the tag (remove 'v' if present)
+          current_version=${{ steps.get_latest_release.outputs.latest_release }}
+          if [[ $current_version == v* ]]; then
+            current_version=${current_version:1}
+          fi
+          
+          # Bump the version according to the release_semver input
+          new_version=$(semver $current_version -i ${{ inputs.release_semver }})
+
+          echo "New version: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+
+      - name: Configure git
+        run: |
+          git config --global user.email "${{ env.GIT_MAIL }}"
+          git config --global user.name "${{ env.GIT_USERNAME }}"
+        env:
+          GIT_MAIL: devops-pagopa-github-bot@pagopa.it
+          GIT_USERNAME: devops-pagopa-github-bot
+
+      - name: Commit version bump
+        run: |
+          yarn version --new-version ${{ steps.bump_version.outputs.new_version }}
+          git push origin ${{ inputs.default_branch }} --tags
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "## Changes:" > CHANGELOG.md
+          echo "Auto-generated release for ${{ github.ref }}" >> CHANGELOG.md
+          echo "$(git log refs/tags/${{ steps.get_latest_release.outputs.latest_release }}..HEAD --pretty=format:"* %h %s" --abbrev-commit --no-merges)" >> CHANGELOG.md
+
+      - name: Create GitHub Release
+        run: |
+          gh release create v${{ steps.bump_version.outputs.new_version }} \
+            --title "v${{ steps.bump_version.outputs.new_version }}" \
+            --notes-file CHANGELOG.md \
+            $([[ "${{ inputs.release_semver }}" == "prerelease" ]] && echo "--prerelease")
+      
+  make-build:
+    needs:
+    - make-release
+    runs-on: ubuntu-22.04
+    if: inputs.environment == 'DEV' || success()
+
+    steps:
+    - name: Check-out code
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+    - name: Setup Node.js
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      with:
+        node-version-file: ".node-version"
+        cache: "yarn"
+        cache-dependency-path: "yarn.lock"
+
+    - name: Build files
+      env:
+        INLINE_RUNTIME_CHUNK: 'false'
+        REACT_APP_ENV: "${{ inputs.environment }}"
+        REACT_APP_ENABLE_ASSISTANCE: "${{ env.REACT_APP_ENABLE_ASSISTANCE }}"
+        REACT_APP_PAGOPA_HELP_EMAIL: "${{ env.REACT_APP_PAGOPA_HELP_EMAIL }}"
+        REACT_APP_OT_SRC: "${{ env.REACT_APP_OT_SRC }}"
+        REACT_APP_OT_TOKEN: "${{ env.REACT_APP_OT_TOKEN }}"
+        REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE: "${{ env.REACT_APP_OT_TERMS_CONDITION_RESOURCE }}"
+        REACT_APP_OT_TOS_RESOURCE: "${{ env.REACT_APP_OT_TOS_RESOURCE }}"
+      run: |
+        # Loading environment variables from ${{ env.ENV_FILE }}
+        export $(cat ./.github/workflows/env/${{ env.ENV_FILE }} | xargs)
+
+        # Build
+        yarn build
+      shell: bash
+
+    - name: Build info
+      env:
+        EXECUTION_ID: "${{ github.run_number }} - ${{ github.workflow }}(${{ github.run_id }})"
+      run: printf "$EXECUTION_ID\n$(git name-rev --name-only FETCH_HEAD) $(git rev-parse HEAD)" > ${{ github.workspace }}/build/build.info
+      shell: bash
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
+      with:
+        name: ${{ env.BUNDLE_NAME }}
+        path: "${{ github.workspace }}/build"
+        if-no-files-found: error
+        retention-days: 7
+
+  deploy:
+    if: ${{ !github.event.act }}
+    needs: [make-build]
+    runs-on: 'ubuntu-22.04'
+    environment: ${{ inputs.environment == 'PROD' && 'prod-cd' || inputs.environment == 'UAT' && 'uat-cd' || 'dev-cd' }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Download Artifact
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: ${{ env.BUNDLE_NAME }}
+          path: ./${{ env.BUNDLE_NAME }}
+
+      - name: Azure Login
+        uses: azure/login@v2 # v2.0.0
+        env:
+          ARM_USE_OIDC: true
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        with:
+          client-id: ${{ env.ARM_CLIENT_ID }}
+          tenant-id: ${{ env.ARM_TENANT_ID }}
+          subscription-id: ${{ env.ARM_SUBSCRIPTION_ID }}
+
+      - name: Set environment value based on input
+        id: set-env
+        run: |
+          if [ "${{ inputs.environment }}" == "DEV" ]; then
+            echo "env_short=d" >> $GITHUB_OUTPUT
+          elif [ "${{ inputs.environment }}" == "UAT" ]; then
+            echo "env_short=u" >> $GITHUB_OUTPUT
+          elif [ "${{ inputs.environment }}" == "PROD" ]; then
+            echo "env_short=p" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid environment: ${{ inputs.environment }}"
+            exit 1
+          fi
+      
+      # - name: CDN Code Deploy
+      #   uses: pagopa/dx/.github/actions/cdn_code_deploy@main
+      #   with:
+      #     sync_dir_name: ${{ env.BUNDLE_NAME }}
+      #     resource_group_name: ${{ env.RESOURCE_GROUP }}
+      #     storage_account_name: ${{ env.STORAGE_ACCOUNT_NAME }}
+      #     profile_name: ${{ env.CDN_PROFILE }}
+      #     endpoint_name: ${{ env.ENDPOINT_NAME }}
+      #     blob_container_name: ${{ env.BLOB_CONTAINER_NAME }}
+      #     selective_purge_paths: "/${{ env.BASE_PATH }} /${{ env.BASE_PATH }}/*"
+      #   env:
+      #     BLOB_CONTAINER_NAME: "$web"
+      #     STORAGE_ACCOUNT_NAME: "selc${{ steps.set-env.outputs.env_short }}checkoutsa"
+      #     CDN_PROFILE: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-profile
+      #     ENDPOINT_NAME: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-endpoint
+      #     RESOURCE_GROUP: selc-${{ steps.set-env.outputs.env_short }}-checkout-fe-rg
+      #     BASE_PATH: auth
+
+      - name: Test Code Deploy
+        run: |
+          az storage blob list -c ${{ env.BLOB_CONTAINER_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }}
+          az cdn endpoint list -g ${{ env.RESOURCE_GROUP }} --profile-name ${{ env.CDN_PROFILE }}
+        env:
+          BLOB_CONTAINER_NAME: "$web"
+          STORAGE_ACCOUNT_NAME: "selc${{ steps.set-env.outputs.env_short }}checkoutsa"
+          CDN_PROFILE: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-profile
+          ENDPOINT_NAME: selc-${{ steps.set-env.outputs.env_short }}-checkout-cdn-endpoint
+          RESOURCE_GROUP: selc-${{ steps.set-env.outputs.env_short }}-checkout-fe-rg
+          BASE_PATH: auth
