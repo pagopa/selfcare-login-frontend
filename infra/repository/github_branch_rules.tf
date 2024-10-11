@@ -35,6 +35,7 @@ resource "github_branch_protection" "protection_main" {
     push_allowances = [
       "pagopa/selfcare-admin",
       "pagopa/selfcare-contributors",
+      "pagopa/engineering-team-cloud-eng",
     ]
   }
 
