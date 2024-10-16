@@ -1,10 +1,10 @@
 data "azurerm_user_assigned_identity" "identity_ci" {
-  name                = "${local.project}-selc-login-frontend-github-ci-identity"
+  name                = "${local.project}-ms-github-ci-identity"
   resource_group_name = local.identity_resource_group_name
 }
 
 data "azurerm_user_assigned_identity" "identity_cd" {
-  name                = "${local.project}-selc-login-frontend-github-cd-identity"
+  name                = "${local.project}-ms-github-cd-identity"
   resource_group_name = local.identity_resource_group_name
 }
 
