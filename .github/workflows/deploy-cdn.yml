@@ -27,7 +27,6 @@ jobs:
   release_and_deploy:
     uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@devops-to-github-action #main
     name: 'login frontend'
-    if: ${{ (startsWith(github.ref_name, 'releases/') != true && inputs.env == null) || inputs.env == 'dev' }}
     secrets: inherit
     with:
       environment: ${{ (startsWith(github.ref_name, 'releases/') != true && inputs.env == null) || inputs.env == 'dev' && 'dev' || (startsWith(github.ref_name, 'releases/') == true && inputs.env == null) || inputs.env == 'uat' && 'uat' || 'prod' }}
@@ -37,7 +36,6 @@ jobs:
       resource_group_name: checkout-fe-rg
       blob_container_name: "$web"
       base_path: auth
-
 
   promote_release:
     name: 'Promote prerelase release'
