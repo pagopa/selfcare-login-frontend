@@ -35,4 +35,4 @@ jobs:
       - name: Trigger release and Deploy on CDN
         run: |
           gh workflow run deploy-cdn.yml \
-            --ref ${{ steps.create_branch.outputs.new_branch_name }}
+            --ref ${{ steps.create_branch.outputs.new_branch_name }} --f env=uat

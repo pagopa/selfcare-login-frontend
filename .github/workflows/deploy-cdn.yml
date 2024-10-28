@@ -29,7 +29,7 @@ jobs:
     name: 'login frontend'
     secrets: inherit
     with:
-      environment: ${{ (startsWith(github.ref_name, 'releases/') != true && inputs.env == null) || inputs.env == 'dev' && 'dev' || (startsWith(github.ref_name, 'releases/') == true && inputs.env == null) || inputs.env == 'uat' && 'uat' || 'prod' }}
+      environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
       storage_account_name: "checkoutsa"
       profile_name: checkout-cdn-profile
       endpoint_name: checkout-cdn-endpoint
