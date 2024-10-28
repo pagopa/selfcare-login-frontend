@@ -3,16 +3,15 @@ name: Deploy CDN
 on:
   push:
     branches:
-      # - main
-      # - releases/*
-      - devops-to-github-action
-    # paths:
-    #   - "!.github/**"
-    #   - "!.devops/**"
-    #   - "!infra/**"
-    #   - "!.pre-commit-config.yaml"
-    #   - "!.terraform-version"
-    #   - "!CODEOWNERS"
+      - main
+      - releases/*
+    paths:
+      - "!.github/**"
+      - "!.devops/**"
+      - "!infra/**"
+      - "!.pre-commit-config.yaml"
+      - "!.terraform-version"
+      - "!CODEOWNERS"
   
   workflow_dispatch:
     inputs:
