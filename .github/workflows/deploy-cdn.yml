@@ -7,7 +7,7 @@ on:
       - releases/*
       - devops-to-github-action
     paths:
-      - "!.github/**"
+      # - "!.github/**"
       - "!.devops/**"
       - "!infra/**"
       - "!.pre-commit-config.yaml"
