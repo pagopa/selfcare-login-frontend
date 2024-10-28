@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - releases/*
+      - devops-to-github-action
     paths:
       - "!.github/**"
       - "!.devops/**"
