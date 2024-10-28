@@ -13,6 +13,6 @@ locals {
     CreatedBy   = "Terraform"
     Environment = "UAT"
     Owner       = "SelfCare"
-    Source      = "https://github.com/pagopa/selfcare-login-frontend/blob/main/infra/identity/prod"
+    Source      = "https://github.com/pagopa/selfcare-login-frontend/blob/main/infra/identity/uat"
   }
 }
