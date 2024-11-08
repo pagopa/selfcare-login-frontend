@@ -6,13 +6,13 @@ on:
       - main
       - releases/*
       - devops-to-github-action
-    paths:
-      # - "!.github/**"
-      - "!.devops/**"
-      - "!infra/**"
-      - "!.pre-commit-config.yaml"
-      - "!.terraform-version"
-      - "!CODEOWNERS"
+    # paths:
+    #   - "!.github/**"
+    #   - "!.devops/**"
+    #   - "!infra/**"
+    #   - "!.pre-commit-config.yaml"
+    #   - "!.terraform-version"
+    #   - "!CODEOWNERS"
   
   workflow_dispatch:
     inputs:
@@ -24,6 +24,7 @@ on:
         - uat
         - prod
 
+        
 jobs:
   release_and_deploy:
     uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@devops-to-github-action
