@@ -25,7 +25,7 @@ on:
 
 jobs:
   release_and_deploy:
-    uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@feature/SELC-5984
+    uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@main
     name: 'login frontend'
     secrets: inherit
     with:
