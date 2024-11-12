@@ -30,7 +30,7 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      file_environment: ${{ inputs.env != null && format('{0}-pnpg', inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat-pnpg') || 'dev-pnpg' }}
+      file_environment: ${{ inputs.env != null && format('fe_{0}_pnpg.env', inputs.env) || (startsWith(github.ref_name, 'releases/') && 'fe_uat_pnpg.env') || 'fe_dev_pnpg.dev' }}
       storage_account_name: "weupnpgcheckoutsa"
       profile_name: weu-pnpg-checkout-cdn-profile
       endpoint_name: weu-pnpg-checkout-cdn-endpoint
