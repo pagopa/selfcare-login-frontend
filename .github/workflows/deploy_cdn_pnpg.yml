@@ -24,13 +24,25 @@ on:
         - prod
 
 jobs:
+  compute_environment:
+    name: Compute Environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.set_env.outputs.environment }}
+    steps:
+      - name: Determine Environment
+        id: set_env
+        run: |
+          echo "environment=${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}" >> $GITHUB_OUTPUT
+  
   release_and_deploy:
     uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@main
-    name: 'login frontend'
+    name: "Release ${{ needs.compute_environment.outputs.environment }}"
+    needs: compute_environment
     secrets: inherit
     with:
-      environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      file_environment: ${{ inputs.env != null && format('fe_{0}_pnpg.env', inputs.env) || (startsWith(github.ref_name, 'releases/') && 'fe_uat_pnpg.env') || 'fe_dev_pnpg.dev' }}
+      environment: ${{ needs.compute_environment.outputs.environment }}
+      file_environment: ${{ format('fe_{0}_pnpg.env', needs.compute_environment.outputs.environment) }}
       storage_account_name: "weupnpgcheckoutsa"
       profile_name: weu-pnpg-checkout-cdn-profile
       endpoint_name: weu-pnpg-checkout-cdn-endpoint
