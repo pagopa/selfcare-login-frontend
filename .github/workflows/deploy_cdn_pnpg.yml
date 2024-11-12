@@ -1,4 +1,4 @@
-name: Deploy CDN
+name: Deploy CDN PNPG
 
 on:
   push:
@@ -30,20 +30,10 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      storage_account_name: "checkoutsa"
-      profile_name: checkout-cdn-profile
-      endpoint_name: checkout-cdn-endpoint
-      resource_group_name: checkout-fe-rg
+      file_environment: ${{ inputs.env != null && format('fe_{0}_pnpg.env', inputs.env) || (startsWith(github.ref_name, 'releases/') && 'fe_uat_pnpg.env') || 'fe_dev_pnpg.dev' }}
+      storage_account_name: "weupnpgcheckoutsa"
+      profile_name: weu-pnpg-checkout-cdn-profile
+      endpoint_name: weu-pnpg-checkout-cdn-endpoint
+      resource_group_name: weu-pnpg-checkout-fe-rg
       blob_container_name: "$web"
       base_path: auth
-
-  promote_release:
-    name: 'Promote prerelase release'
-    if: ${{ inputs.env == 'prod' }}
-    runs-on: ubuntu-20.04
-    needs: [release_and_deploy]
-    steps:
-      - uses: pagopa/selfcare-commons/github-actions-template/promote-release@main
-        with:
-          github_path_token: ${{ secrets.GH_PAT_VARIABLES }}
-          release_version: ${{ vars.CURRENT_UAT_VERSION }}
