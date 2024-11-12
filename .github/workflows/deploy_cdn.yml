@@ -23,14 +23,15 @@ on:
         - uat
         - prod
 
+
 jobs:
   release_and_deploy:
     uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@main
-    name: 'login frontend'
+    name: "Release [${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
     secrets: inherit
     with:
       environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      file_environment: ${{ inputs.env != null && format('fe_{0}.env', inputs.env) || (startsWith(github.ref_name, 'releases/') && 'fe_uat.env') || 'fe_dev.dev' }}
+      file_environment: ${{ format('fe_{0}.env', (inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev')) }}
       storage_account_name: "checkoutsa"
       profile_name: checkout-cdn-profile
       endpoint_name: checkout-cdn-endpoint
