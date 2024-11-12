@@ -1,4 +1,4 @@
-name: Deploy CDN
+name: Deploy CDN PNPG
 
 on:
   push:
