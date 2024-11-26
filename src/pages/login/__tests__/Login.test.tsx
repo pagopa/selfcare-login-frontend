@@ -9,6 +9,8 @@ import { ROUTE_TERMS_AND_CONDITION } from '../../../utils/constants';
 
 const oldWindowLocation = global.window.location;
 
+jest.mock('i18next-browser-languagedetector');
+
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
