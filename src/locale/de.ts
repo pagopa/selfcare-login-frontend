@@ -1,27 +1,72 @@
 export default {
   loginPage: {
-    title: 'Zugriff auf Area Riservata',
-    description: 'Der Bereich für die Körperschaften, die die Produkte PagoPA nutzen.',
+    title: 'Zugang zum reservierten Bereich',
+    description: 'Der Bereich für die Körperschaften, die PagoPA-Produkte verwenden.',
+    temporaryLogin: {
+      alert:
+        'Wenn du dich mit SPID anmeldest und ein Problem auftritt, kehre auf diese Seite zurück und klicke hier neben',
+      join: 'Melde dich hier an',
+    },
     loginBox: {
-      title: 'Log-in',
-      spidLogin: 'Zugriff mit SPID',
-      cieLogin: 'Zugriff mit CIE',
+      title: 'Login',
+      spidLogin: 'Mit SPID anmelden',
+      cieLogin: 'Mit CIE anmelden',
     },
     privacyAndCondition:
-      'Wenn du dich anmeldest, akzeptierst du die <1>Allgemeinen Geschäftsbedingungen</1> des Dienstes und <3 /> bestätigst, die <5>Datenschutzerklärung</5> gelesen zu haben',
+      "Durch Anmelden am Dienst erklärst du dich mit dessen <1>Nutzungsbedingungen</1> einverstanden <3 />und bestätigst, die <5>Datenschutzerklärung gelesen zu haben.</5>",
   },
   loginPageFromOnboarding: {
-    title: 'Wie möchtest du zugreifen?',
-    description: 'Wähle deinen bevorzugten Modus aus und starte das <1 /> Beitrittsverfahren.',
+    title: 'Wie möchtest du dich anmelden?',
+    description:
+      'Wähle deinen bevorzugten Anmeldemodus und beginne mit dem <1 /> Beitritt zum Produkt <3>{{nomeProdotto}}<3/>.',
+    ptDescription:
+      'Wähle deinen bevorzugzten Anmeldemodus und registriere dich <1 /> als technologischer Partner für das Produkt <3>{{nomeProdotto}}<3/>.',
   },
   spidSelect: {
     title: 'Wähle deinen SPID-Anbieter',
+    modalTitle: 'Wähle deinen Identity Provider',
     cancelButton: 'Abbrechen',
-    closeButton: 'Abmelden',
+    closeButton: 'Beenden',
   },
   loginError: {
-    title: 'Es ist leider ein Fehler aufgetreten.',
-    message:
-      'Aufgrund eines Systemfehlers ist es nicht möglich, den Vorgang abzuschließen.<1 />Bitte versuche es später erneut.',
+    retry: 'Erneut versuchen',
+    close: 'Schließen',
+    tooManyAttempts: {
+      title: 'Du hast zu viele <1 />Anmeldeversuche unternommen',
+      description:
+        'Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben. <1 />Prüfe die Anmeldedaten und versuche es bitte in einigen Minuten erneut oder wende dich an <3 />deinen SPID-Identitätsanbieter, um deine Anmeldeinformationen zu ändern.',
+    },
+    incompatibleCredentials: {
+      title: 'Anmeldung fehlgeschlagen',
+      description:
+        'Aus Sicherheitsgründen musst du eine Identität mit einer höheren <1 />Sicherheitsstufe verwenden. Für weiterführende Informationen wende dich bitte an <3 />deinen SPID-Identitätsanbieter.',
+    },
+    authTimeout: {
+      title: 'Zu viel Zeit ist vergangen',
+      description:
+        "Seit deinem Anmeldeversuch ist zu viel Zeit vergangen: Beginne <1 />von vorne.",
+    },
+    deniedByUser: {
+      title: 'Du hast der Übermittlung <1 />der Daten nicht zugestimmt',
+      description: 'Zum Anmelden ist es notwendig, der Übermittlung einiger Daten zuzustimmen.',
+    },
+    suspendedOrRevoked: {
+      title: 'Identität gesperrt oder widerrufen',
+      message:
+        'Deine SPID-Identität ist gesperrt oder widerrufen. Für mehr <1/>Informationen wende dich bitte an deinen SPID-Identitätsanbieter.',
+    },
+    canceledbyUser: {
+      title: 'Du hast die Anmeldung abgebrochen',
+      description: 'Du kannst die Anmeldung jederzeit wieder versuchen.',
+    },
+    generic: {
+      title: 'Anmeldung fehlgeschlagen',
+      description: 'Beim Anmelden ist ein Problem aufgetreten. Versuch es in einigen <1/>Minuten erneut.',
+    },
+  },
+  breadCrumb: {
+    back: 'Zurück',
+    privacyPolicy: 'Datenschutzrichtlinie',
+    termsAndConditions: 'Nutzungsbedingungen',
   },
 };
