@@ -5,15 +5,14 @@ import { ENV } from '../../../utils/env';
 import './../../../locale';
 import { productId2ProductTitle } from '@pagopa/selfcare-common-frontend/lib/utils/productId2ProductTitle';
 import { MemoryRouter } from 'react-router-dom';
-import { ROUTE_TERMS_AND_CONDITION } from '../../../utils/constants';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 
 const oldWindowLocation = global.window.location;
-
-jest.mock('i18next-browser-languagedetector');
 
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  i18n.changeLanguage('it');
 });
 afterAll(() => {
   // eslint-disable-next-line functional/immutable-data
