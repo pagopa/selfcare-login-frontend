@@ -3,6 +3,7 @@ import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
 import { redirectToLogin } from '../../utils/utils';
@@ -21,7 +22,7 @@ export const redirectSuccessLogin = () => {
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
-      : ENV.URL_FE.DASHBOARD;
+      : ENV.URL_FE.DASHBOARD.concat(`?lang=${i18n.language}`);
   storageOnSuccessOps.delete();
   window.location.assign(redirectTo);
 };
