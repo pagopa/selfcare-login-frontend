@@ -20,7 +20,6 @@ import {
 } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
-import SpidSelect from './SpidSelect';
 import SpidModal from './SpidModal';
 
 type BannerContent = {
@@ -44,7 +43,6 @@ export const cieIcon = () => (
 const Login = () => {
   const { t } = useTranslation();
 
-  const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
@@ -153,18 +151,6 @@ const Login = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
 
-  const onBackAction = () => {
-    setShowIDPS(false);
-  };
-
-  const onLinkClick = () => {
-    setShowIDPS(true);
-  };
-
-  if (showIDPS) {
-    return <SpidSelect onBack={onBackAction} />;
-  }
-
   const columnsOccupiedByAlert = 5;
 
   return (
@@ -229,22 +215,6 @@ const Login = () => {
                   t('loginPage.description')
                 )}
               </Typography>
-            </Grid>
-          </Grid>
-        )}
-        {ENV.ENABLED_SPID && (
-          <Grid container justifyContent="center" mb={5}>
-            <Grid item>
-              <Alert severity="warning">
-                {t('loginPage.temporaryLogin.alert')}
-                <Link
-                  ml={4}
-                  sx={{ fontWeight: 'fontWeightBold', cursor: 'pointer', textDecoration: 'none' }}
-                  onClick={onLinkClick}
-                >
-                  {t('loginPage.temporaryLogin.join')}
-                </Link>
-              </Alert>
             </Grid>
           </Grid>
         )}

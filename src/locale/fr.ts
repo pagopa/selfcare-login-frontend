@@ -2,18 +2,13 @@ export default {
   loginPage: {
     title: 'Accéder à l’Espace Réservé',
     description: 'L’espace dédié aux organismes utilisant les produits de PagoPA.',
-    temporaryLogin: {
-      alert:
-        'Si vous vous connectez avec le SPID et que vous rencontrez un problème, revenez à cette page et cliquez ici',
-      join: 'Entrez ici',
-    },
     loginBox: {
       title: 'Login',
       spidLogin: 'Entrez avec SPID',
       cieLogin: 'Entrez avec CIE',
     },
     privacyAndCondition:
-      "En continuant vous acceptez les <1>Conditions générales d’utilisation</1> du service et <3 /> vous confirmez que vous avez lu <5>la Charte de confidentialité</5>",
+      'En continuant vous acceptez les <1>Conditions générales d’utilisation</1> du service et <3 /> vous confirmez que vous avez lu <5>la Charte de confidentialité</5>',
   },
   loginPageFromOnboarding: {
     title: 'Comment voulez-vous y accéder ?',
@@ -44,7 +39,7 @@ export default {
     authTimeout: {
       title: 'Trop de temps s’est écoulé',
       description:
-        "Trop de temps s’est écoulé depuis que vous avez commencé la procédure de connexion : recommencez <1 />depuis le début.",
+        'Trop de temps s’est écoulé depuis que vous avez commencé la procédure de connexion : recommencez <1 />depuis le début.',
     },
     deniedByUser: {
       title: 'Vous n’avez pas consenti à l’envoi <1 />des données',
@@ -61,7 +56,8 @@ export default {
     },
     generic: {
       title: 'Impossible de se connecter',
-      description: 'Une erreur s’est produite lors de la connexion. Réessayez dans quelques <1/>minutes.',
+      description:
+        'Une erreur s’est produite lors de la connexion. Réessayez dans quelques <1/>minutes.',
     },
   },
   breadCrumb: {

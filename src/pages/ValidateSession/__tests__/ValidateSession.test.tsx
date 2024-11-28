@@ -4,6 +4,7 @@ import ValidSession from '../ValidateSession';
 import { ENV } from '../../../utils/env';
 import { User } from '../../../models/User';
 import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 const { TextDecoder } = require('util');
 
 global.TextDecoder = TextDecoder;
@@ -15,6 +16,7 @@ const oldWindowLocation = global.window.location;
 
 beforeAll(() => {
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  i18n.changeLanguage('it');
 });
 afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });

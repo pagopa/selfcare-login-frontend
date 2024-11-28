@@ -8,10 +8,12 @@ type Props = {
 
 const ValidateSession = ({ sessionToken }: Props) => {
   const user: User = storageUserOps.read();
+  const language = localStorage.getItem('i18nextLng');
+
   if (!user) {
     readUserFromToken(sessionToken);
   }
-  redirectSuccessLogin();
+  redirectSuccessLogin(language);
 
   return <div />;
 };

@@ -2,18 +2,13 @@ export default {
   loginPage: {
     title: 'Zugang zum reservierten Bereich',
     description: 'Der Bereich für die Körperschaften, die PagoPA-Produkte verwenden.',
-    temporaryLogin: {
-      alert:
-        'Wenn du dich mit SPID anmeldest und ein Problem auftritt, kehre auf diese Seite zurück und klicke hier neben',
-      join: 'Melde dich hier an',
-    },
     loginBox: {
       title: 'Login',
       spidLogin: 'Mit SPID anmelden',
       cieLogin: 'Mit CIE anmelden',
     },
     privacyAndCondition:
-      "Durch Anmelden am Dienst erklärst du dich mit dessen <1>Nutzungsbedingungen</1> einverstanden <3 />und bestätigst, die <5>Datenschutzerklärung gelesen zu haben.</5>",
+      'Durch Anmelden am Dienst erklärst du dich mit dessen <1>Nutzungsbedingungen</1> einverstanden <3 />und bestätigst, die <5>Datenschutzerklärung gelesen zu haben.</5>',
   },
   loginPageFromOnboarding: {
     title: 'Wie möchtest du dich anmelden?',
@@ -43,8 +38,7 @@ export default {
     },
     authTimeout: {
       title: 'Zu viel Zeit ist vergangen',
-      description:
-        "Seit deinem Anmeldeversuch ist zu viel Zeit vergangen: Beginne <1 />von vorne.",
+      description: 'Seit deinem Anmeldeversuch ist zu viel Zeit vergangen: Beginne <1 />von vorne.',
     },
     deniedByUser: {
       title: 'Du hast der Übermittlung <1 />der Daten nicht zugestimmt',
@@ -61,7 +55,8 @@ export default {
     },
     generic: {
       title: 'Anmeldung fehlgeschlagen',
-      description: 'Beim Anmelden ist ein Problem aufgetreten. Versuch es in einigen <1/>Minuten erneut.',
+      description:
+        'Beim Anmelden ist ein Problem aufgetreten. Versuch es in einigen <1/>Minuten erneut.',
     },
   },
   breadCrumb: {
