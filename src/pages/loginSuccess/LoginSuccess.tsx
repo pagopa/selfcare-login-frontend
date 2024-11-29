@@ -16,28 +16,27 @@ export const readUserFromToken = (token: string) => {
 };
 
 const validOnSuccessPattern = new RegExp('^[\\w?=&/-]+$');
-export const redirectSuccessLogin = (language: string | null) => {
+export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageOnSuccessOps.read();
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
   storageOnSuccessOps.delete();
-  window.location.assign(redirectTo.concat(`?lang=${language}`));
+  window.location.assign(redirectTo);
 };
 
 /** success login operations */
 const LoginSuccess = () => {
   const { hash = '' } = window.location;
   const urlToken = hash.replace('#token=', '');
-  const language = localStorage.getItem('i18nextLng');
 
   if (urlToken !== '' && urlToken !== undefined) {
     const spidId = storageSpidSelectedOps.read();
     trackEvent('LOGIN_SUCCESS', { SPID_IDP_ID: spidId });
     storageTokenOps.write(urlToken);
     readUserFromToken(urlToken);
-    redirectSuccessLogin(language);
+    redirectSuccessLogin();
   } else {
     redirectToLogin();
   }

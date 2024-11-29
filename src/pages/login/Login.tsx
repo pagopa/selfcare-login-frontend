@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -48,6 +49,8 @@ const Login = () => {
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
   const [openSpidModal, setOpenSpidModal] = useState(false);
   const [isPT, setIsPT] = useState(false);
+  const [language, setLanguage] = useState<string>();
+  const lang = i18n.language;
 
   const mapToArray = (json: { [key: string]: BannerContent }) => {
     const mapped = Object.values(json);
@@ -114,6 +117,12 @@ const Login = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang]);
+
   const handleTosRedirect = () => {
     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () => {
       const tosRoute = isPnpg
@@ -134,6 +143,9 @@ const Login = () => {
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+    if (language) {
+      sessionStorage.setItem('i18nextLng', language);
+    }
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {
