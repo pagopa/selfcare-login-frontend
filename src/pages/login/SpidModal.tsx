@@ -27,7 +27,7 @@ const SpidModal = ({ openSpidModal, setOpenSpidModal }: Props) => {
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
     if (language) {
-      sessionStorage.setItem('i18nextLng', language);
+      sessionStorage.setItem('lang', language);
     }
     const redirectUrl = `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(

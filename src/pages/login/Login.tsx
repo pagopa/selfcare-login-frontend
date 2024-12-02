@@ -144,7 +144,7 @@ const Login = () => {
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
     if (language) {
-      sessionStorage.setItem('i18nextLng', language);
+      sessionStorage.setItem('lang', language);
     }
     trackEvent(
       'LOGIN_IDP_SELECTED',
