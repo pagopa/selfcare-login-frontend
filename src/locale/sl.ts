@@ -2,18 +2,13 @@ export default {
   loginPage: {
     title: 'Dostopajte do rezerviranega območja',
     description: 'Prostor, namenjen organizacijam, ki uporabljajo produkte PagoPA.',
-    temporaryLogin: {
-      alert:
-        'Če se prijavite s SPID in naletite na težavo, se vrnite na to stran in pritisnite zraven',
-      join: 'Vstopite od tukaj',
-    },
     loginBox: {
       title: 'Prijava',
       spidLogin: 'Vstopite s SPID',
       cieLogin: 'Vstopite s CIE',
     },
     privacyAndCondition:
-      "S prijavo sprejemate <1>Pogoje in določila uporabe</1> storitve in <3 /> potrjujete, da ste prebrali <5>Politiko varovanja zasebnosti</5>",
+      'S prijavo sprejemate <1>Pogoje in določila uporabe</1> storitve in <3 /> potrjujete, da ste prebrali <5>Politiko varovanja zasebnosti</5>',
   },
   loginPageFromOnboarding: {
     title: 'Kako se želite prijaviti?',
@@ -43,8 +38,7 @@ export default {
     },
     authTimeout: {
       title: 'Minilo je preveč časa',
-      description:
-        "Preveč časa je minilo, odkar ste začeli s prijavo: začnite od <1 />začetka.",
+      description: 'Preveč časa je minilo, odkar ste začeli s prijavo: začnite od <1 />začetka.',
     },
     deniedByUser: {
       title: 'Niste podali soglasja za pošiljanje <1 />podatkov',

@@ -8,6 +8,7 @@ type Props = {
 
 const ValidateSession = ({ sessionToken }: Props) => {
   const user: User = storageUserOps.read();
+
   if (!user) {
     readUserFromToken(sessionToken);
   }

@@ -2,18 +2,13 @@ export default {
   loginPage: {
     title: 'Log in to the Reserved Area',
     description: 'The space dedicated to institutions that use PagoPA products.',
-    temporaryLogin: {
-      alert:
-        'If you enter with SPID and encounter a problem, return to this page and press here to the side',
-      join: 'Enter here',
-    },
     loginBox: {
       title: 'Login',
       spidLogin: 'Log in with SPID',
       cieLogin: 'Log in with CIE',
     },
     privacyAndCondition:
-      "By logging in, you accept the service <1>terms and conditions of use</1> and <3 />confirm to have read the <5>Privacy Policy</5>",
+      'By logging in, you accept the service <1>terms and conditions of use</1> and <3 />confirm to have read the <5>Privacy Policy</5>',
   },
   loginPageFromOnboarding: {
     title: 'How do you want to log in?',
@@ -44,7 +39,7 @@ export default {
     authTimeout: {
       title: 'Too much time has passed',
       description:
-        "Too much time has passed since you started your login: start <1 />from the beginning.",
+        'Too much time has passed since you started your login: start <1 />from the beginning.',
     },
     deniedByUser: {
       title: 'You did not give consent to send <1 />data',

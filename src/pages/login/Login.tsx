@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { Trans, useTranslation } from 'react-i18next';
 import { theme } from '@pagopa/mui-italia';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import Layout from '../../components/Layout';
 import SpidIcon from '../../assets/SpidIcon.svg';
 import CIEIcon from '../../assets/CIEIcon.svg';
@@ -20,7 +21,6 @@ import {
 } from '../../utils/constants';
 import { storageSpidSelectedOps } from '../../utils/storage';
 import { isPnpg } from '../../utils/utils';
-import SpidSelect from './SpidSelect';
 import SpidModal from './SpidModal';
 
 type BannerContent = {
@@ -44,12 +44,13 @@ export const cieIcon = () => (
 const Login = () => {
   const { t } = useTranslation();
 
-  const [showIDPS, setShowIDPS] = useState(false);
   const [fromOnboarding, setFromOnboarding] = useState<boolean>();
   const [product, setProduct] = useState<string>('');
   const [bannerContent, setBannerContent] = useState<Array<BannerContent>>();
   const [openSpidModal, setOpenSpidModal] = useState(false);
   const [isPT, setIsPT] = useState(false);
+  const [language, setLanguage] = useState<string>();
+  const lang = i18n.language;
 
   const mapToArray = (json: { [key: string]: BannerContent }) => {
     const mapped = Object.values(json);
@@ -116,6 +117,12 @@ const Login = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang]);
+
   const handleTosRedirect = () => {
     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () => {
       const tosRoute = isPnpg
@@ -136,6 +143,9 @@ const Login = () => {
 
   const goCIE = () => {
     storageSpidSelectedOps.write(ENV.SPID_CIE_ENTITY_ID);
+    if (language) {
+      sessionStorage.setItem('lang', language);
+    }
     trackEvent(
       'LOGIN_IDP_SELECTED',
       {
@@ -152,18 +162,6 @@ const Login = () => {
   const goBackToLandingPage = () => {
     window.location.assign(`${ENV.URL_FE.LANDING}`);
   };
-
-  const onBackAction = () => {
-    setShowIDPS(false);
-  };
-
-  const onLinkClick = () => {
-    setShowIDPS(true);
-  };
-
-  if (showIDPS) {
-    return <SpidSelect onBack={onBackAction} />;
-  }
 
   const columnsOccupiedByAlert = 5;
 
@@ -229,22 +227,6 @@ const Login = () => {
                   t('loginPage.description')
                 )}
               </Typography>
-            </Grid>
-          </Grid>
-        )}
-        {ENV.ENABLED_SPID && (
-          <Grid container justifyContent="center" mb={5}>
-            <Grid item>
-              <Alert severity="warning">
-                {t('loginPage.temporaryLogin.alert')}
-                <Link
-                  ml={4}
-                  sx={{ fontWeight: 'fontWeightBold', cursor: 'pointer', textDecoration: 'none' }}
-                  onClick={onLinkClick}
-                >
-                  {t('loginPage.temporaryLogin.join')}
-                </Link>
-              </Alert>
             </Grid>
           </Grid>
         )}

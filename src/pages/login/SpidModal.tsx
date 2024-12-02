@@ -1,6 +1,8 @@
 import { Button, Dialog, Grid, Icon, Typography } from '@mui/material';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { useTranslation } from 'react-i18next';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
+import { useState, useEffect } from 'react';
 import { IDPS, IdentityProvider } from '../../utils/IDPS';
 import { ENV } from '../../utils/env';
 import { storageSpidSelectedOps } from '../../utils/storage';
@@ -13,8 +15,20 @@ type Props = {
 const SpidModal = ({ openSpidModal, setOpenSpidModal }: Props) => {
   const { t } = useTranslation();
 
+  const [language, setLanguage] = useState<string>();
+  const lang = i18n.language;
+
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang]);
+
   const getSPID = (IDP: IdentityProvider) => {
     storageSpidSelectedOps.write(IDP.entityId);
+    if (language) {
+      sessionStorage.setItem('lang', language);
+    }
     const redirectUrl = `${ENV.URL_API.LOGIN}/login?entityID=${IDP.entityId}&authLevel=SpidL2&RelayState=selfcare_pagopa_it`;
     trackEvent(
       'LOGIN_IDP_SELECTED',
