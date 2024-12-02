@@ -57,7 +57,6 @@ test('test login success when invalid redirect', () => {
 test('test login success no token', () => {
   mockedLocation.hash = undefined;
   const requestedPath = 'prova?';
-  testSuccessRedirect(requested';
   testSuccessRedirect(requestedPath, false, ROUTE_LOGIN);
 });
 
