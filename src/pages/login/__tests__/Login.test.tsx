@@ -29,7 +29,7 @@ test('Test: Session not found while trying to access dashboard: "Selfcare" Login
       <Login />
     </MemoryRouter>
   );
-  await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
+  await waitFor(() => screen.getByText('Accedi all’Area Riservata Enti'));
   expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
@@ -77,14 +77,14 @@ test('Test: Session not found while trying to access at upload contract flow: "S
       <Login />
     </MemoryRouter>
   );
-  await waitFor(() => screen.getByText('Accedi all’Area Riservata'));
+  await waitFor(() => screen.getByText('Accedi all’Area Riservata Enti'));
 
   expect(URLSearchParams.prototype.get).toBeCalledTimes(3);
 });
 
 test('Test: Trying to access the login with SPID', () => {
   render(<Login />);
-  const buttonSpid = document.getElementById('spidButton');
+  const buttonSpid = document.getElementById('spidButton') as HTMLButtonElement;
   fireEvent.click(buttonSpid);
 });
 
