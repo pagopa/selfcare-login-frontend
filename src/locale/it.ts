@@ -1,6 +1,6 @@
 export default {
   loginPage: {
-    title: 'Accedi all’Area Riservata',
+    title: 'Accedi all’Area Riservata Enti',
     description: 'Lo spazio dedicato agli enti che utilizzano i prodotti di PagoPA.',
     loginBox: {
       title: 'Login',
