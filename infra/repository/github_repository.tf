@@ -41,4 +41,6 @@ module "repository" {
   github = {
     repository = "selfcare-login-frontend"
   }
+
+  identity_component = "fe"
 }
