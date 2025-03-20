@@ -1,6 +1,6 @@
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import _ from 'lodash';
+import { uniqueId } from 'lodash';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
@@ -17,13 +17,13 @@ import {
   ROUTE_PRIVACY_DISCLAIMER,
   ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
+import { ENV } from './utils/env';
 import {
   storageNonceOps,
   storageOnSuccessOps,
   storageRedirectURIOps,
   storageStateOps,
 } from './utils/storage';
-import { ENV } from './utils/env';
 
 const onTermsAndCondition = () => <TermsAndConditionsPage />;
 
@@ -52,7 +52,7 @@ const onOneIdentityAuthCallback = () => <OneIdentityAuthCallbackPage />;
 
 const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
-  const generateUniqueString = () => _.uniqueId().padEnd(15, '0').slice(0, 15);
+  const generateUniqueString = () => uniqueId().padEnd(15, '0').slice(0, 15);
   const state = generateUniqueString();
   const nonce = generateUniqueString();
   const redirect_uri = `${ENV.URL_FE.LOGIN}${ROUTE_AUTH_CALLBACK}`;
@@ -65,7 +65,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   storageRedirectURIOps.write(redirect_uri);
 
   window.location.assign(
-    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&redirect_uri=${redirect_uri}&state=${state}&nonce=${nonce}`
+    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${redirect_uri}`
   );
 };
 
