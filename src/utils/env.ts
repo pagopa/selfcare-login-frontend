@@ -59,6 +59,10 @@ export const ENV = {
     BASE_URL: env.get('REACT_APP_OI_BASE_URL').required().asString(),
   },
 
+  API_TIMEOUT_MS: {
+    DASHBOARD: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
+  },
+
   ANALYTCS: {
     ENABLE: env.get('REACT_APP_ANALYTICS_ENABLE').default('false').asBool(),
     MOCK: env.get('REACT_APP_ANALYTICS_MOCK').default('false').asBool(),
