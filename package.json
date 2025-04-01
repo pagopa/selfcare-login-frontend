@@ -28,8 +28,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "clean": "npm-run-all clean:*",
     "start": "craco start",
+    "prebuild": "npm run generate",
     "build": "craco build",
+    "clean:build": "rimraf build",
     "test": "craco test -i",
     "test:coverage": "craco test -i --coverage",
     "eject": "craco eject",
@@ -59,7 +62,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@craco/craco": "^6.4.3",
     "@pagopa/openapi-codegen-ts": "^14.0.0",
