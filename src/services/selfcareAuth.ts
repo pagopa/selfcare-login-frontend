@@ -5,7 +5,7 @@ import { OidcExchangeRequest } from '../api/generated/selfcare-auth/OidcExchange
 export const selfcareAuthService = async (
   oidcExchangeRequest: OidcExchangeRequest
 ): Promise<OidcExchangeRequest> => {
-  if (process.env.REACT_APP_API_MOCK_PARTIES === 'true') {
+  if (process.env.REACT_APP_API_MOCK === 'true') {
     return await SelfcareAuthApiMock.oneIdentityCodeExchangeMock(oidcExchangeRequest);
   } else {
     return await SelfcareAuthApi.oneIdentityCodeExchange(oidcExchangeRequest);

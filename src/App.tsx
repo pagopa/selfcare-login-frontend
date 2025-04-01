@@ -1,6 +1,6 @@
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { uniqueId } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 import { LoadingOverlay } from './components/LoadingOverlay';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
@@ -53,9 +53,9 @@ const onOneIdentityAuthCallback = () => <OneIdentityAuthCallbackPage />;
 
 const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
-  const generateUniqueString = () => uniqueId().padEnd(15, '0').slice(0, 15);
-  const state = generateUniqueString();
-  const nonce = generateUniqueString();
+  const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
+  const state = generateRandomUniqueString();
+  const nonce = generateRandomUniqueString();
   const redirect_uri = `${ENV.URL_FE.LOGIN}${ROUTE_AUTH_CALLBACK}`;
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
   trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
