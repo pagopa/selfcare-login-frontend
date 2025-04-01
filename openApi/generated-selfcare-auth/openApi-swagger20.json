@@ -32,7 +32,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/OidcExchangeRequest"
+              "$ref": "#/definitions/OidcExchangeResponse"
             }
           },
           "400": {
@@ -85,6 +85,14 @@
         "code",
         "redirectUri"
       ],
+      "type": "object"
+    },
+    "OidcExchangeResponse": {
+      "properties": {
+        "sessionToken": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "Problem": {

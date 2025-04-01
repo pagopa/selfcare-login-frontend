@@ -24,7 +24,9 @@ export const OneIdentityAuthCallbackPage = () => {
       redirectUri: redirectURI as NonEmptyString,
     })
       .then((res) => {
-        storageTokenOps.write(res.code);
+        if (res.sessionToken) {
+          storageTokenOps.write(res.sessionToken);
+        }
         window.location.assign(ROUTE_LOGIN_SUCCESS);
       })
       .catch(() => {

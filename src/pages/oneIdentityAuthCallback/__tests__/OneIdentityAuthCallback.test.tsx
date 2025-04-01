@@ -103,7 +103,7 @@ describe('OneIdentityAuthCallbackPage', () => {
     (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
 
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
-      code: 'auth-token',
+      sessionToken: 'auth-token',
     });
 
     render(<OneIdentityAuthCallbackPage />);
@@ -121,7 +121,7 @@ describe('OneIdentityAuthCallbackPage', () => {
     (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
 
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
-      code: 'auth-token',
+      sessionToken: 'auth-token',
     });
 
     render(<OneIdentityAuthCallbackPage />);
@@ -147,7 +147,7 @@ describe('OneIdentityAuthCallbackPage', () => {
 
     // Mock API call
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
-      code: 'auth-token',
+      sessionToken: 'auth-token',
     });
 
     render(<OneIdentityAuthCallbackPage />);
