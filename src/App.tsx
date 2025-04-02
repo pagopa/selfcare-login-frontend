@@ -1,6 +1,7 @@
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { uniqueId } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
+import { LoadingOverlay } from './components/LoadingOverlay';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
@@ -45,17 +46,18 @@ const onLoginRequest = () => {
   storageNonceOps.delete();
   storageRedirectURIOps.delete();
   handleLoginRequestOnSuccessRequest();
-  return <div />;
+  return <LoadingOverlay loadingText="" />;
 };
 
 const onOneIdentityAuthCallback = () => <OneIdentityAuthCallbackPage />;
 
 const handleLoginRequestOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
-  const generateUniqueString = () => uniqueId().padEnd(15, '0').slice(0, 15);
-  const state = generateUniqueString();
-  const nonce = generateUniqueString();
+  const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
+  const state = generateRandomUniqueString();
+  const nonce = generateRandomUniqueString();
   const redirect_uri = `${ENV.URL_FE.LOGIN}${ROUTE_AUTH_CALLBACK}`;
+  const encodedRedirectUri = encodeURIComponent(redirect_uri);
   trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
   if (onSuccess) {
     storageOnSuccessOps.write(onSuccess);
@@ -65,7 +67,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   storageRedirectURIOps.write(redirect_uri);
 
   window.location.assign(
-    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${redirect_uri}`
+    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
   );
 };
 
@@ -73,7 +75,6 @@ const onLoginSuccess = () => <LoginSuccess />;
 
 function App(): JSX.Element {
   const token = storageTokenOps.read();
-
   if (window.location.pathname === ROUTE_LOGOUT) {
     return onLogout();
   } else if (window.location.pathname === ROUTE_TERMS_AND_CONDITION) {
@@ -100,7 +101,6 @@ function App(): JSX.Element {
         return <></>;
     }
   }
-  return <></>;
 }
 
 export default App;

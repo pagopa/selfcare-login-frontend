@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
   setupFiles: ['dotenv/config'],
-  testEnvironment: 'node',
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['dist', '/node_modules', '.helper.ts$'],
 };

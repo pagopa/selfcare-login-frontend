@@ -4,4 +4,3 @@ export const storageOnSuccessOps = storageOpsBuilder<string>('LOGIN:onSuccess', 
 export const storageStateOps = storageOpsBuilder<string>('StateGenerated', 'string', false);
 export const storageNonceOps = storageOpsBuilder<string>('Nonce', 'string', false);
 export const storageRedirectURIOps = storageOpsBuilder<string>('redirect_uri', 'string', false);
-export const storageSpidSelectedOps = storageOpsBuilder<string>('SPID_SELECTED', 'object', false);
