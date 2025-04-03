@@ -8,13 +8,15 @@ import { OidcExchangeRequest } from './generated/selfcare-auth/OidcExchangeReque
 import { OidcExchangeResponse } from './generated/selfcare-auth/OidcExchangeResponse';
 
 const apiCLient = createClient({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: ENV.URL_API.AUTH,
   basePath: '',
   fetchApi: buildFetchApi(ENV.API_TIMEOUT_MS.DASHBOARD),
 });
 
 export const SelfcareAuthApi = {
-  oneIdentityCodeExchange: async (oidcExchangeRequest: OidcExchangeRequest): Promise<OidcExchangeResponse> => {
+  oneIdentityCodeExchange: async (
+    oidcExchangeRequest: OidcExchangeRequest
+  ): Promise<OidcExchangeResponse> => {
     const result = await apiCLient.oidcExchange({ body: oidcExchangeRequest });
     return extractResponse(result, 200, () => {});
   },

@@ -43,6 +43,7 @@ export const ENV = {
 
   URL_API: {
     LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
+    AUTH: env.get('REACT_APP_URL_API_AUTH').required().asString(),
   },
 
   URL_FOOTER: {
