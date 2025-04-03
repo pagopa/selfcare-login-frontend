@@ -10,10 +10,11 @@ export const OneIdentityAuthCallbackPage = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const receivedState = urlParams.get('state');
   const oneIdentityCode = urlParams.get('code');
+  const error = urlParams.get('error');
   const storedState = storageStateOps.read();
   const redirectURI = storageRedirectURIOps.read();
 
-  if (!oneIdentityCode || !receivedState || receivedState !== storedState) {
+  if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
     redirectToErrorPage();
     return <></>;
   }
