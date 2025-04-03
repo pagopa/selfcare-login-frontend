@@ -15,6 +15,7 @@ export const OneIdentityAuthCallbackPage = () => {
   const redirectURI = storageRedirectURIOps.read();
 
   if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
+    // TODO pass error code to error page if its required to show a different message based on the error
     redirectToErrorPage();
     return <></>;
   }
