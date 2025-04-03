@@ -26,8 +26,8 @@ export const OneIdentityAuthCallbackPage = () => {
       .then((res) => {
         if (res.sessionToken) {
           storageTokenOps.write(res.sessionToken);
+          window.location.assign(ROUTE_LOGIN_SUCCESS);
         }
-        window.location.assign(ROUTE_LOGIN_SUCCESS);
       })
       .catch(() => {
         redirectToErrorPage();

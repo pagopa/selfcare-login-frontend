@@ -44,7 +44,7 @@ const onLoginRequest = () => {
   storageOnSuccessOps.delete();
   storageStateOps.delete();
   storageNonceOps.delete();
-  storageRedirectURIOps.delete();
+  storageTokenOps.delete();
   handleLoginRequestOnSuccessRequest();
   return <LoadingOverlay loadingText="" />;
 };
