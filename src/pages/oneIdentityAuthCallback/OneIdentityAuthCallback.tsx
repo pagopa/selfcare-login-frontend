@@ -10,10 +10,12 @@ export const OneIdentityAuthCallbackPage = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const receivedState = urlParams.get('state');
   const oneIdentityCode = urlParams.get('code');
+  const error = urlParams.get('error');
   const storedState = storageStateOps.read();
   const redirectURI = storageRedirectURIOps.read();
 
-  if (!oneIdentityCode || !receivedState || receivedState !== storedState) {
+  if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
+    // TODO pass error code to error page if its required to show a different message based on the error
     redirectToErrorPage();
     return <></>;
   }

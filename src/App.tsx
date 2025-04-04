@@ -56,7 +56,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
-  const redirect_uri = `${ENV.URL_FE.LOGIN}${ROUTE_AUTH_CALLBACK}`;
+  const redirect_uri = ROUTE_AUTH_CALLBACK;
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
   trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
   if (onSuccess) {
@@ -98,7 +98,7 @@ function App(): JSX.Element {
       case ROUTE_PRIVACY_DISCLAIMER:
         return onPrivacyDisclaimer();
       default:
-        return <></>;
+        return onLoginRequest();
     }
   }
 }
