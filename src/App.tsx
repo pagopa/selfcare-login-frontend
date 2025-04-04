@@ -56,7 +56,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
-  const redirect_uri = ENV.URL_FE.LOGIN + '/auth/callback';
+  const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
   trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
   if (onSuccess) {
