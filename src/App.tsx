@@ -67,7 +67,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   storageRedirectURIOps.write(redirect_uri);
 
   window.location.assign(
-    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
+    `${ENV.ONE_IDENTITY.BASE_URL}/login?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
   );
 };
 
