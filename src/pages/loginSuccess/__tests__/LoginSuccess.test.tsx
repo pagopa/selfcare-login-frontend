@@ -1,14 +1,14 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import LoginSuccess from '../LoginSuccess';
-import { ENV } from '../../../utils/env';
-import { ROUTE_LOGIN } from '../../../utils/constants';
-import { User } from '../../../models/User';
 import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { User } from '../../../models/User';
+import { ROUTE_LOGIN } from '../../../utils/constants';
+import { ENV } from '../../../utils/env';
 import { storageOnSuccessOps } from '../../../utils/storage';
+import LoginSuccess from '../LoginSuccess';
 const { TextDecoder } = require('util');
 
 global.TextDecoder = TextDecoder;
@@ -27,8 +27,8 @@ afterAll(() => {
 });
 
 test('test login success', () => {
+  storageTokenOps.write(token);
   render(<LoginSuccess />);
-
   expect(storageTokenOps.read()).toBe(token);
 
   const user: User = storageUserOps.read();
@@ -55,9 +55,10 @@ test('test login success when invalid redirect', () => {
 });
 
 test('test login success no token', () => {
-  mockedLocation.hash = undefined;
-  const requestedPath = 'prova?';
-  testSuccessRedirect(requestedPath, false, ROUTE_LOGIN);
+  storageTokenOps.delete();
+  render(<LoginSuccess />);
+
+  expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
 });
 
 function testSuccessRedirect(
@@ -66,6 +67,7 @@ function testSuccessRedirect(
   expectedPathRedirect: string
 ) {
   storageOnSuccessOps.write(requestedPath);
+  storageTokenOps.write(token);
 
   render(<LoginSuccess />);
 

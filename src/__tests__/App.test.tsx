@@ -3,6 +3,7 @@ import App from '../App';
 import { ROUTE_LOGIN } from '../utils/constants';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { storageOnSuccessOps } from '../utils/storage';
+import React from 'react';
 
 const oldWindowLocation = global.window.location;
 const mockedLocation = {
@@ -27,7 +28,6 @@ afterEach(() => {
 });
 
 jest.mock('../pages/logout/Logout', () => () => 'LOGOUT');
-jest.mock('../pages/login/Login', () => () => 'LOGIN');
 jest.mock('../pages/loginSuccess/LoginSuccess', () => () => 'LOGIN_SUCCESS');
 jest.mock(
   '../pages/ValidateSession/ValidateSession',
@@ -37,6 +37,7 @@ jest.mock(
 );
 
 test.skip('test not served path', () => {
+  
   render(<App />);
   expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
   checkRedirect(true);
@@ -60,18 +61,16 @@ test('test Logout even if in session', () => {
 test('test Login', () => {
   mockedLocation.pathname = '/login';
   render(<App />);
-  screen.getByText('LOGIN');
   expect(storageOnSuccessOps.read()).toBeUndefined();
-  checkRedirect(false);
+  checkRedirect(true);
 });
 
 test('test Login with onSuccess', () => {
   mockedLocation.pathname = '/login';
   mockedLocation.search = 'onSuccess=prova';
   render(<App />);
-  screen.getByText('LOGIN');
   expect(storageOnSuccessOps.read()).toBe('prova');
-  checkRedirect(false);
+  checkRedirect(true);
 });
 
 test('test ValidateSession', () => {

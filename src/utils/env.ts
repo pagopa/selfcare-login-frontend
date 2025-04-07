@@ -32,6 +32,7 @@ export const ENV = {
 
   URL_FE: {
     LOGOUT: PUBLIC_URL + '/logout',
+    LOGIN: env.get('REACT_APP_URL_FE_LOGIN').required().asString(),
     ONBOARDING: env.get('REACT_APP_URL_FE_ONBOARDING').required().asString(),
     DASHBOARD: env.get('REACT_APP_URL_FE_DASHBOARD').required().asString(),
     LANDING: env.get('REACT_APP_URL_FE_LANDING').required().asString(),
@@ -42,6 +43,7 @@ export const ENV = {
 
   URL_API: {
     LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
+    AUTH: env.get('REACT_APP_URL_API_AUTH').required().asString(),
   },
 
   URL_FOOTER: {
@@ -52,6 +54,15 @@ export const ENV = {
   SPID_TEST_ENV_ENABLED: env.get('REACT_APP_SPID_TEST_ENV_ENABLED').required().asBool(),
 
   SPID_CIE_ENTITY_ID: env.get('REACT_APP_SPID_CIE_ENTITY_ID').required().asString(),
+
+  ONE_IDENTITY: {
+    CLIENT_ID: env.get('REACT_APP_OI_CLIENT_ID').required().asString(),
+    BASE_URL: env.get('REACT_APP_OI_BASE_URL').required().asString(),
+  },
+
+  API_TIMEOUT_MS: {
+    DASHBOARD: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
+  },
 
   ANALYTCS: {
     ENABLE: env.get('REACT_APP_ANALYTICS_ENABLE').default('false').asBool(),

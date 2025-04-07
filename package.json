@@ -22,18 +22,26 @@
     "react-router": "^5.2.1",
     "react-scripts": "^5.0.0",
     "typescript": "^4.1.2",
+    "url": "^0.11.4",
     "util": "^0.12.5",
+    "uuid": "^11.1.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "clean": "npm-run-all clean:*",
     "start": "craco start",
+    "prebuild": "npm run generate",
     "build": "craco build",
+    "clean:build": "rimraf build",
     "test": "craco test -i",
     "test:coverage": "craco test -i --coverage",
     "eject": "craco eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
-    "prettify": "prettier --write \"./**/*.{ts,tsx}\""
+    "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
+    "generate": "npm-run-all generate:*",
+    "clean:api-selfcare-auth": "rimraf src/api/generated/selfcare-auth && rimraf openApi/generated-selfcare-auth",
+    "generate:api-selfcare-auth": "yarn run clean:api-selfcare-auth && mkdirp openApi/generated-selfcare-auth && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/openapi.json > openApi/generated-selfcare-auth/openApi-swagger20.json && gen-api-models --api-spec openApi/generated-selfcare-auth/openApi-swagger20.json --out-dir src/api/generated/selfcare-auth --no-strict --request-types --response-decoders --client"
   },
   "eslintConfig": {
     "extends": [
@@ -57,17 +65,20 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@craco/craco": "^6.4.3",
+    "@pagopa/openapi-codegen-ts": "^14.0.0",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
     "@types/history": "^4.7.9",
     "@types/jest": "^26.0.24",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^12.20.19",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-router": "^5.1.16",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "api-spec-converter": "^2.12.0",
     "eslint": "7.11.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-functional": "^3.7.2",
@@ -75,7 +86,10 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.10.0",
-    "prettier": "^2.4.1"
+    "mkdirp": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.4.1",
+    "rimraf": "^6.0.1"
   },
   "resolutions": {
     "nth-check": ">=2.0.1",

@@ -1,0 +1,134 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Auth API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/oidc/exchange": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OIDC"
+        ],
+        "description": "OIDC exchange endpoint provides a token exchange by accepting a valid authorization code and releasing a jwt session token",
+        "operationId": "oidcExchange",
+        "summary": "OIDC exchange endpoint"
+      }
+    }
+  },
+  "definitions": {
+    "OidcExchangeRequest": {
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "redirectUri": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "redirectUri"
+      ],
+      "type": "object"
+    },
+    "OidcExchangeResponse": {
+      "properties": {
+        "sessionToken": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Problem": {
+      "properties": {
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "securityDefinitions": {
+    "SecurityScheme": {
+      "description": "Authentication",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "tags": [
+    {
+      "name": "OIDC"
+    }
+  ],
+  "x-components": {}
+}
