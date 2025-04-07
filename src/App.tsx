@@ -56,7 +56,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
-  const redirect_uri = ROUTE_AUTH_CALLBACK;
+  const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
   trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
   if (onSuccess) {
@@ -67,7 +67,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   storageRedirectURIOps.write(redirect_uri);
 
   window.location.assign(
-    `${ENV.ONE_IDENTITY.BASE_URL}?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
+    `${ENV.ONE_IDENTITY.BASE_URL}/login?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
   );
 };
 
@@ -98,7 +98,7 @@ function App(): JSX.Element {
       case ROUTE_PRIVACY_DISCLAIMER:
         return onPrivacyDisclaimer();
       default:
-        return onLoginRequest();
+        return <></>;
     }
   }
 }
