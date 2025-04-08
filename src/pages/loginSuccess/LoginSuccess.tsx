@@ -2,6 +2,7 @@ import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
 import { storageOnSuccessOps } from '../../utils/storage';
@@ -35,7 +36,7 @@ const LoginSuccess = () => {
   } else {
     redirectToLogin();
   }
-  return <div />;
+  return <LoadingOverlayComponent open={true} />;
 };
 
 export default LoginSuccess;

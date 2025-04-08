@@ -1,6 +1,6 @@
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
-import { LoadingOverlay } from '../../components/LoadingOverlay';
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { selfcareAuthService } from '../../services/selfcareAuth';
 import { ROUTE_LOGIN_SUCCESS } from '../../utils/constants';
 import { storageRedirectURIOps, storageStateOps } from '../../utils/storage';
@@ -36,5 +36,5 @@ export const OneIdentityAuthCallbackPage = () => {
       });
   }
 
-  return <LoadingOverlay loadingText="" />;
+  return <LoadingOverlayComponent open={true} />;
 };

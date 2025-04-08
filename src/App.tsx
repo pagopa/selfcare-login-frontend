@@ -1,7 +1,7 @@
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { v4 as uuidv4 } from 'uuid';
-import { LoadingOverlay } from './components/LoadingOverlay';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
@@ -46,7 +46,7 @@ const onLoginRequest = () => {
   storageNonceOps.delete();
   storageTokenOps.delete();
   handleLoginRequestOnSuccessRequest();
-  return <LoadingOverlay loadingText="" />;
+  return <LoadingOverlayComponent open={true} />;
 };
 
 const onOneIdentityAuthCallback = () => <OneIdentityAuthCallbackPage />;
