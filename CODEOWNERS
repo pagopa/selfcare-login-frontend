@@ -5,3 +5,7 @@
 # engineering-team-cloud-eng
 /infra/ @pagopa/engineering-team-cloud-eng
 /.github/ @pagopa/engineering-team-cloud-eng
+
+/src/ @OraldoDoci @GabrieleMaiocchiFilippo
+/public/ @OraldoDoci @GabrieleMaiocchiFilippo
+/openApi/ @OraldoDoci @GabrieleMaiocchiFilippo
