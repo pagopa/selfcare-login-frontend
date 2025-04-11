@@ -1,13 +1,10 @@
-import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
-import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
 import { OneIdentityAuthCallbackPage } from './pages/oneIdentityAuthCallback/OneIdentityAuthCallback';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
 import {
   ROUTE_AUTH_CALLBACK,
@@ -15,8 +12,6 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
-  ROUTE_PRIVACY_DISCLAIMER,
-  ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
 import { ENV } from './utils/env';
 import {
@@ -25,10 +20,6 @@ import {
   storageRedirectURIOps,
   storageStateOps,
 } from './utils/storage';
-
-const onTermsAndCondition = () => <TermsAndConditionsPage />;
-
-const onPrivacyDisclaimer = () => <PrivacyPolicyPage />;
 
 const onLogout = () => <Logout />;
 
@@ -58,7 +49,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const nonce = generateRandomUniqueString();
   const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
-  trackEvent('LOGIN_INTENT', { target: onSuccess ?? 'dashboard' });
+
   if (onSuccess) {
     storageOnSuccessOps.write(onSuccess);
   }
@@ -77,10 +68,6 @@ function App(): JSX.Element {
   const token = storageTokenOps.read();
   if (window.location.pathname === ROUTE_LOGOUT) {
     return onLogout();
-  } else if (window.location.pathname === ROUTE_TERMS_AND_CONDITION) {
-    return onTermsAndCondition();
-  } else if (window.location.pathname === ROUTE_PRIVACY_DISCLAIMER) {
-    return onPrivacyDisclaimer();
   } else if (token !== null && token !== undefined) {
     return onAlreadyInSession(token);
   } else {
@@ -93,10 +80,6 @@ function App(): JSX.Element {
         return onLoginSuccess();
       case ROUTE_LOGIN_ERROR:
         return onLoginError();
-      case ROUTE_TERMS_AND_CONDITION:
-        return onTermsAndCondition();
-      case ROUTE_PRIVACY_DISCLAIMER:
-        return onPrivacyDisclaimer();
       default:
         return <></>;
     }

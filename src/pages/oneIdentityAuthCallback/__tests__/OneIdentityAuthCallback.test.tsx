@@ -1,12 +1,12 @@
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { OneIdentityAuthCallbackPage } from '../OneIdentityAuthCallback';
 import React from 'react';
 import { SelfcareAuthApiMock } from '../../../api/__mocks__/SelfcareAuthApiClient';
 import { ROUTE_LOGIN_SUCCESS } from '../../../utils/constants';
 import { storageRedirectURIOps, storageStateOps } from '../../../utils/storage';
 import { redirectToErrorPage } from '../../../utils/utils';
+import { OneIdentityAuthCallbackPage } from '../OneIdentityAuthCallback';
 
 jest.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', () => ({
   storageTokenOps: {
@@ -35,8 +35,8 @@ jest.mock('../../../utils/utils', () => ({
   redirectToErrorPage: jest.fn(),
 }));
 
-jest.mock('../../../components/LoadingOverlay', () => ({
-  LoadingOverlay: () => <div data-testid="loading-overlay">Loading...</div>,
+jest.mock('@pagopa/selfcare-common-frontend/lib', () => ({
+  LoadingOverlayComponent: () => <div data-testid="loading-overlay">Loading...</div>,
 }));
 
 const originalWindow = { ...window };

@@ -9,7 +9,6 @@ import App from './App';
 import { ENV } from './utils/env';
 import './consentAndAnalyticsConfiguration.ts';
 import './locale';
-import './index.css';
 
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;

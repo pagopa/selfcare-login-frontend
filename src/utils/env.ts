@@ -7,16 +7,9 @@ export const ENV = {
   ENV: currentEnv,
   PUBLIC_URL,
 
-  ENABLED_SPID: env.get('REACT_APP_LOGIN_SPID_ENABLED').required().asBool(),
-
   OT: {
     SRC: env.get('REACT_APP_OT_SRC').required().asString(),
     TOKEN: env.get('REACT_APP_OT_TOKEN').required().asString(),
-
-    RESOURCE_TERMS_AND_CONDITION: env
-      .get('REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE')
-      .required()
-      .asString(),
     REACT_APP_OT_TOS_RESOURCE: env.get('REACT_APP_OT_TOS_RESOURCE').required().asString(),
   },
 

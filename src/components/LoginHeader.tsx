@@ -1,6 +1,5 @@
 import { Header } from '@pagopa/selfcare-common-frontend/lib';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { useEffect, useState } from 'react';
 import { ENV } from '../utils/env';
 import { isPnpg } from '../utils/utils';
@@ -30,9 +29,6 @@ export const LoginHeader = ({ withSecondHeader }: Props) => {
       onDocumentationClick={
         !isPnpg && showDocBtn
           ? () => {
-              trackEvent('OPEN_OPERATIVE_MANUAL', {
-                from: 'login',
-              });
               window.open(ENV.URL_DOCUMENTATION, '_blank');
             }
           : undefined

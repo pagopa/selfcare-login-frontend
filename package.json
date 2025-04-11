@@ -97,10 +97,10 @@
   },
   "jest": {
     "coveragePathIgnorePatterns": [
+      "src/api/generated",
       "src/index.tsx",
       "src/reportWebVitals.ts",
-      "src/utils/constants.ts",
-      "src/utils/IDPS.ts"
+      "src/utils/constants.ts"
     ]
   }
 }
