@@ -81,7 +81,7 @@ function App(): JSX.Element {
       case ROUTE_LOGIN_ERROR:
         return onLoginError();
       default:
-        return <></>;
+        return onLoginRequest();
     }
   }
 }

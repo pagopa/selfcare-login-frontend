@@ -36,10 +36,9 @@ jest.mock(
       'VALIDATE_SESSION:' + sessionToken
 );
 
-test.skip('test not served path', () => {
-  
+test('test not served path', () => {
   render(<App />);
-  expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
+  expect(mockedLocation.assign.mock.calls[0][0].startsWith('https://dev.oneid.pagopa.it/login')).toBe(true);
   checkRedirect(true);
 });
 
