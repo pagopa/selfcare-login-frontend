@@ -11,6 +11,10 @@ export const ENV = {
     SRC: env.get('REACT_APP_OT_SRC').required().asString(),
     TOKEN: env.get('REACT_APP_OT_TOKEN').required().asString(),
     REACT_APP_OT_TOS_RESOURCE: env.get('REACT_APP_OT_TOS_RESOURCE').required().asString(),
+    RESOURCE_TERMS_AND_CONDITION: env
+      .get('REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE')
+      .required()
+      .asString(),
   },
 
   ASSISTANCE: {
