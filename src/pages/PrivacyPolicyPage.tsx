@@ -44,7 +44,7 @@ export function PrivacyPolicyPage() {
 
   return (
     <Grid container xs={12} p={3} bgcolor={theme.palette.background.default}>
-      <Grid mt={5}>
+      <Grid>
         <div
           id="otnotice-26403d01-dc46-4c89-be70-4894839cf639"
           className="otnotice"
