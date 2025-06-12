@@ -122,21 +122,21 @@ const Login = () => {
       setLanguage(lang);
     }
   }, [lang]);
+  const tosRoute = isPnpg
+    ? ROUTE_TERMS_AND_CONDITION.replace('/auth/', '/')
+    : ROUTE_TERMS_AND_CONDITION;
 
   const handleTosRedirect = () => {
     trackEvent('LOGIN_TOS', { SPID_IDP_NAME: 'LOGIN_TOS' }, () => {
-      const tosRoute = isPnpg
-        ? ROUTE_TERMS_AND_CONDITION.replace('/auth/', '/')
-        : ROUTE_TERMS_AND_CONDITION;
       window.location.assign(tosRoute);
     });
   };
 
+  const privacyRoute = isPnpg
+    ? ROUTE_PRIVACY_DISCLAIMER.replace('/auth/', '/')
+    : ROUTE_PRIVACY_DISCLAIMER;
   const handlePrivacyRedirect = () => {
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () => {
-      const privacyRoute = isPnpg
-        ? ROUTE_PRIVACY_DISCLAIMER.replace('/auth/', '/')
-        : ROUTE_PRIVACY_DISCLAIMER;
       window.location.assign(privacyRoute);
     });
   };
@@ -319,6 +319,7 @@ const Login = () => {
               <Trans i18nKey="loginPage.privacyAndCondition" shouldUnescape>
                 Accedendo accetti i
                 <Link
+                  href={tosRoute}
                   sx={{
                     cursor: 'pointer',
                     textDecoration: 'none !important',
@@ -333,6 +334,7 @@ const Login = () => {
                 <br />
                 confermi di avere letto l&apos;
                 <Link
+                href={privacyRoute}
                   sx={{
                     cursor: 'pointer',
                     textDecoration: 'none !important',
