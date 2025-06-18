@@ -57,6 +57,9 @@ export const ENV = {
     BASE_URL: env.get('REACT_APP_OI_BASE_URL').required().asString(),
   },
 
+  ENABLE_OTP: env.get('REACT_APP_ENABLE_OTP').required().asBool(),
+  ENABLE_MAIL_OTP: env.get('REACT_APP_ENABLE_SEND_MAIL_OTP').required().asBool(),
+
   API_TIMEOUT_MS: {
     DASHBOARD: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
   },

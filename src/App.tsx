@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
-import { OneIdentityAuthCallbackPage } from './pages/oneIdentityAuthCallback/OneIdentityAuthCallback';
+import OneIdentityAuthCallbackPage from './pages/oneIdentityAuthCallback/OneIdentityAuthCallback';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
@@ -14,6 +14,7 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
+  ROUTE_OTP,
   ROUTE_PRIVACY_DISCLAIMER,
   ROUTE_TERMS_AND_CONDITION,
 } from './utils/constants';
@@ -24,6 +25,7 @@ import {
   storageRedirectURIOps,
   storageStateOps,
 } from './utils/storage';
+import OTPPage from './pages/otp/OTPPage';
 
 const onTermsAndCondition = () => <TermsAndConditionsPage />;
 
@@ -72,30 +74,44 @@ const handleLoginRequestOnSuccessRequest = () => {
 
 const onLoginSuccess = () => <LoginSuccess />;
 
+const onOTPRequest = () => <OTPPage />;
+
+const resolveRoute = (path: string, token: string | null): JSX.Element => {
+  const isOTPEnabled = ENV.ENABLE_OTP === true;
+
+  if (path === ROUTE_LOGOUT) {
+    return onLogout();
+  }
+  if (path === ROUTE_TERMS_AND_CONDITION) {
+    return onTermsAndCondition();
+  }
+  if (path === ROUTE_PRIVACY_DISCLAIMER) {
+    return onPrivacyDisclaimer();
+  }
+
+  if (token) {
+    return onAlreadyInSession(token);
+  }
+
+  switch (path) {
+    case ROUTE_LOGIN:
+      return onLoginRequest();
+    case ROUTE_AUTH_CALLBACK:
+      return onOneIdentityAuthCallback();
+    case ROUTE_LOGIN_SUCCESS:
+      return onLoginSuccess();
+    case ROUTE_LOGIN_ERROR:
+      return onLoginError();
+    case ROUTE_OTP:
+      return isOTPEnabled ? onOTPRequest() : onLoginRequest();
+    default:
+      return onLoginRequest();
+  }
+};
+
 function App(): JSX.Element {
   const token = storageTokenOps.read();
-  if (window.location.pathname === ROUTE_LOGOUT) {
-    return onLogout();
-  } else if (window.location.pathname === ROUTE_TERMS_AND_CONDITION) {
-    return onTermsAndCondition();
-  } else if (window.location.pathname === ROUTE_PRIVACY_DISCLAIMER) {
-    return onPrivacyDisclaimer();
-  } else if (token !== null && token !== undefined) {
-    return onAlreadyInSession(token);
-  } else {
-    switch (window.location.pathname) {
-      case ROUTE_LOGIN:
-        return onLoginRequest();
-      case ROUTE_AUTH_CALLBACK:
-        return onOneIdentityAuthCallback();
-      case ROUTE_LOGIN_SUCCESS:
-        return onLoginSuccess();
-      case ROUTE_LOGIN_ERROR:
-        return onLoginError();
-      default:
-        return onLoginRequest();
-    }
-  }
+  return resolveRoute(window.location.pathname, token);
 }
 
 export default App;
