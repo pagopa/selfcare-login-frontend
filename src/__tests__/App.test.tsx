@@ -35,10 +35,18 @@ jest.mock(
     ({ sessionToken }) =>
       'VALIDATE_SESSION:' + sessionToken
 );
+jest.mock(
+  '../pages/oneIdentityAuthCallback/OneIdentityAuthCallback',
+  () => () => 'ONE_IDENTITY_AUTH_CALLBACK'
+);
+
+jest.mock('../pages/otp/OTPPage', () => () => 'OTP_PAGE');
 
 test('test not served path', () => {
   render(<App />);
-  expect(mockedLocation.assign.mock.calls[0][0].startsWith('https://dev.oneid.pagopa.it/login')).toBe(true);
+  expect(
+    mockedLocation.assign.mock.calls[0][0].startsWith('https://dev.oneid.pagopa.it/login')
+  ).toBe(true);
   checkRedirect(true);
 });
 
@@ -85,6 +93,21 @@ test('test LoginSuccess', () => {
   mockedLocation.hash = 'token=successToken';
   render(<App />);
   screen.getByText('LOGIN_SUCCESS');
+  checkRedirect(false);
+});
+
+test('oneIdentityAuthCallback', () => {
+  mockedLocation.pathname = '/login/callback';
+  mockedLocation.search = '?code=oneIdCode';
+  render(<App />);
+  screen.getByText('ONE_IDENTITY_AUTH_CALLBACK');
+  checkRedirect(false);
+});
+
+test('OTP confirmation page', () => {
+  mockedLocation.pathname = '/login/otp';
+  render(<App />);
+  screen.getByText('OTP_PAGE');
   checkRedirect(false);
 });
 

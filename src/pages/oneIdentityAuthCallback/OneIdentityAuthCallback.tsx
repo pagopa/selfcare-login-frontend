@@ -6,7 +6,7 @@ import { ROUTE_LOGIN_SUCCESS } from '../../utils/constants';
 import { storageRedirectURIOps, storageStateOps } from '../../utils/storage';
 import { redirectToErrorPage } from '../../utils/utils';
 
-export const OneIdentityAuthCallbackPage = () => {
+const OneIdentityAuthCallbackPage = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const receivedState = urlParams.get('state');
   const oneIdentityCode = urlParams.get('code');
@@ -37,3 +37,5 @@ export const OneIdentityAuthCallbackPage = () => {
 
   return <LoadingOverlayComponent open={true} />;
 };
+
+export default OneIdentityAuthCallbackPage;
