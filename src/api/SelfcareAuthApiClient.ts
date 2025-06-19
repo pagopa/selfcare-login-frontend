@@ -2,10 +2,10 @@ import {
   buildFetchApi,
   extractResponse,
 } from '@pagopa/selfcare-common-frontend/lib/utils/api-utils';
+import { OidcExchangeResponse } from '../models/tokenExchange';
 import { ENV } from '../utils/env';
 import { createClient } from './generated/selfcare-auth/client';
 import { OidcExchangeRequest } from './generated/selfcare-auth/OidcExchangeRequest';
-import { OidcExchangeResponse } from './generated/selfcare-auth/OidcExchangeResponse';
 
 const apiClient = createClient({
   baseUrl: ENV.URL_API.AUTH,
@@ -18,6 +18,6 @@ export const SelfcareAuthApi = {
     oidcExchangeRequest: OidcExchangeRequest
   ): Promise<OidcExchangeResponse> => {
     const result = await apiClient.oidcExchange({ body: oidcExchangeRequest });
-    return extractResponse(result, 200, () => {});
+    return extractResponse(result, [200, 201], () => {});
   },
 };
