@@ -2,8 +2,12 @@ import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/stor
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { SelfcareAuthApiMock } from '../../../api/__mocks__/SelfcareAuthApiClient';
-import { ROUTE_LOGIN_SUCCESS } from '../../../utils/constants';
-import { storageRedirectURIOps, storageStateOps } from '../../../utils/storage';
+import { ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../../utils/constants';
+import {
+  storageMaskedEmailOps,
+  storageRedirectURIOps,
+  storageStateOps,
+} from '../../../utils/storage';
 import { redirectToErrorPage } from '../../../utils/utils';
 import OneIdentityAuthCallbackPage from '../OneIdentityAuthCallback';
 
@@ -27,6 +31,12 @@ jest.mock('../../../utils/storage', () => ({
   },
   storageRedirectURIOps: {
     read: jest.fn(),
+  },
+  storageMaskedEmailOps: {
+    write: jest.fn(),
+  },
+  storageOTPSessionUidOps: {
+    write: jest.fn(),
   },
 }));
 
@@ -197,5 +207,30 @@ describe('OneIdentityAuthCallbackPage', () => {
 
     // API should not be called
     expect(SelfcareAuthApiMock.oneIdentityCodeExchangeMock).not.toHaveBeenCalled();
+  });
+
+  test('should redirect to otp page when requiredOtp is true in the token exchange response', async () => {
+    // Set up window.location.search with code and state
+    Object.defineProperty(window, 'location', {
+      value: { ...window.location, search: '?code=test-otp-code&state=test-state' },
+      writable: true,
+    });
+
+    // Mock stored state. Value test-otp-code is used to trigger the oidcExchange response with requiresOtpFlow=true
+    (storageStateOps.read as jest.Mock).mockReturnValue('test-otp-code');
+    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
+
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
+      requiresOtpFlow: true,
+      otpSessionUid: 'otpSessionUidTest',
+      maskedEmail: 'mask**Email***@email.comTest',
+    });
+
+    render(<OneIdentityAuthCallbackPage />);
+    await waitFor(() => {
+      expect(storageMaskedEmailOps.write).toHaveBeenCalledWith('mask**Email***@email.comTest');
+      expect(mockAssign).toHaveBeenCalledWith(ROUTE_OTP);
+    });
   });
 });

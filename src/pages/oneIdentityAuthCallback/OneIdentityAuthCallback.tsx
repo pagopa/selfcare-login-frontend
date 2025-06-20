@@ -1,9 +1,14 @@
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
-import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { selfcareAuthService } from '../../services/selfcareAuth';
-import { ROUTE_LOGIN_SUCCESS } from '../../utils/constants';
-import { storageRedirectURIOps, storageStateOps } from '../../utils/storage';
+import { ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../utils/constants';
+import {
+  storageMaskedEmailOps,
+  storageOTPSessionUidOps,
+  storageRedirectURIOps,
+  storageStateOps,
+} from '../../utils/storage';
 import { redirectToErrorPage } from '../../utils/utils';
 
 const OneIdentityAuthCallbackPage = () => {
@@ -28,6 +33,12 @@ const OneIdentityAuthCallbackPage = () => {
         if (res.sessionToken) {
           storageTokenOps.write(res.sessionToken);
           window.location.assign(ROUTE_LOGIN_SUCCESS);
+        }
+
+        if (res.requiresOtpFlow === true && res.otpSessionUid && res.maskedEmail) {
+          storageOTPSessionUidOps.write(res.otpSessionUid);
+          storageMaskedEmailOps.write(res.maskedEmail);
+          window.location.assign(ROUTE_OTP);
         }
       })
       .catch(() => {

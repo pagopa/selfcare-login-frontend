@@ -16,7 +16,6 @@
           "application/json"
         ],
         "produces": [
-          "application/json",
           "application/problem+json"
         ],
         "parameters": [
@@ -32,7 +31,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/OidcExchangeResponse"
+              "$ref": "#/definitions/OidcExchangeTokenResponse"
+            }
+          },
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeOtpResponse"
             }
           },
           "400": {
@@ -70,6 +75,20 @@
     }
   },
   "definitions": {
+    "OidcExchangeOtpResponse": {
+      "properties": {
+        "maskedEmail": {
+          "type": "string"
+        },
+        "otpSessionUid": {
+          "type": "string"
+        },
+        "requiresOtpFlow": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "OidcExchangeRequest": {
       "properties": {
         "code": {
@@ -87,8 +106,11 @@
       ],
       "type": "object"
     },
-    "OidcExchangeResponse": {
+    "OidcExchangeTokenResponse": {
       "properties": {
+        "requiresOtpFlow": {
+          "type": "boolean"
+        },
         "sessionToken": {
           "type": "string"
         }

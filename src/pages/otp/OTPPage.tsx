@@ -3,12 +3,15 @@ import { IllusEmailValidation } from '@pagopa/mui-italia';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { ENV } from '../../utils/env';
+import { storageMaskedEmailOps, storageOTPSessionUidOps } from '../../utils/storage';
 import OtpInput from './components/OTPInputFields';
 import { SendOTPMail } from './components/SendOTPMail';
 
 const OTPPage = () => {
   const { t } = useTranslation();
-  console.log('TODO Integrate api');
+  const maskedEmail = storageMaskedEmailOps.read();
+  const otpSessionUid = storageOTPSessionUidOps.read();
+  console.log('TODO Integrate api with otpSessionUid', otpSessionUid);
   return (
     <Layout>
       <Grid sx={{ backgroundColor: '#F5F5F5' }} minHeight={'80vh'} alignContent="center">
@@ -38,7 +41,7 @@ const OTPPage = () => {
                       i18nKey="otp.description"
                       components={{ 1: <strong />, 2: <br /> }}
                       values={{
-                        email: 'm****a@p**.it',
+                        email: maskedEmail,
                       }}
                     />
                   }
