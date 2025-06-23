@@ -29,12 +29,12 @@ const errorConfig: Record<
 };
 
 type LoginErrorProps = {
-  queryParams: URLSearchParams;
+  queryParams?: URLSearchParams;
 };
 
 const LoginError: React.FC<LoginErrorProps> = ({ queryParams }: LoginErrorProps): JSX.Element => {
   const { t } = useTranslation();
-  const errorType = queryParams.get('errorType') ?? 'generic';
+  const errorType = queryParams?.get('errorType') ?? 'generic';
   const config = errorConfig[errorType] ?? errorConfig.generic;
 
   return (
