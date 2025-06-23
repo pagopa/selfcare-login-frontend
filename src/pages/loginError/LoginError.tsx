@@ -1,29 +1,57 @@
+import { Grid } from '@mui/material';
 import { IllusError } from '@pagopa/mui-italia';
 import { EndingPage } from '@pagopa/selfcare-common-frontend/lib';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { redirectToLogin } from '../../utils/utils';
 
-const LoginError = () => {
+import { ReactComponent as UmbrellaIcon } from '../../assets/Umbrella.svg';
+
+const errorConfig: Record<
+  string,
+  { titleKey: string; descriptionKey: string; buttonLabel: string }
+> = {
+  generic: {
+    titleKey: 'loginError.generic.title',
+    descriptionKey: 'loginError.generic.description',
+    buttonLabel: 'loginError.retry',
+  },
+  otpGeneric: {
+    titleKey: 'otp.error.generic.title',
+    descriptionKey: 'otp.error.generic.description',
+    buttonLabel: 'otp.error.generic.buttonLabel',
+  },
+  otpToManyAttempts: {
+    titleKey: 'otp.error.toManyAttempts.title',
+    descriptionKey: 'otp.error.toManyAttempts.description',
+    buttonLabel: 'otp.error.toManyAttempts.buttonLabel',
+  },
+};
+
+type LoginErrorProps = {
+  queryParams?: URLSearchParams;
+};
+
+const LoginError: React.FC<LoginErrorProps> = ({ queryParams }: LoginErrorProps): JSX.Element => {
   const { t } = useTranslation();
+  const errorType = queryParams?.get('errorType') ?? 'generic';
+  const config = errorConfig[errorType] ?? errorConfig.generic;
 
   return (
     <Layout>
-      <EndingPage
-        minHeight={'100vh'}
-        icon={<IllusError size={60} />}
-        variantTitle="h4"
-        variantDescription="body1"
-        title={t('loginError.generic.title')}
-        description={
-          <Trans i18nKey="loginError.generic.description" components={{ 1: <br /> }}>
-            {'Si è verificato un problema durante l’accesso. Riprova tra qualche <1/>minuto.'}
-          </Trans>
-        }
-        variantFirstButton={'contained'}
-        buttonLabel={t('loginError.retry')}
-        onButtonClick={redirectToLogin}
-      />
+      <Grid sx={{ backgroundColor: '#F5F5F5' }}>
+        <EndingPage
+          minHeight={'100vh'}
+          icon={errorType === 'otpToManyAttempts' ? <UmbrellaIcon /> : <IllusError size={60} />}
+          variantTitle="h4"
+          variantDescription="body1"
+          title={t(config.titleKey)}
+          description={t(config.descriptionKey)}
+          variantFirstButton={'contained'}
+          buttonLabel={t(config.buttonLabel)}
+          onButtonClick={redirectToLogin}
+        />
+      </Grid>
     </Layout>
   );
 };
