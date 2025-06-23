@@ -28,6 +28,19 @@ export default {
     description:
       'Abbiamo inviato un’e-mail all’indirizzo <1>{{email}}</1><2/>Per proseguire, controlla la casella di posta e inserisci qui il codice numerico.',
     resend: 'Non hai ricevuto il codice? <1>Richiedi un nuovo codice</1> tra 60s.',
+    error: {
+      generic: {
+        title: 'Qualcosa è andato storto',
+        description: 'Riprova tra qualche minuto.',
+        buttonLabel: 'Chiudi',
+      },
+      toManyAttempts: {
+        title: 'Hai superato il numero massimo di tentativi',
+        description:
+          'Hai inserito il codice errato per più di 5 volte. Autenticati di nuovo con SPID o CIE per accedere.',
+        buttonLabel: 'Esci',
+      },
+    },
   },
   loginError: {
     retry: 'Riprova',
@@ -62,7 +75,7 @@ export default {
     },
     generic: {
       title: 'Non è stato possibile accedere',
-      description: 'Si è verificato un problema durante l’accesso. Riprova tra qualche <1/>minuto.',
+      description: 'Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.',
     },
   },
   breadCrumb: {

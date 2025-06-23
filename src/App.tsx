@@ -5,6 +5,7 @@ import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
 import OneIdentityAuthCallbackPage from './pages/oneIdentityAuthCallback/OneIdentityAuthCallback';
+import OTPPage from './pages/otp/OTPPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
@@ -25,7 +26,6 @@ import {
   storageRedirectURIOps,
   storageStateOps,
 } from './utils/storage';
-import OTPPage from './pages/otp/OTPPage';
 
 const onTermsAndCondition = () => <TermsAndConditionsPage />;
 
@@ -33,7 +33,7 @@ const onPrivacyDisclaimer = () => <PrivacyPolicyPage />;
 
 const onLogout = () => <Logout />;
 
-const onLoginError = () => <LoginError />;
+const onLoginError = (queryParams: URLSearchParams) => <LoginError queryParams={queryParams} />;
 
 /** if exists already a session */
 const onAlreadyInSession = (sessionToken: string) => (
@@ -76,7 +76,11 @@ const onLoginSuccess = () => <LoginSuccess />;
 
 const onOTPRequest = () => <OTPPage />;
 
-const resolveRoute = (path: string, token: string | null): JSX.Element => {
+const resolveRoute = (
+  path: string,
+  token: string | null,
+  queryParams: URLSearchParams
+): JSX.Element => {
   const isOTPEnabled = ENV.ENABLE_OTP === true;
 
   if (path === ROUTE_LOGOUT) {
@@ -101,7 +105,7 @@ const resolveRoute = (path: string, token: string | null): JSX.Element => {
     case ROUTE_LOGIN_SUCCESS:
       return onLoginSuccess();
     case ROUTE_LOGIN_ERROR:
-      return onLoginError();
+      return onLoginError(queryParams);
     case ROUTE_OTP:
       return isOTPEnabled ? onOTPRequest() : onLoginRequest();
     default:
@@ -111,7 +115,8 @@ const resolveRoute = (path: string, token: string | null): JSX.Element => {
 
 function App(): JSX.Element {
   const token = storageTokenOps.read();
-  return resolveRoute(window.location.pathname, token);
+  const queryParams = new URLSearchParams(window.location.search);
+  return resolveRoute(window.location.pathname, token, queryParams);
 }
 
 export default App;
