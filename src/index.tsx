@@ -1,15 +1,15 @@
-import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import '@pagopa/selfcare-common-frontend/index.css';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '@pagopa/mui-italia';
+import '@pagopa/selfcare-common-frontend/index.css';
+import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import App from './App';
-import { ENV } from './utils/env';
 import './consentAndAnalyticsConfiguration.ts';
-import './locale';
 import './index.css';
+import './locale';
+import { ENV } from './utils/env';
 
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
