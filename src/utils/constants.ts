@@ -12,3 +12,5 @@ export const ROUTE_LOGOUT = ENV.URL_FE.LOGOUT;
 export const ROUTE_OTP = BASE_ROUTE + '/login/otp';
 
 export const ENABLE_LANDING_REDIRECT = !ENV.URL_FE.LANDING.endsWith('/auth/logout');
+
+export const LOADING_TASK_VERIFY_OTP = 'VERIFY_OTP';

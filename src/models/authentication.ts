@@ -4,3 +4,7 @@ export type OidcExchangeResponse = {
   requiresOtpFlow?: boolean;
   sessionToken?: string;
 };
+
+export type otpVerifyResponse = {
+  sessionToken: string;
+};

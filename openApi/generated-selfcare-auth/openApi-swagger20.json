@@ -72,6 +72,69 @@
         "operationId": "oidcExchange",
         "summary": "OIDC exchange endpoint"
       }
+    },
+    "/otp/verify": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OtpVerifyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TokenResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/OtpForbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OTP"
+        ],
+        "description": "Verify endpoint is used to complete an otp flow by validating user account",
+        "operationId": "otpVerify",
+        "summary": "Verify OTP endpoint"
+      }
     }
   },
   "definitions": {
@@ -117,6 +180,54 @@
       },
       "type": "object"
     },
+    "OtpForbidden": {
+      "properties": {
+        "otpForbiddenCode": {
+          "$ref": "#/definitions/OtpForbiddenCode"
+        },
+        "otpStatus": {
+          "$ref": "#/definitions/OtpStatus"
+        },
+        "remainingAttempts": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "OtpForbiddenCode": {
+      "enum": [
+        "CODE_001",
+        "CODE_002"
+      ],
+      "type": "string"
+    },
+    "OtpStatus": {
+      "enum": [
+        "PENDING",
+        "EXPIRED",
+        "REJECTED",
+        "COMPLETED"
+      ],
+      "type": "string"
+    },
+    "OtpVerifyRequest": {
+      "properties": {
+        "otp": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "otpUuid": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "otpUuid",
+        "otp"
+      ],
+      "type": "object"
+    },
     "Problem": {
       "properties": {
         "detail": {
@@ -137,6 +248,14 @@
         }
       },
       "type": "object"
+    },
+    "TokenResponse": {
+      "properties": {
+        "sessionToken": {
+          "type": "string"
+        }
+      },
+      "type": "object"
     }
   },
   "securityDefinitions": {
@@ -150,6 +269,9 @@
   "tags": [
     {
       "name": "OIDC"
+    },
+    {
+      "name": "OTP"
     }
   ],
   "x-components": {}
