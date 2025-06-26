@@ -27,7 +27,7 @@ export default {
     title: 'Conferma la tua identità',
     description:
       'Abbiamo inviato un’e-mail all’indirizzo <1>{{email}}</1><2/>Per proseguire, controlla la casella di posta e inserisci qui il codice numerico.',
-    resend: 'Non hai ricevuto il codice? <1>Richiedi un nuovo codice</1> tra 60s.',
+    resend: 'Non hai ricevuto il codice? <1>Richiedi un nuovo codice</1> {{timer}}',
     error: {
       generic: {
         title: 'Qualcosa è andato storto',
@@ -44,7 +44,7 @@ export default {
       expired: {
         message: 'Il codice non è più valido',
         buttonLabel: 'Richiedi un nuovo codice',
-      }
+      },
     },
   },
   loginError: {

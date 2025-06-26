@@ -111,22 +111,31 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
     [error]
   );
 
-  const handleVerifyError = (statusCode: number, _otpForbiddenCode: string) => {
+  const handleVerifyError = (
+    statusCode: number,
+    otpForbiddenCode: string,
+    remainingAttempts?: number
+  ) => {
+    const toManyAttempts = statusCode === 403 && otpForbiddenCode === 'CODE_002';
+    const wrongOtp = statusCode === 403 && otpForbiddenCode === 'CODE_001';
+    const expiredOtp = statusCode === 409;
     setError(true);
-    if (statusCode === 403 && _otpForbiddenCode === 'CODE_002') {
+
+    if (wrongOtp) {
+      setErrorType('wrongOtp');
+      return setHelperText(t('otp.error.toManyAttempts.wrongOtp', { remainingAttempts }));
+    }
+
+    if (expiredOtp) {
+      setErrorType('expiredOtp');
+      return setHelperText(t('otp.error.expired.message'));
+    }
+
+    if (toManyAttempts) {
       setErrorType('otpToManyAttempts');
       return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpToManyAttempts`);
     }
 
-    if (statusCode === 403 && _otpForbiddenCode === 'CODE_001') {
-      setErrorType('wrongOtp');
-      return setHelperText(t('otp.error.toManyAttempts.wrongOtp'));
-    }
-
-    if (statusCode === 409) {
-      setErrorType('expiredOtp');
-      return setHelperText(t('otp.error.expired.message'));
-    }
     return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpGeneric`);
   };
 
@@ -138,12 +147,15 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
         otpUuid: otpSessionUid as NonEmptyString,
       })
         .then((res) => {
-          console.log('this is Res', res);
           storageTokenOps.write(res.sessionToken);
           window.location.assign(ROUTE_LOGIN_SUCCESS);
         })
         .catch((error) => {
-          handleVerifyError(error.httpStatus, error.httpBody);
+          handleVerifyError(
+            error.httpStatus,
+            error.httpBody.otpForbiddenCode,
+            error.httpBody.remainingAttempts
+          );
         });
     }
   }, [otp]);

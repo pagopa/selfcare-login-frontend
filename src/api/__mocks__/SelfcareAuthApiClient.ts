@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import { OidcExchangeResponse, otpVerifyResponse } from '../../models/authentication';
 import { OidcExchangeRequest } from '../generated/selfcare-auth/OidcExchangeRequest';
 import { OtpVerifyRequest } from '../generated/selfcare-auth/OtpVerifyRequest';
@@ -8,7 +9,6 @@ export const SelfcareAuthApiMock = {
   oneIdentityCodeExchangeMock: async (
     oidcExchangeRequest: OidcExchangeRequest
   ): Promise<OidcExchangeResponse> => {
-    console.log('oidcExchangeRequest.code', oidcExchangeRequest.code);
     if (oidcExchangeRequest.code === 'test-otp-code') {
       return Promise.resolve({
         requiresOtpFlow: true,
@@ -23,8 +23,44 @@ export const SelfcareAuthApiMock = {
     });
   },
 
-  otpVerifyMock: async (_otpVerifyRequest: OtpVerifyRequest): Promise<otpVerifyResponse> =>
-    await Promise.resolve({
+  otpVerifyMock: async (otpVerifyRequest: OtpVerifyRequest): Promise<otpVerifyResponse> => {
+    if (otpVerifyRequest.otp === '111666') {
+      const error: any = new Error('wrong otp');
+      error.httpStatus = 403;
+      error.httpBody = {
+        otpForbiddenCode: 'CODE_001',
+        remainingAttempts: 3,
+        otpStatus: 'PENDING',
+      };
+      throw error;
+    }
+
+    if (otpVerifyRequest.otp === '222666') {
+      const error: any = new Error('otp attempt exceeded');
+      error.httpStatus = 403;
+      error.httpBody = {
+        otpForbiddenCode: 'CODE_002',
+        remainingAttempts: 0,
+        otpStatus: 'PENDING',
+      };
+      throw error;
+    }
+
+    if (otpVerifyRequest.otp === '111999') {
+      const error: any = new Error('OTP expired');
+      error.httpStatus = 409;
+      error.httpBody = {
+        detail: 'string',
+        instance: 'string',
+        status: 0,
+        title: 'string',
+        type: 'string',
+      };
+      throw error;
+    }
+
+    return {
       sessionToken: mockedSessionToken,
-    }),
+    };
+  },
 };

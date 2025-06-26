@@ -39,9 +39,8 @@ const LoginError: React.FC<LoginErrorProps> = ({ queryParams }: LoginErrorProps)
 
   return (
     <Layout>
-      <Grid sx={{ backgroundColor: '#F5F5F5' }}>
+      <Grid sx={{ backgroundColor: '#F5F5F5' }} minHeight={'80vh'} alignContent="center">
         <EndingPage
-          minHeight={'100vh'}
           icon={errorType === 'otpToManyAttempts' ? <UmbrellaIcon /> : <IllusError size={60} />}
           variantTitle="h4"
           variantDescription="body1"
