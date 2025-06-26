@@ -39,7 +39,12 @@ export default {
         description:
           'Hai inserito il codice errato per più di 5 volte. Autenticati di nuovo con SPID o CIE per accedere.',
         buttonLabel: 'Esci',
+        wrongOtp: 'Il codice non è corretto. Hai ancora {{remainingAttempts}} tentativi.',
       },
+      expired: {
+        message: 'Il codice non è più valido',
+        buttonLabel: 'Richiedi un nuovo codice',
+      }
     },
   },
   loginError: {
