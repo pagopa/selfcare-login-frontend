@@ -1,16 +1,23 @@
-import { Box, TextField } from '@mui/material';
+import { Box, FormHelperText, TextField } from '@mui/material';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { otpVerifyService } from '../../../services/selfcareAuth';
 import { ROUTE_LOGIN_ERROR, ROUTE_LOGIN_SUCCESS } from '../../../utils/constants';
 import { storageOTPSessionUidOps } from '../../../utils/storage';
 
 const OTP_LENGTH = 6;
 
-const OtpInput: React.FC = () => {
+type Props = {
+  setErrorType: (errorType: string) => void;
+};
+
+const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState<Array<string>>(() => Array.from({ length: OTP_LENGTH }, () => ''));
   const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
 
   const otpSessionUid = storageOTPSessionUidOps.read();
 
@@ -91,6 +98,7 @@ const OtpInput: React.FC = () => {
       if (error) {
         setOtp(Array.from({ length: OTP_LENGTH }, () => ''));
         setError(false);
+        setHelperText('');
       }
 
       const input = e.target;
@@ -103,18 +111,31 @@ const OtpInput: React.FC = () => {
     [error]
   );
 
-  const handleVerifyError = (statusCode: number, _otpForbiddenCode: string) => {
-    if (statusCode === 403 && _otpForbiddenCode === 'CODE_002') {
-      window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpToManyAttempts`);
+  const handleVerifyError = (
+    statusCode: number,
+    otpForbiddenCode: string,
+    remainingAttempts?: number
+  ) => {
+    const toManyAttempts = statusCode === 403 && otpForbiddenCode === 'CODE_002';
+    const wrongOtp = statusCode === 403 && otpForbiddenCode === 'CODE_001';
+    const expiredOtp = statusCode === 409;
+    setError(true);
+
+    if (wrongOtp) {
+      setErrorType('wrongOtp');
+      return setHelperText(t('otp.error.toManyAttempts.wrongOtp', { remainingAttempts }));
     }
 
-    if (statusCode === 403 && _otpForbiddenCode === 'CODE_001') {
-      // TODO handle in page error with otpForbiddenCode CODE_001=wrong otp
+    if (expiredOtp) {
+      setErrorType('expiredOtp');
+      return setHelperText(t('otp.error.expired.message'));
     }
 
-    if (statusCode === 409) {
-      // TODO handle in page error expired otp
+    if (toManyAttempts) {
+      setErrorType('otpToManyAttempts');
+      return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpToManyAttempts`);
     }
+
     return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpGeneric`);
   };
 
@@ -126,19 +147,22 @@ const OtpInput: React.FC = () => {
         otpUuid: otpSessionUid as NonEmptyString,
       })
         .then((res) => {
-          console.log('this is Res', res);
           storageTokenOps.write(res.sessionToken);
           window.location.assign(ROUTE_LOGIN_SUCCESS);
         })
         .catch((error) => {
-          handleVerifyError(error.httpStatus, error.httpBody);
+          handleVerifyError(
+            error.httpStatus,
+            error.httpBody.otpForbiddenCode,
+            error.httpBody.remainingAttempts
+          );
         });
     }
   }, [otp]);
 
   return (
     <form>
-      <Box display="flex" gap={1} justifyContent="center" mt={2} mb={4}>
+      <Box display="flex" gap={1} justifyContent="center">
         {inputRefs.map((ref, index) => (
           <TextField
             key={index}
@@ -154,7 +178,7 @@ const OtpInput: React.FC = () => {
               input: {
                 textAlign: 'center',
                 fontSize: '24px',
-                width: '33px',
+                width: '34px',
                 height: '53px',
                 padding: 0,
                 borderRadius: 1,
@@ -184,6 +208,13 @@ const OtpInput: React.FC = () => {
             variant="outlined"
           />
         ))}
+      </Box>
+      <Box display="flex" justifyContent="center" mt={1}>
+        {error && (
+          <FormHelperText sx={{ fontSize: 'fontSize' }} error={error}>
+            {helperText}
+          </FormHelperText>
+        )}
       </Box>
     </form>
   );
