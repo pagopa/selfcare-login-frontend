@@ -141,7 +141,12 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
 
   useEffect(() => {
     const isOtpFilled = otp.length === OTP_LENGTH && otp.every((char) => char !== '');
-    if (isOtpFilled) {
+
+    if (!isOtpFilled) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
       otpVerifyService({
         otp: otp.join('') as NonEmptyString,
         otpUuid: otpSessionUid as NonEmptyString,
@@ -157,7 +162,9 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
             error.httpBody.remainingAttempts
           );
         });
-    }
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
   }, [otp]);
 
   return (
