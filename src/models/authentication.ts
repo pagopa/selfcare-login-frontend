@@ -8,3 +8,8 @@ export type OidcExchangeResponse = {
 export type otpVerifyResponse = {
   sessionToken: string;
 };
+
+export type OtpResend = {
+  otpSessionUid: string;
+  maskedEmail: string;
+};

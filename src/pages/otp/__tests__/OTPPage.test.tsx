@@ -1,10 +1,14 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { createStore } from '../../../redux/store';
 import OTPPage from '../OTPPage';
 import OtpInput from '../components/OTPInputFields';
+import { SendOTPMail } from '../components/SendOTPMail';
 
 const user = userEvent.setup();
+const store = createStore();
 
 const mockSetErrorType = jest.fn();
 
@@ -23,13 +27,21 @@ describe('OTPPage', () => {
   });
 
   test('renders OTP page with title', () => {
-    render(<OTPPage />);
+    render(
+      <Provider store={store}>
+        <OTPPage />
+      </Provider>
+    );
     const pageTitle = screen.getByText('Conferma la tua identità');
     expect(pageTitle).toBeInTheDocument();
   });
 
   test('renders OtpInput component within the page', () => {
-    render(<OTPPage />);
+    render(
+      <Provider store={store}>
+        <OTPPage />
+      </Provider>
+    );
     const otpInputs = screen.getAllByRole('textbox');
     expect(otpInputs).toHaveLength(6);
   });
@@ -45,13 +57,21 @@ describe('OtpInput Component', () => {
   });
 
   test('renders 6 OTP input fields', () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
     const inputs = screen.getAllByRole('textbox');
     expect(inputs).toHaveLength(6);
   });
 
   test('accepts only numeric input', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1') as HTMLInputElement;
 
@@ -65,7 +85,11 @@ describe('OtpInput Component', () => {
   });
 
   test('automatically focuses next input when digit is entered', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
     const secondInput = screen.getByLabelText('OTP character 2');
@@ -81,7 +105,11 @@ describe('OtpInput Component', () => {
   });
 
   test('handles backspace correctly - clears current field first', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
     const secondInput = screen.getByLabelText('OTP character 2');
@@ -100,7 +128,11 @@ describe('OtpInput Component', () => {
   });
 
   test('handles backspace on empty field - moves to previous field and clears it', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
     const secondInput = screen.getByLabelText('OTP character 2');
@@ -118,7 +150,11 @@ describe('OtpInput Component', () => {
   });
 
   test('handles paste operation - fills multiple fields with numeric data', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
 
@@ -139,7 +175,11 @@ describe('OtpInput Component', () => {
   });
 
   test('filters non-numeric characters from pasted data', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
 
@@ -162,7 +202,11 @@ describe('OtpInput Component', () => {
   });
 
   test('has proper accessibility attributes', () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     // Check that all inputs have proper aria-labels
     for (let i = 1; i <= 6; i++) {
@@ -174,7 +218,11 @@ describe('OtpInput Component', () => {
   });
 
   test('Handle error case for worng otp filled', async () => {
-    render(<OtpInput {...defaultProps} />);
+    render(
+      <Provider store={store}>
+        <OtpInput {...defaultProps} />{' '}
+      </Provider>
+    );
 
     const firstInput = screen.getByLabelText('OTP character 1');
 
@@ -185,5 +233,27 @@ describe('OtpInput Component', () => {
         getData: (type: string) => (type === 'Text' ? '111666' : ''),
       },
     });
+  });
+});
+
+describe('SendOTPMail component', () => {
+  test('renders correctly', () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <SendOTPMail errorType="expiredOtp" />
+      </Provider>
+    );
+    expect(getByText('Richiedi un nuovo codice')).toBeInTheDocument();
+  });
+
+  test('disables button when timer is active', () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <SendOTPMail errorType="expiredOtp" />
+      </Provider>
+    );
+    const button = getByText('Richiedi un nuovo codice');
+    fireEvent.click(button);
+    expect(button).toBeDisabled();
   });
 });

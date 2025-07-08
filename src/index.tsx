@@ -5,10 +5,12 @@ import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './App';
 import './consentAndAnalyticsConfiguration.ts';
 import './index.css';
 import './locale';
+import { store } from './redux/store';
 import { ENV } from './utils/env';
 
 // eslint-disable-next-line functional/immutable-data
@@ -18,9 +20,11 @@ CONFIG.URL_FE.ASSISTANCE = ENV.URL_FE.ASSISTANCE;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ThemeProvider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 );

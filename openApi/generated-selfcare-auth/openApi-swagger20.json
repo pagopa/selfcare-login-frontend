@@ -73,6 +73,63 @@
         "summary": "OIDC exchange endpoint"
       }
     },
+    "/otp/resend": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OtpResendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeOtpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OTP"
+        ],
+        "description": "Resend an OTP if email has not been received by user",
+        "operationId": "otpResend",
+        "summary": "Resend OTP endpoint"
+      }
+    },
     "/otp/verify": {
       "post": {
         "consumes": [
@@ -201,6 +258,18 @@
         "CODE_002"
       ],
       "type": "string"
+    },
+    "OtpResendRequest": {
+      "properties": {
+        "otpUuid": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "otpUuid"
+      ],
+      "type": "object"
     },
     "OtpStatus": {
       "enum": [

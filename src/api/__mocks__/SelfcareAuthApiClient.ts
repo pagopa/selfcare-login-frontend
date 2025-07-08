@@ -1,6 +1,8 @@
 /* eslint-disable functional/immutable-data */
 import { OidcExchangeResponse, otpVerifyResponse } from '../../models/authentication';
+import { OidcExchangeOtpResponse } from '../generated/selfcare-auth/OidcExchangeOtpResponse';
 import { OidcExchangeRequest } from '../generated/selfcare-auth/OidcExchangeRequest';
+import { OtpResendRequest } from '../generated/selfcare-auth/OtpResendRequest';
 import { OtpVerifyRequest } from '../generated/selfcare-auth/OtpVerifyRequest';
 
 const mockedSessionToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTc1MDQxNjAxMH0.yvLnfaZEZ-DMh7pW_7DkWj637qXg4uJ7XcJQiF-8Wiw`;
@@ -63,4 +65,9 @@ export const SelfcareAuthApiMock = {
       sessionToken: mockedSessionToken,
     };
   },
+
+  otpResendMock: async (_otpResendRequest: OtpResendRequest): Promise<OidcExchangeOtpResponse> =>
+    Promise.resolve({
+      sessionToken: mockedSessionToken,
+    }),
 };
