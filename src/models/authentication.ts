@@ -13,3 +13,10 @@ export type OtpResend = {
   otpSessionUid: string;
   maskedEmail: string;
 };
+
+export enum OtpErrorTypeEnum {
+  WrongOtp = 'wrongOtp',
+  ExpiredOtp = 'expiredOtp',
+  OtpToManyAttempts = 'otpToManyAttempts',
+  OtpGeneric = 'otpGeneric',
+}

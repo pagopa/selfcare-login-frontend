@@ -1,5 +1,4 @@
 import { appStateReducer } from '@pagopa/selfcare-common-frontend/lib/redux/slices/appStateSlice';
-import { permissionsReducer } from '@pagopa/selfcare-common-frontend/lib/redux/slices/permissionsSlice';
 import { userReducer } from '@pagopa/selfcare-common-frontend/lib/redux/slices/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
@@ -11,7 +10,6 @@ export const createStore = () =>
   configureStore({
     reducer: {
       user: userReducer,
-      permissions: permissionsReducer,
       appState: appStateReducer,
     },
     middleware: (getDefaultMiddleware: any) =>
