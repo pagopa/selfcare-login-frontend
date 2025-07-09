@@ -1,5 +1,9 @@
 import { ENV } from './env';
 
+const IS_DEVELOP = process.env.NODE_ENV === 'development';
+
+export const LOG_REDUX_ACTIONS = IS_DEVELOP;
+
 export const BASE_ROUTE = ENV.PUBLIC_URL;
 
 export const ROUTE_LOGIN = BASE_ROUTE + '/login';

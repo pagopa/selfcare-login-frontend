@@ -5,7 +5,9 @@ import {
 import { OidcExchangeResponse, otpVerifyResponse } from '../models/authentication';
 import { ENV } from '../utils/env';
 import { createClient } from './generated/selfcare-auth/client';
+import { OidcExchangeOtpResponse } from './generated/selfcare-auth/OidcExchangeOtpResponse';
 import { OidcExchangeRequest } from './generated/selfcare-auth/OidcExchangeRequest';
+import { OtpResendRequest } from './generated/selfcare-auth/OtpResendRequest';
 import { OtpVerifyRequest } from './generated/selfcare-auth/OtpVerifyRequest';
 
 const apiClient = createClient({
@@ -24,6 +26,11 @@ export const SelfcareAuthApi = {
 
   otpVerify: async (otpVerifyRequest: OtpVerifyRequest): Promise<otpVerifyResponse> => {
     const result = await apiClient.otpVerify({ body: otpVerifyRequest });
+    return extractResponse(result, 200, () => {});
+  },
+
+  otpResend: async (otpResendRequest: OtpResendRequest): Promise<OidcExchangeOtpResponse> => {
+    const result = await apiClient.otpResend({ body: otpResendRequest });
     return extractResponse(result, 200, () => {});
   },
 };

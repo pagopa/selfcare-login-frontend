@@ -3,6 +3,7 @@ import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/stor
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { OtpErrorTypeEnum } from '../../../models/authentication';
 import { otpVerifyService } from '../../../services/selfcareAuth';
 import { ROUTE_LOGIN_ERROR, ROUTE_LOGIN_SUCCESS } from '../../../utils/constants';
 import { storageOTPSessionUidOps } from '../../../utils/storage';
@@ -113,7 +114,7 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
 
   const handleVerifyError = (
     statusCode: number,
-    otpForbiddenCode: string,
+    otpForbiddenCode?: string,
     remainingAttempts?: number
   ) => {
     const toManyAttempts = statusCode === 403 && otpForbiddenCode === 'CODE_002';
@@ -122,21 +123,23 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
     setError(true);
 
     if (wrongOtp) {
-      setErrorType('wrongOtp');
+      setErrorType(OtpErrorTypeEnum.WrongOtp);
       return setHelperText(t('otp.error.toManyAttempts.wrongOtp', { remainingAttempts }));
     }
 
     if (expiredOtp) {
-      setErrorType('expiredOtp');
+      setErrorType(OtpErrorTypeEnum.ExpiredOtp);
       return setHelperText(t('otp.error.expired.message'));
     }
 
     if (toManyAttempts) {
-      setErrorType('otpToManyAttempts');
-      return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpToManyAttempts`);
+      setErrorType(OtpErrorTypeEnum.OtpToManyAttempts);
+      return window.location.assign(
+        `${ROUTE_LOGIN_ERROR}?errorType=${OtpErrorTypeEnum.OtpToManyAttempts}`
+      );
     }
 
-    return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=otpGeneric`);
+    return window.location.assign(`${ROUTE_LOGIN_ERROR}?errorType=${OtpErrorTypeEnum.OtpGeneric}`);
   };
 
   useEffect(() => {
@@ -158,8 +161,8 @@ const OtpInput: React.FC<Props> = ({ setErrorType }: Props) => {
         .catch((error) => {
           handleVerifyError(
             error.httpStatus,
-            error.httpBody.otpForbiddenCode,
-            error.httpBody.remainingAttempts
+            error.httpBody?.otpForbiddenCode,
+            error.httpBody?.remainingAttempts
           );
         });
     }, 300);
