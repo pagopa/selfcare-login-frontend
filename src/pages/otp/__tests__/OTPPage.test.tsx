@@ -240,7 +240,7 @@ describe('SendOTPMail component', () => {
   test('renders correctly', () => {
     const { getByText } = render(
       <Provider store={store}>
-        <SendOTPMail errorType="expiredOtp" />
+        <SendOTPMail errorType="expiredOtp" clearErrorType={jest.fn()} />
       </Provider>
     );
     expect(getByText('Richiedi un nuovo codice')).toBeInTheDocument();
@@ -249,7 +249,7 @@ describe('SendOTPMail component', () => {
   test('disables button when timer is active', () => {
     const { getByText } = render(
       <Provider store={store}>
-        <SendOTPMail errorType="expiredOtp" />
+        <SendOTPMail errorType="expiredOtp" clearErrorType={jest.fn()} />
       </Provider>
     );
     const button = getByText('Richiedi un nuovo codice');
