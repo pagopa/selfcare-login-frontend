@@ -21,7 +21,13 @@ const OneIdentityAuthCallbackPage = () => {
   const redirectURI = storageRedirectURIOps.read();
 
   if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
-    trackEvent('LOGIN_ERROR_ONE_IDENTITY', { error, state: receivedState });
+    trackEvent('LOGIN_ERROR_ONE_IDENTITY', {
+      error,
+      storedState,
+      receivedState,
+      oneIdentityCode,
+      redirectURI,
+    });
     redirectToErrorPage();
     return <></>;
   }
