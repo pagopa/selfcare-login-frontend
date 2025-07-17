@@ -1,4 +1,5 @@
 import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { selfcareAuthService } from '../../services/selfcareAuth';
@@ -20,6 +21,13 @@ const OneIdentityAuthCallbackPage = () => {
   const redirectURI = storageRedirectURIOps.read();
 
   if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
+    trackEvent('LOGIN_ERROR_ONE_IDENTITY', {
+      error,
+      storedState,
+      receivedState,
+      oneIdentityCode,
+      redirectURI,
+    });
     redirectToErrorPage();
     return <></>;
   }
