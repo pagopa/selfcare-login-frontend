@@ -46,6 +46,7 @@ const onLoginRequest = () => {
   storageStateOps.delete();
   storageNonceOps.delete();
   storageTokenOps.delete();
+  storageRedirectURIOps.delete();
   handleLoginRequestOnSuccessRequest();
   return <LoadingOverlayComponent open={true} />;
 };

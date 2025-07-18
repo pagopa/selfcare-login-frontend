@@ -4,5 +4,5 @@ export const storageOnSuccessOps = storageOpsBuilder<string>('LOGIN:onSuccess', 
 export const storageStateOps = storageOpsBuilder<string>('StateGenerated', 'string', true);
 export const storageNonceOps = storageOpsBuilder<string>('Nonce', 'string', true);
 export const storageRedirectURIOps = storageOpsBuilder<string>('redirect_uri', 'string', true);
-export const storageOTPSessionUidOps = storageOpsBuilder<string>('OTPSessionUid', 'string', true);
-export const storageMaskedEmailOps = storageOpsBuilder<string>('MaskedEmail', 'string', true);
+export const storageOTPSessionUidOps = storageOpsBuilder<string>('OTPSessionUid', 'string', false);
+export const storageMaskedEmailOps = storageOpsBuilder<string>('MaskedEmail', 'string', false);
