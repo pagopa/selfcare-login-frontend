@@ -1,8 +1,9 @@
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
 import { User, userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
 import { storageOnSuccessOps } from '../../utils/storage';
@@ -23,6 +24,9 @@ export const redirectSuccessLogin = () => {
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
   storageOnSuccessOps.delete();
+  trackEvent('LOGIN_SUCCESS', {
+    origin: location.origin,
+  });
   window.location.assign(redirectTo);
 };
 
