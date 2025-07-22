@@ -49,7 +49,14 @@ const OneIdentityAuthCallbackPage = () => {
           window.location.assign(ROUTE_OTP);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        trackEvent('LOGIN_ERROR_ONE_IDENTITY', {
+          selfcareAuthServiceError: err,
+          storedState,
+          receivedState,
+          oneIdentityCode,
+          redirectURI,
+        });
         redirectToErrorPage();
       });
   }

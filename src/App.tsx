@@ -1,4 +1,5 @@
 import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 import LoginError from './pages/loginError/LoginError';
@@ -67,6 +68,9 @@ const handleLoginRequestOnSuccessRequest = () => {
   storageStateOps.write(state);
   storageNonceOps.write(nonce);
   storageRedirectURIOps.write(redirect_uri);
+  trackEvent('LOGIN_INTENT', {
+    origin: location.origin,
+  });
 
   window.location.assign(
     `${ENV.ONE_IDENTITY.BASE_URL}/login?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
