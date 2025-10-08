@@ -1,17 +1,24 @@
 import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { User } from '@pagopa/selfcare-common-frontend/lib/model/User';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { User, userFromJwtToken } from '../../models/User';
+import { userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
-import { storageOnSuccessOps } from '../../utils/storage';
+import {
+  storageNonceOps,
+  storageOnSuccessOps,
+  storageRedirectURIOps,
+  storageStateOps,
+} from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
 
 export const readUserFromToken = (token: string) => {
   const user: User = userFromJwtToken(token);
   if (user) {
+    console.log('users', user);
     storageUserOps.write(user);
   }
 };
@@ -23,7 +30,12 @@ export const redirectSuccessLogin = () => {
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
+
   storageOnSuccessOps.delete();
+  storageStateOps.delete();
+  storageNonceOps.delete();
+  storageRedirectURIOps.delete();
+
   trackEvent('LOGIN_SUCCESS', {
     origin: location.origin,
   });
@@ -32,7 +44,11 @@ export const redirectSuccessLogin = () => {
 
 /** success login operations */
 const LoginSuccess = () => {
-  const selfcareToken = storageTokenOps.read();
+  const hash = location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const tokenFragment = params.get('token');
+
+  const selfcareToken = tokenFragment || storageTokenOps.read();
 
   if (selfcareToken !== '' && selfcareToken !== undefined) {
     readUserFromToken(selfcareToken);
