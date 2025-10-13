@@ -18,7 +18,6 @@ import { redirectToLogin } from '../../utils/utils';
 export const readUserFromToken = (token: string) => {
   const user: User = userFromJwtToken(token);
   if (user) {
-    console.log('users', user);
     storageUserOps.write(user);
   }
 };
@@ -49,6 +48,10 @@ const LoginSuccess = () => {
   const tokenFragment = params.get('token');
 
   const selfcareToken = tokenFragment || storageTokenOps.read();
+
+  if (tokenFragment) {
+    storageTokenOps.write(tokenFragment);
+  }
 
   if (selfcareToken !== '' && selfcareToken !== undefined) {
     readUserFromToken(selfcareToken);
