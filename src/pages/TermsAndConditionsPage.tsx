@@ -14,7 +14,10 @@ export function TermsAndConditionsPage() {
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings = process.env.REACT_APP_OT_TOKEN;
+    script.setAttribute(
+      'settings',
+      'eyJjb250ZW50QXBpVXJsIjoiaHR0cHM6Ly9wcml2YWN5cG9ydGFsLWRlLm9uZXRydXN0LmNvbS9yZXF1ZXN0L3YxL2VudGVycHJpc2Vwb2xpY3kvZGlnaXRhbHBvbGljeS9jb250ZW50IiwibWV0YWRhdGFBcGlVcmwiOiJodHRwczovL3ByaXZhY3lwb3J0YWwtZGUub25ldHJ1c3QuY29tL3JlcXVlc3QvdjEvZW50ZXJwcmlzZXBvbGljeS9kaWdpdGFscG9saWN5L21ldGEtZGF0YSJ9'
+    );
 
     document.body.appendChild(script);
 
@@ -22,7 +25,7 @@ export function TermsAndConditionsPage() {
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
         (window as any).OneTrust.NoticeApi.LoadNotices([
-          process.env.REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE,
+          'https://privacyportalde-cdn.onetrust.com/storage-container/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/6f92cced-3bd1-4859-9295-baecfc74c64a/draft/privacynotice.json',
         ]);
       });
     };
