@@ -30,7 +30,9 @@ export function PrivacyPolicyPage() {
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([process.env.REACT_APP_OT_TOS_RESOURCE]);
+        (window as any).OneTrust.NoticeApi.LoadNotices([
+          'https://privacyportalde-cdn.onetrust.com/storage-container/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/26403d01-dc46-4c89-be70-4894839cf639/draft/privacynotice.json',
+        ]);
       });
     };
 
