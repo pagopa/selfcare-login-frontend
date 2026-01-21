@@ -22,7 +22,7 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = new RegExp('^[\\w?=&/-]+$');
+const validOnSuccessPattern = /^\/(?:[\w\-./?=&]|%[0-9A-Fa-f]{2})+$/;
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageOnSuccessOps.read();
   const redirectTo =
