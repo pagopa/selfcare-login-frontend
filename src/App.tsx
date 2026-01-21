@@ -43,7 +43,6 @@ const onAlreadyInSession = (sessionToken: string) => (
 
 /** login request operations */
 const onLoginRequest = () => {
-  storageOnSuccessOps.delete();
   storageStateOps.delete();
   storageNonceOps.delete();
   storageTokenOps.delete();
