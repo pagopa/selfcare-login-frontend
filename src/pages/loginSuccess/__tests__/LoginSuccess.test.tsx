@@ -75,7 +75,6 @@ test('test login success with ENV.TEST_TOKEN fragment in URL', () => {
   expect(user.name).toBe('Mario');
   expect(user.surname).toBe('Rossi');
   expect(user.email).toBe('1@111sadcx11.com');
-
   expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
 
