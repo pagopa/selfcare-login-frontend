@@ -1,12 +1,19 @@
+import { LoadingOverlayComponent } from '@pagopa/selfcare-common-frontend/lib';
+import { User } from '@pagopa/selfcare-common-frontend/lib/model/User';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { User, userFromJwtToken } from '../../models/User';
+import { userFromJwtToken } from '../../models/User';
 import { ENV } from '../../utils/env';
+import {
+  storageNonceOps,
+  storageOnSuccessOps,
+  storageRedirectURIOps,
+  storageStateOps,
+} from '../../utils/storage';
 import { redirectToLogin } from '../../utils/utils';
-import { storageOnSuccessOps, storageSpidSelectedOps } from '../../utils/storage';
 
 export const readUserFromToken = (token: string) => {
   const user: User = userFromJwtToken(token);
@@ -15,32 +22,44 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = new RegExp('^[\\w?=&/-]+$');
+const validOnSuccessPattern = /^\/?([\w\-./?=&]|%[0-9A-Fa-f]{2})+$/;
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageOnSuccessOps.read();
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
       ? window.location.origin + '/' + onSuccess.replace(/^\//, '')
       : ENV.URL_FE.DASHBOARD;
+
   storageOnSuccessOps.delete();
+  storageStateOps.delete();
+  storageNonceOps.delete();
+  storageRedirectURIOps.delete();
+
+  trackEvent('LOGIN_SUCCESS', {
+    origin: location.origin,
+  });
   window.location.assign(redirectTo);
 };
 
 /** success login operations */
 const LoginSuccess = () => {
-  const { hash = '' } = window.location;
-  const urlToken = hash.replace('#token=', '');
+  const hash = location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const tokenFragment = params.get('token');
 
-  if (urlToken !== '' && urlToken !== undefined) {
-    const spidId = storageSpidSelectedOps.read();
-    trackEvent('LOGIN_SUCCESS', { SPID_IDP_ID: spidId });
-    storageTokenOps.write(urlToken);
-    readUserFromToken(urlToken);
+  const selfcareToken = tokenFragment || storageTokenOps.read();
+
+  if (tokenFragment) {
+    storageTokenOps.write(tokenFragment);
+  }
+
+  if (selfcareToken !== '' && selfcareToken !== undefined) {
+    readUserFromToken(selfcareToken);
     redirectSuccessLogin();
   } else {
     redirectToLogin();
   }
-  return <div />;
+  return <LoadingOverlayComponent open={true} />;
 };
 
 export default LoginSuccess;

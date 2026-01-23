@@ -1,13 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { useEffect, useRef } from 'react';
-import { Button, Grid, Link, Stack } from '@mui/material';
-import { Breadcrumbs } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Grid } from '@mui/material';
 import { theme } from '@pagopa/mui-italia';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
 
 export function PrivacyPolicyPage() {
-  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,14 +23,19 @@ export function PrivacyPolicyPage() {
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings = process.env.REACT_APP_OT_TOKEN;
+    script.setAttribute(
+      'settings',
+      'eyJjYWxsYmFja1VybCI6Imh0dHBzOi8vcHJpdmFjeXBvcnRhbC1kZS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9wcml2YWN5Tm90aWNlcy9zdGF0cy92aWV3cyIsImNvbnRlbnRBcGlVcmwiOiJodHRwczovL3ByaXZhY3lwb3J0YWwtZGUub25ldHJ1c3QuY29tL3JlcXVlc3QvdjEvZW50ZXJwcmlzZXBvbGljeS9kaWdpdGFscG9saWN5L2NvbnRlbnQiLCJtZXRhZGF0YUFwaVVybCI6Imh0dHBzOi8vcHJpdmFjeXBvcnRhbC1kZS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9lbnRlcnByaXNlcG9saWN5L2RpZ2l0YWxwb2xpY3kvbWV0YS1kYXRhIn0='
+    );
 
     document.body.appendChild(script);
 
     // eslint-disable-next-line functional/immutable-data
     script.onload = () => {
-      (window as any).OneTrust.NoticeApi.Initialized.then(() => {
-        (window as any).OneTrust.NoticeApi.LoadNotices([process.env.REACT_APP_OT_TOS_RESOURCE]);
+      (window as any).OneTrust.NoticeApi?.Initialized.then(() => {
+        (window as any).OneTrust.NoticeApi.LoadNotices([
+          'https://privacyportalde-cdn.onetrust.com/storage-container/77f17844-04c3-4969-a11d-462ee77acbe1/privacy-notices/26403d01-dc46-4c89-be70-4894839cf639/published/privacynotice.json',
+        ]);
       });
     };
 
@@ -46,38 +47,15 @@ export function PrivacyPolicyPage() {
     };
   }, []);
 
-  const goBack = () => {
-    history.back();
-  };
-
   return (
     <Grid container xs={12} p={3} bgcolor={theme.palette.background.default}>
-      <Stack p={3}>
-        <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            variant="text"
-            color="primary"
-            size="small"
-            startIcon={<ArrowBackIcon />}
-            accessKey="b"
-            onClick={goBack}
-          >
-            {t('breadCrumb.back')}
-          </Button>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="none" color={theme.palette.text.disabled} sx={{ cursor: 'default' }}>
-              {t('breadCrumb.privacyPolicy')}
-            </Link>
-          </Breadcrumbs>
-        </Grid>
-        <Grid mt={5}>
-          <div
-            id="otnotice-26403d01-dc46-4c89-be70-4894839cf639"
-            className="otnotice"
-            ref={containerRef}
-          ></div>
-        </Grid>
-      </Stack>
+      <Grid>
+        <div
+          id="otnotice-26403d01-dc46-4c89-be70-4894839cf639"
+          className="otnotice"
+          ref={containerRef}
+        ></div>
+      </Grid>
     </Grid>
   );
 }

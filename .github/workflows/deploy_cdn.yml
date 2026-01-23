@@ -42,7 +42,7 @@ jobs:
   promote_release:
     name: 'Promote prerelase release'
     if: ${{ inputs.env == 'prod' }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     needs: [release_and_deploy]

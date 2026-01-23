@@ -17,7 +17,7 @@ const Layout = ({ children }: Props) => (
   >
     <LoginHeader />
     {children}
-    <Box mt={16}>
+    <Box >
       <Footer loggedUser={false} productsJsonUrl={ENV.JSON_URL.PRODUCTS} />
     </Box>
   </Box>

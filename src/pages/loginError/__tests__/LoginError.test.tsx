@@ -1,82 +1,56 @@
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR } from '../../../utils/constants';
 import LoginError from '../LoginError';
-import { ROUTE_LOGIN_ERROR } from '../../../utils/constants';
 import './../../../locale';
 
 const oldWindowLocation = global.window.location;
 
 beforeAll(() => {
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  i18n.changeLanguage('it');
 });
+
 afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });
 });
 
 test('Test: Identity providers authentication errors and the relative error pages', async () => {
-  let componentRendered = false;
-  const errorCodes = ['19', '20', '21', '22', '23', '25', '24'];
+  render(<LoginError />);
 
-  errorCodes.forEach((errorCode) => {
-    if (!componentRendered) {
-      render(<LoginError />);
+  screen.getByText(/Non è stato possibile accedere/);
+  screen.getByText(/Si è verificato un problema durante l’accesso. Riprova tra qualche minuto./);
+  const tryAgainBtn = screen.getByText('Riprova');
 
-      window.location.assign(ROUTE_LOGIN_ERROR.concat(`?errorCode=${errorCode}`));
+  fireEvent.click(tryAgainBtn);
+  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
+});
 
-      switch (errorCode) {
-        case '19':
-          waitFor(() => {
-            screen.getByText(/Hai effettuato troppi tentativi di accesso/);
-            screen.getByText(
-              /Hai inserito troppe volte un nome utente o password non corretti. Verifica i dati di accesso e riprova fra qualche minuto, o contatta il tuo fornitore di identità SPID per modificare le tue credenziali./
-            );
-            screen.getByText('Riprova');
-            screen.getByText('Chiudi');
-          });
-          break;
-        case '20':
-          screen.getByText(/Hai effettuato troppi tentativi di accesso/);
-          screen.getByText(
-            /Per motivi di sicurezza, devi utilizzare un’identità con un livello di sicurezza superiore. Per avere più informazioni, contatta il tuo fornitore di identità SPID./
-          );
-          screen.getByText('Chiudi');
-          break;
-        case '21':
-          screen.getByText(
-            /È passato troppo tempo da quando hai iniziato l'accesso: riparti dall'inizio./
-          );
-          screen.getByText(/Ti chiediamo di riprovare più tardi./);
-          screen.getByText('Riprova');
-          screen.getByText('Chiudi');
-          break;
-        case '22':
-          screen.getByText(/Non hai dato il consenso all’invio dei dati/);
-          screen.getByText(/Per accedere, è necessario acconsentire all’invio di alcuni dati./);
-          screen.getByText('Riprova');
-          screen.getByText('Chiudi');
-          break;
-        case '23':
-          screen.getByText(/Identità sospesa o revocata/);
-          screen.getByText(
-            /La tua identità SPID risulta sospesa o revocata. Per maggiori informazioni, contatta il tuo fornitore di identità SPID./
-          );
-          screen.getByText('Chiudi');
-          break;
-        case '25':
-          screen.getByText(/Hai annullato l’accesso/);
-          screen.getByText(/Per entrare, riprova quando vuoi./);
-          screen.getByText('Riprova');
-          screen.getByText('Chiudi');
-          break;
-        default:
-          screen.getByText(/Non è stato possibile accedere/);
-          screen.getByText(
-            /Si è verificato un problema durante l’accesso. Riprova tra qualche minuto./
-          );
-          screen.getByText('Riprova');
-          screen.getByText('Chiudi');
-      }
-    }
-    componentRendered = true;
-  });
+test('Test: Identity providers authentication errors and the relative error pages', async () => {
+  const queryParams = new URLSearchParams({ errorType: 'otpGeneric' });
+
+  render(<LoginError queryParams={queryParams} />);
+
+  screen.getByText(/Qualcosa è andato storto/);
+  screen.getByText(/Riprova tra qualche minuto./);
+  const tryAgainBtn = screen.getByText('Chiudi');
+
+  fireEvent.click(tryAgainBtn);
+  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
+});
+
+test('Test: Identity providers authentication errors and the relative error pages', async () => {
+  const queryParams = new URLSearchParams({ errorType: 'otpToManyAttempts' });
+
+  render(<LoginError queryParams={queryParams} />);
+
+  screen.getByText(/Hai superato il numero massimo di tentativi/);
+  screen.getByText(
+    /Hai inserito il codice errato per più di 5 volte. Autenticati di nuovo con SPID o CIE per accedere./
+  );
+  const tryAgainBtn = screen.getByText('Esci');
+
+  fireEvent.click(tryAgainBtn);
+  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
 });

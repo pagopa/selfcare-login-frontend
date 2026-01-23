@@ -1,5 +1,5 @@
+import { User } from '@pagopa/selfcare-common-frontend/lib/model/User';
 import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { User } from '../../models/User';
 import { readUserFromToken, redirectSuccessLogin } from '../loginSuccess/LoginSuccess';
 
 type Props = {

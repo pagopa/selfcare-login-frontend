@@ -23,6 +23,31 @@ export default {
     cancelButton: 'Annulla',
     closeButton: 'Esci',
   },
+  otp: {
+    title: 'Conferma la tua identità',
+    description:
+      'Abbiamo inviato un’e-mail all’indirizzo <1>{{email}}</1><2/>Per proseguire, controlla la casella di posta e inserisci qui il codice numerico.',
+    resend: 'Non hai ricevuto il codice? <1>Richiedi un nuovo codice</1> {{timer}}',
+    resendExpired: '<0></0><1>Richiedi un nuovo codice</1> {{timer}}',
+    error: {
+      generic: {
+        title: 'Qualcosa è andato storto',
+        description: 'Riprova tra qualche minuto.',
+        buttonLabel: 'Chiudi',
+      },
+      toManyAttempts: {
+        title: 'Hai superato il numero massimo di tentativi',
+        description:
+          'Hai inserito il codice errato per più di 5 volte. Autenticati di nuovo con SPID o CIE per accedere.',
+        buttonLabel: 'Esci',
+        wrongOtp: 'Il codice non è corretto. Hai ancora {{remainingAttempts}} tentativi.',
+      },
+      expired: {
+        message: 'Il codice non è più valido',
+        buttonLabel: 'Richiedi un nuovo codice',
+      },
+    },
+  },
   loginError: {
     retry: 'Riprova',
     close: 'Chiudi',
@@ -56,7 +81,7 @@ export default {
     },
     generic: {
       title: 'Non è stato possibile accedere',
-      description: 'Si è verificato un problema durante l’accesso. Riprova tra qualche <1/>minuto.',
+      description: 'Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.',
     },
   },
   breadCrumb: {

@@ -7,17 +7,16 @@ export const ENV = {
   ENV: currentEnv,
   PUBLIC_URL,
 
-  ENABLED_SPID: env.get('REACT_APP_LOGIN_SPID_ENABLED').required().asBool(),
+  TEST_TOKEN: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMTExc2FkY3gxMS5jb20iLCJmYW1pbHlfbmFtZSI6IlJvc3NpIiwiZmlzY2FsX251bWJlciI6IlVOSVRURVNUUyIsIm5hbWUiOiJNYXJpbyIsImZyb21fYWEiOmZhbHNlLCJsZXZlbCI6IkwyIiwiaWF0IjoxNjM1MzYyODE1LCJleHAiOjE2MzUzNjY0MTUsImlzcyI6IlNQSUQiLCJqdGkiOiIwMUZLMUtHRlRYRjZNSDMwS1IyRTFGRUNIRCIsInVpZCI6IjAifQ.EuJlVuuQa2mqpaR_nj7wT95Ig3FuDTKmVGs5FEt3cZZovI6xegM3DV9Xiz3fjGk0Lg-S1qjf6oyvg1e6d7692CGbSuadkSeJNojeUaTK2yHwBRl207DpSEEqhWpqFM5qDZPgbwPFb1Oau5oE9kEwE8Z7KIBBu5gBzCb6dSKXKe_7wvR6QFwZKvjuWf82fCxuIZbHdI4bQwWoqXGCRh45T5VsMPDQ-xuJQTvxvRczEp8W3RF1INyF8vnY_wKXzjrZG4p_2kVS4RM6npy9oGluzlMTZxTaQZb1OSBv9YDzmEbJbgJ0KAt_4CrSORUi_NP38S1C2RLKCG_-Yt4H5JGWrQ',
 
   OT: {
     SRC: env.get('REACT_APP_OT_SRC').required().asString(),
     TOKEN: env.get('REACT_APP_OT_TOKEN').required().asString(),
-
+    REACT_APP_OT_TOS_RESOURCE: env.get('REACT_APP_OT_TOS_RESOURCE').required().asString(),
     RESOURCE_TERMS_AND_CONDITION: env
       .get('REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE')
       .required()
       .asString(),
-    REACT_APP_OT_TOS_RESOURCE: env.get('REACT_APP_OT_TOS_RESOURCE').required().asString(),
   },
 
   ASSISTANCE: {
@@ -32,6 +31,7 @@ export const ENV = {
 
   URL_FE: {
     LOGOUT: PUBLIC_URL + '/logout',
+    LOGIN: env.get('REACT_APP_URL_FE_LOGIN').required().asString(),
     ONBOARDING: env.get('REACT_APP_URL_FE_ONBOARDING').required().asString(),
     DASHBOARD: env.get('REACT_APP_URL_FE_DASHBOARD').required().asString(),
     LANDING: env.get('REACT_APP_URL_FE_LANDING').required().asString(),
@@ -42,6 +42,7 @@ export const ENV = {
 
   URL_API: {
     LOGIN: env.get('REACT_APP_URL_API_LOGIN').required().asString(),
+    AUTH: env.get('REACT_APP_URL_API_AUTH').required().asString(),
   },
 
   URL_FOOTER: {
@@ -52,6 +53,18 @@ export const ENV = {
   SPID_TEST_ENV_ENABLED: env.get('REACT_APP_SPID_TEST_ENV_ENABLED').required().asBool(),
 
   SPID_CIE_ENTITY_ID: env.get('REACT_APP_SPID_CIE_ENTITY_ID').required().asString(),
+
+  ONE_IDENTITY: {
+    CLIENT_ID: env.get('REACT_APP_OI_CLIENT_ID').required().asString(),
+    BASE_URL: env.get('REACT_APP_OI_BASE_URL').required().asString(),
+  },
+
+  ENABLE_OTP: env.get('REACT_APP_ENABLE_OTP').required().asBool(),
+  ENABLE_MAIL_OTP: env.get('REACT_APP_ENABLE_SEND_MAIL_OTP').required().asBool(),
+
+  API_TIMEOUT_MS: {
+    DASHBOARD: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
+  },
 
   ANALYTCS: {
     ENABLE: env.get('REACT_APP_ANALYTICS_ENABLE').default('false').asBool(),

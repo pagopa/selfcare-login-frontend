@@ -1,0 +1,347 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Auth API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/oidc/exchange": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeTokenResponse"
+            }
+          },
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeOtpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OIDC"
+        ],
+        "description": "OIDC exchange endpoint provides a token exchange by accepting a valid authorization code and releasing a jwt session token",
+        "operationId": "oidcExchange",
+        "summary": "OIDC exchange endpoint"
+      }
+    },
+    "/otp/resend": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OtpResendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OidcExchangeOtpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OTP"
+        ],
+        "description": "Resend an OTP if email has not been received by user",
+        "operationId": "otpResend",
+        "summary": "Resend OTP endpoint"
+      }
+    },
+    "/otp/verify": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/OtpVerifyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TokenResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/OtpForbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "tags": [
+          "OTP"
+        ],
+        "description": "Verify endpoint is used to complete an otp flow by validating user account",
+        "operationId": "otpVerify",
+        "summary": "Verify OTP endpoint"
+      }
+    }
+  },
+  "definitions": {
+    "OidcExchangeOtpResponse": {
+      "properties": {
+        "maskedEmail": {
+          "type": "string"
+        },
+        "otpSessionUid": {
+          "type": "string"
+        },
+        "requiresOtpFlow": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "OidcExchangeRequest": {
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "redirectUri": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "redirectUri"
+      ],
+      "type": "object"
+    },
+    "OidcExchangeTokenResponse": {
+      "properties": {
+        "requiresOtpFlow": {
+          "type": "boolean"
+        },
+        "sessionToken": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OtpForbidden": {
+      "properties": {
+        "otpForbiddenCode": {
+          "$ref": "#/definitions/OtpForbiddenCode"
+        },
+        "otpStatus": {
+          "$ref": "#/definitions/OtpStatus"
+        },
+        "remainingAttempts": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "OtpForbiddenCode": {
+      "enum": [
+        "CODE_001",
+        "CODE_002"
+      ],
+      "type": "string"
+    },
+    "OtpResendRequest": {
+      "properties": {
+        "otpUuid": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "otpUuid"
+      ],
+      "type": "object"
+    },
+    "OtpStatus": {
+      "enum": [
+        "PENDING",
+        "EXPIRED",
+        "REJECTED",
+        "COMPLETED"
+      ],
+      "type": "string"
+    },
+    "OtpVerifyRequest": {
+      "properties": {
+        "otp": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "otpUuid": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "otpUuid",
+        "otp"
+      ],
+      "type": "object"
+    },
+    "Problem": {
+      "properties": {
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TokenResponse": {
+      "properties": {
+        "sessionToken": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "securityDefinitions": {
+    "SecurityScheme": {
+      "description": "Authentication",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "tags": [
+    {
+      "name": "OIDC"
+    },
+    {
+      "name": "OTP"
+    }
+  ],
+  "x-components": {}
+}
