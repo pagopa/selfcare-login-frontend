@@ -1,12 +1,18 @@
 import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR } from './constants';
+import { ENV } from './env';
 
-export const redirectToLogin = () => {
-  window.location.assign(ROUTE_LOGIN);
+export const redirectToLogin = (isGoogleLogin = false) => {
+  if (isGoogleLogin) {
+    globalThis.location.assign(ENV.GOOGLE_LOGIN_URL);
+    return;
+  }
+  globalThis.location.assign(ROUTE_LOGIN);
 };
 
 export const redirectToErrorPage = () => {
-  window.location.assign(ROUTE_LOGIN_ERROR);
+  globalThis.location.assign(ROUTE_LOGIN_ERROR);
 };
 
 export const isPnpg =
-  window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
+  globalThis.location.hostname?.startsWith('pnpg') ||
+  globalThis.location.hostname?.startsWith('imprese');
