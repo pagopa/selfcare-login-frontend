@@ -17,6 +17,12 @@ export default {
     ptDescription:
       'Sélectionnez votre mode préféré pour vous connecter et vous enregistrer <1 /> en tant que Partenaire technologique pour le produit <3>{{nomProduit}}<3/>.',
   },
+  logoutGoogle: {
+    title: 'Vous avez été déconnecté',
+    subTitle: 'Pour continuer à utiliser les services, veuillez vous reconnecter.',
+    loginButton: 'Se connecter',
+    closeWindow: 'Ou fermer la fenêtre',
+  },
   spidSelect: {
     title: 'Choisissez votre SPID',
     modalTitle: 'Choisissez votre fournisseur d’identité',

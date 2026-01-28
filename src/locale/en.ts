@@ -17,6 +17,12 @@ export default {
     ptDescription:
       'Select the method you prefer to log in and register yourself <1 /> as a technological partner for the product <3>{{nomeProdotto}}<3/>.',
   },
+  logoutGoogle: {
+    title: 'You have been logged out',
+    subTitle: 'To continue using our services, please log in again.',
+    loginButton: 'Log In',
+    closeWindow: 'Or close the window',
+  },
   spidSelect: {
     title: 'Select your SPID',
     modalTitle: 'Select your Identity Provider',

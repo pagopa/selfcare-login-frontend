@@ -17,6 +17,12 @@ export default {
     ptDescription:
       'Izberite želeni način za dostop in registracijo <1 /> kot tehnološki partner za produkt <3>{{nomeProdotto}}<3/>.',
   },
+  logoutGoogle: {
+    title: 'Bili ste odjavljeni',
+    subTitle: 'Za nadaljnjo uporabo storitev se ponovno prijavite.',
+    loginButton: 'Prijava',
+    closeWindow: 'Ali zaprite okno',
+  },
   spidSelect: {
     title: 'Izberite svoj SPID',
     modalTitle: 'Izberite svojega ponudnika identitete',

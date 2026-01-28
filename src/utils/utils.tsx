@@ -1,12 +1,17 @@
-import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR } from './constants';
+import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR, ROUTE_LOGOUT_GOGGLE } from './constants';
 
-export const redirectToLogin = () => {
-  window.location.assign(ROUTE_LOGIN);
+export const redirectToLogin = (isGoogleLogin = false) => {
+  if (isGoogleLogin) {
+    globalThis.location.assign(ROUTE_LOGOUT_GOGGLE);
+    return;
+  }
+  globalThis.location.assign(ROUTE_LOGIN);
 };
 
 export const redirectToErrorPage = () => {
-  window.location.assign(ROUTE_LOGIN_ERROR);
+  globalThis.location.assign(ROUTE_LOGIN_ERROR);
 };
 
 export const isPnpg =
-  window.location.hostname?.startsWith('pnpg') || window.location.hostname?.startsWith('imprese');
+  globalThis.location.hostname?.startsWith('pnpg') ||
+  globalThis.location.hostname?.startsWith('imprese');

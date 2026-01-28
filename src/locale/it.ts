@@ -17,6 +17,12 @@ export default {
     ptDescription:
       'Seleziona la modalità che preferisci per accedere e registrarti <1 /> come Partner tecnologico per il prodotto <3>{{nomeProdotto}}<3/>.',
   },
+  logoutGoogle: {
+    title: 'Sei stato disconnesso',
+    subTitle: 'Per continuare a utilizzare i servizi, accedi di nuovo.',
+    loginButton: 'Accedi',
+    closeWindow: 'Oppure chiudi la finestra',
+  },
   spidSelect: {
     title: 'Scegli il tuo SPID',
     modalTitle: 'Scegli il tuo Identity Provider',

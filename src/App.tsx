@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LoginError from './pages/loginError/LoginError';
 import LoginSuccess from './pages/loginSuccess/LoginSuccess';
 import Logout from './pages/logout/Logout';
+import { LogoutGoogle } from './pages/logoutGoogle/LogoutGoogle';
 import OneIdentityAuthCallbackPage from './pages/oneIdentityAuthCallback/OneIdentityAuthCallback';
 import OTPPage from './pages/otp/OTPPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
@@ -16,6 +17,7 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
+  ROUTE_LOGOUT_GOGGLE,
   ROUTE_OTP,
   ROUTE_PRIVACY_DISCLAIMER,
   ROUTE_TERMS_AND_CONDITION,
@@ -33,6 +35,8 @@ const onTermsAndCondition = () => <TermsAndConditionsPage />;
 const onPrivacyDisclaimer = () => <PrivacyPolicyPage />;
 
 const onLogout = () => <Logout />;
+
+const onLogoutGoogle = () => <LogoutGoogle />;
 
 const onLoginError = (queryParams: URLSearchParams) => <LoginError queryParams={queryParams} />;
 
@@ -90,6 +94,9 @@ const resolveRoute = (
 
   if (path === ROUTE_LOGOUT) {
     return onLogout();
+  }
+  if (path === ROUTE_LOGOUT_GOGGLE) {
+    return onLogoutGoogle();
   }
   if (path === ROUTE_TERMS_AND_CONDITION) {
     return onTermsAndCondition();

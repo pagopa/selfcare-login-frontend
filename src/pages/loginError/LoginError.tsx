@@ -48,7 +48,7 @@ const LoginError: React.FC<LoginErrorProps> = ({ queryParams }: LoginErrorProps)
           description={t(config.descriptionKey)}
           variantFirstButton={'contained'}
           buttonLabel={t(config.buttonLabel)}
-          onButtonClick={redirectToLogin}
+          onButtonClick={() => redirectToLogin()}
         />
       </Grid>
     </Layout>
