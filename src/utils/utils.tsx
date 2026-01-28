@@ -1,9 +1,8 @@
-import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR } from './constants';
-import { ENV } from './env';
+import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR, ROUTE_LOGOUT_GOGGLE } from './constants';
 
 export const redirectToLogin = (isGoogleLogin = false) => {
   if (isGoogleLogin) {
-    globalThis.location.assign(ENV.GOOGLE_LOGIN_URL);
+    globalThis.location.assign(ROUTE_LOGOUT_GOGGLE);
     return;
   }
   globalThis.location.assign(ROUTE_LOGIN);
