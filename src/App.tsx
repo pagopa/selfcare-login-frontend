@@ -17,7 +17,7 @@ import {
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
   ROUTE_LOGOUT,
-  ROUTE_LOGOUT_GOGGLE,
+  ROUTE_LOGOUT_GOOGLE,
   ROUTE_OTP,
   ROUTE_PRIVACY_DISCLAIMER,
   ROUTE_TERMS_AND_CONDITION,
@@ -95,7 +95,7 @@ const resolveRoute = (
   if (path === ROUTE_LOGOUT) {
     return onLogout();
   }
-  if (path === ROUTE_LOGOUT_GOGGLE) {
+  if (path === ROUTE_LOGOUT_GOOGLE) {
     return onLogoutGoogle();
   }
   if (path === ROUTE_TERMS_AND_CONDITION) {
