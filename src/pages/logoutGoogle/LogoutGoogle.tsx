@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { storageOnSuccessOps } from '../../utils/storage';
-import { redirectToLogin } from '../../utils/utils';
+import { redirectToGoogleLogin } from '../../utils/utils';
 
 export const LogoutGoogle = () => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export const LogoutGoogle = () => {
           description={t('logoutGoogle.subTitle')}
           variantFirstButton={'contained'}
           buttonLabel={t('logoutGoogle.loginButton')}
-          onButtonClick={() => redirectToLogin(true)}
+          onButtonClick={redirectToGoogleLogin}
           isParagraphPresent={true}
           paragraph={
             <Typography variant="body2" color="text.secondary">
