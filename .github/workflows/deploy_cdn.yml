@@ -45,9 +45,10 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
+      variables: write 
     needs: [release_and_deploy]
     steps:
       - uses: pagopa/selfcare-commons/github-actions-template/promote-release@main
         with:
-          github_path_token: ${{ secrets.GITHUB_TOKEN }}
+          github_path_token: ${{ secrets.GH_PAT_VARIABLES }}
           release_version: ${{ vars.CURRENT_UAT_VERSION }}
