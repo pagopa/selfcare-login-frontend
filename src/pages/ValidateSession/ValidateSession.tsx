@@ -18,6 +18,10 @@ const ValidateSession = ({ sessionToken, path }: Props) => {
   const params = new URLSearchParams(hash);
   const tokenFragment = params.get('token');
 
+  if (!user) {
+    readUserFromToken(sessionToken);
+  }
+
   console.log('ValidateSession - sessionToken:', path, tokenFragment);
   if (user && tokenFragment && user.iss !== 'PAGOPA') {
     storageUserOps.delete();
@@ -33,9 +37,6 @@ const ValidateSession = ({ sessionToken, path }: Props) => {
     return;
   }
 
-  if (!user) {
-    readUserFromToken(sessionToken);
-  }
   redirectSuccessLogin();
 
   return <div />;
