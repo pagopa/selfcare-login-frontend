@@ -13,7 +13,7 @@ import {
   storageRedirectURIOps,
   storageStateOps,
 } from '../../utils/storage';
-import { redirectToLogin } from '../../utils/utils';
+import { redirectToGoogleLogout, redirectToLogin, redirectToLogout } from '../../utils/utils';
 
 export const readUserFromToken = (token: string) => {
   const user: User = userFromJwtToken(token);
@@ -23,7 +23,22 @@ export const readUserFromToken = (token: string) => {
 };
 
 const validOnSuccessPattern = /^\/?([\w\-./?=&]|%[0-9A-Fa-f]{2})+$/;
-export const redirectSuccessLogin = () => {
+export const redirectSuccessLogin = (isGoogleLoginFlow: boolean = false) => {
+  const currentUser: User | null = storageUserOps.read();
+
+  // 2. Force lougout if the user is logged with a different provider respect to the token received
+  if (currentUser) {
+    if (isGoogleLoginFlow && currentUser?.iss !== 'PAGOPA') {
+      redirectToGoogleLogout();
+      return;
+    }
+
+    if (!isGoogleLoginFlow && currentUser?.iss === 'PAGOPA') {
+      redirectToLogout();
+      return;
+    }
+  }
+
   const onSuccess: string | null = storageOnSuccessOps.read();
   const redirectTo =
     onSuccess && validOnSuccessPattern.test(onSuccess)
@@ -55,7 +70,11 @@ const LoginSuccess = () => {
 
   if (selfcareToken !== '' && selfcareToken !== undefined) {
     readUserFromToken(selfcareToken);
-    redirectSuccessLogin();
+    if (tokenFragment) {
+      redirectSuccessLogin(true);
+    } else {
+      redirectSuccessLogin(false);
+    }
   } else {
     redirectToLogin();
   }
