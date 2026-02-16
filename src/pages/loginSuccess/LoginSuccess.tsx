@@ -29,11 +29,15 @@ export const redirectSuccessLogin = (isGoogleLoginFlow: boolean = false) => {
   // 2. Force lougout if the user is logged with a different provider respect to the token received
   if (currentUser) {
     if (isGoogleLoginFlow && currentUser?.iss !== 'PAGOPA') {
+      storageUserOps.delete();
+      storageTokenOps.delete();
       redirectToGoogleLogout();
       return;
     }
 
     if (!isGoogleLoginFlow && currentUser?.iss === 'PAGOPA') {
+      storageUserOps.delete();
+      storageTokenOps.delete();
       redirectToLogout();
       return;
     }
