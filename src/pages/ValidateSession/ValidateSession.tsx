@@ -3,7 +3,6 @@ import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import { ROUTE_LOGIN } from '../../utils/constants';
 import { redirectToGoogleLogout, redirectToLogout } from '../../utils/utils';
 import { readUserFromToken, redirectSuccessLogin } from '../loginSuccess/LoginSuccess';
 
@@ -30,7 +29,7 @@ const ValidateSession = ({ sessionToken, path }: Props) => {
     return;
   }
 
-  if (user && path === ROUTE_LOGIN && user.iss === 'PAGOPA') {
+  if (!tokenFragment && user?.iss === 'PAGOPA') {
     storageTokenOps.delete();
     storageUserOps.delete();
     redirectToLogout();
