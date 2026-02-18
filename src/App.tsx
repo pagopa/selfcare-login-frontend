@@ -41,8 +41,8 @@ const onLogoutGoogle = () => <LogoutGoogle />;
 const onLoginError = (queryParams: URLSearchParams) => <LoginError queryParams={queryParams} />;
 
 /** if exists already a session */
-const onAlreadyInSession = (sessionToken: string) => (
-  <ValidateSession sessionToken={sessionToken} />
+const onAlreadyInSession = (sessionToken: string, path: string) => (
+  <ValidateSession sessionToken={sessionToken} path={path} />
 );
 
 /** login request operations */
@@ -106,7 +106,7 @@ const resolveRoute = (
   }
 
   if (token) {
-    return onAlreadyInSession(token);
+    return onAlreadyInSession(token, path);
   }
 
   switch (path) {
