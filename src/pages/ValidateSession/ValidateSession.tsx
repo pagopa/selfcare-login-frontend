@@ -8,10 +8,9 @@ import { readUserFromToken, redirectSuccessLogin } from '../loginSuccess/LoginSu
 
 type Props = {
   sessionToken: string;
-  path: string;
 };
 
-const ValidateSession = ({ sessionToken, path }: Props) => {
+const ValidateSession = ({ sessionToken }: Props) => {
   const user: User = storageUserOps.read();
   const hash = location.hash.substring(1);
   const params = new URLSearchParams(hash);
