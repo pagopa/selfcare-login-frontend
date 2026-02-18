@@ -21,7 +21,6 @@ const ValidateSession = ({ sessionToken, path }: Props) => {
     readUserFromToken(sessionToken);
   }
 
-  console.log('ValidateSession - sessionToken:', path, tokenFragment);
   if (user && tokenFragment && user.iss !== 'PAGOPA') {
     storageUserOps.delete();
     storageTokenOps.delete();
