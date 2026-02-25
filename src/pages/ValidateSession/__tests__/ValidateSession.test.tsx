@@ -24,7 +24,7 @@ let currentLanguage = 'it';
 
 beforeAll(() => {
   Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
-  i18n.changeLanguage('it');
+  // i18n.changeLanguage('it');
 });
 afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });
