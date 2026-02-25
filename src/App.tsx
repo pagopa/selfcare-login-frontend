@@ -71,7 +71,7 @@ function App() {
       case ROUTE_PRIVACY_DISCLAIMER:
         return onPrivacyDisclaimer();
       default:
-        return <></>;
+        return onLoginRequest();
     }
   }
 

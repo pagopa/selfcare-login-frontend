@@ -230,8 +230,7 @@ const Login = () => {
             </Grid>
           </Grid>
         )}
-        {fromOnboarding &&
-          bannerContent &&
+        {bannerContent &&
           bannerContent.map(
             (bc, index) =>
               bc.enable && (
@@ -334,7 +333,7 @@ const Login = () => {
                 <br />
                 confermi di avere letto l&apos;
                 <Link
-                href={privacyRoute}
+                  href={privacyRoute}
                   sx={{
                     cursor: 'pointer',
                     textDecoration: 'none !important',
