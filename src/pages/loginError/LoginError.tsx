@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
 import { redirectToLogin } from '../../utils/utils';
 
-import { ReactComponent as UmbrellaIcon } from '../../assets/Umbrella.svg';
+import UmbrellaIcon from '../../assets/Umbrella.svg?react';
 
 const errorConfig: Record<
   string,

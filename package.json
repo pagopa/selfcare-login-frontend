@@ -2,38 +2,33 @@
   "name": "selfcare-login-frontend",
   "version": "1.4.0",
   "private": true,
-  "homepage": "/auth/",
   "dependencies": {
-    "@mui/icons-material": "^5.14.1",
-    "@mui/lab": "^5.0.0-alpha.157",
-    "@mui/material": "^5.14.1",
-    "@pagopa/mui-italia": "^1.6.1",
-    "@pagopa/selfcare-common-frontend": "^1.34.89",
-    "@types/react": "18.3.16",
+    "@mui/base": "^5.0.0-beta.70",
+    "@mui/icons-material": "^5.8.2",
+    "@mui/lab": "^5.0.0-alpha.80",
+    "@mui/material": "^5.8.2",
+    "@mui/utils": "^7.3.9",
+    "@pagopa/mui-italia": "^1.7.2",
+    "@pagopa/selfcare-common-frontend": "^1.34.88",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
-    "env-var": "^7.1.1",
-    "i18next": "^23.7.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^15.1.2",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "^5.0.0",
-    "redux-logger": "^3.0.6",
-    "url": "^0.11.4",
-    "util": "^0.12.5",
-    "uuid": "^11.1.0",
-    "web-vitals": "^1.0.1"
+    "url": "^0.11.0",
+    "uuid": "^13.0.0",
+    "vite-plugin-svgr": "^4.5.0"
   },
   "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "clean": "npm-run-all clean:*",
-    "start": "craco start",
     "prebuild": "npm run generate",
-    "build": "craco build",
     "clean:build": "rimraf build",
-    "test": "craco test -i",
-    "test:coverage": "craco test -i --coverage",
-    "eject": "craco eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
@@ -41,63 +36,41 @@
     "clean:api-selfcare-auth": "rimraf src/api/generated/selfcare-auth && rimraf openApi/generated-selfcare-auth",
     "generate:api-selfcare-auth": "yarn run clean:api-selfcare-auth && mkdirp openApi/generated-selfcare-auth && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/openapi.json > openApi/generated-selfcare-auth/openApi-swagger20.json && gen-api-models --api-spec openApi/generated-selfcare-auth/openApi-swagger20.json --out-dir src/api/generated/selfcare-auth --no-strict --request-types --response-decoders --client"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-private-property-in-object": "^7.25.9",
-    "@craco/craco": "^6.4.3",
-    "@pagopa/openapi-codegen-ts": "^14.0.0",
-    "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.1",
-    "@types/history": "^4.7.9",
-    "@types/jest": "^26.0.24",
+    "@module-federation/vite": "^1.0.0",
+    "@pagopa/openapi-codegen-ts": "^12.1.2",
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "12.1.2",
+    "@testing-library/user-event": "^14.0.4",
     "@types/lodash": "^4.17.13",
-    "@types/node": "^12.20.19",
     "@types/redux-logger": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "@vitest/coverage-v8": "4.0.18",
     "api-spec-converter": "^2.12.0",
-    "eslint": "7.11.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-functional": "^3.7.2",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-functional": "^4.2.1",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-sonarjs": "^0.10.0",
-    "mkdirp": "^3.0.1",
+    "eslint-plugin-sonarjs": "^0.13.0",
+    "jsdom": "^28.0.0",
+    "mkdirp": "^1.0.4",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.4.1",
-    "rimraf": "^6.0.1"
+    "prettier": "^2.7.1",
+    "regex-replace": "^2.3.1",
+    "rimraf": "^3.0.2",
+    "vite": "7.0.0",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-html": "^3.2.2",
+    "vite-tsconfig-paths": "^6.1.0",
+    "vitest": "^4.0.18"
   },
   "resolutions": {
     "@types/react": "18.3.16",
     "nth-check": ">=2.0.1",
     "postcss": ">=8.4.31"
-  },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "src/api/generated",
-      "src/index.tsx",
-      "src/reportWebVitals.ts",
-      "src/utils/constants.ts"
-    ]
   }
 }

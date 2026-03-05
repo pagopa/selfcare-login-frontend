@@ -2,8 +2,10 @@ locales/locales.ts
 **/__tests__/**
 .eslintrc.js
 definitions/*
-src/react-app-env.d.ts
+src/vite-env.d.ts
 Dangerfile.ts
 src/reportWebVitals.ts
 **/generated/**
-jest.config.js
+vite.config.ts
+vitest.config.ts
+/dist

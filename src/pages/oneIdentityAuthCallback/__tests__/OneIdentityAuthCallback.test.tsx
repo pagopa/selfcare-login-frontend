@@ -23,7 +23,7 @@ jest.mock('../../../api/__mocks__/SelfcareAuthApiClient', () => ({
   },
 }));
 
-process.env.REACT_APP_API_MOCK = 'true';
+process.env.VITE_APP_API_MOCK = 'true';
 
 jest.mock('../../../utils/storage', () => ({
   storageStateOps: {
