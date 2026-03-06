@@ -3,9 +3,9 @@ import { IllusError } from '@pagopa/mui-italia';
 import { EndingPage } from '@pagopa/selfcare-common-frontend/lib';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../components/Layout';
+import UmbrellaIcon from '../../assets/Umbrella';
 import { redirectToLogin } from '../../utils/utils';
 
-import UmbrellaIcon from '../../assets/Umbrella.svg?react';
 
 const errorConfig: Record<
   string,

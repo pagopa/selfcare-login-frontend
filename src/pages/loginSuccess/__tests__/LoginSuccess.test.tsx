@@ -10,11 +10,11 @@ import { storageOnSuccessOps } from '../../../utils/storage';
 import LoginSuccess from '../LoginSuccess';
 
 // mock analytics service
-jest.mock('@pagopa/selfcare-common-frontend/lib/services/analyticsService', () => ({
-  trackEvent: jest.fn(),
+vi.mock('@pagopa/selfcare-common-frontend/lib/services/analyticsService', () => ({
+  trackEvent: vi.fn(),
 }));
 
-const { TextDecoder } = require('util');
+const { TextDecoder } = await import('util');
 global.TextDecoder = TextDecoder;
 
 // save the original window.location
@@ -26,7 +26,7 @@ const mockLocation = (hash = '', origin = 'MOCKEDORIGIN') => {
     value: {
       hash,
       origin,
-      assign: jest.fn(),
+      assign: vi.fn(),
     },
     writable: true,
   });
@@ -37,7 +37,7 @@ beforeAll(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   mockLocation(); // reset hash and mocks
 });
 

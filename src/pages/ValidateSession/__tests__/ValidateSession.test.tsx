@@ -1,34 +1,40 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import ValidSession from '../ValidateSession';
-import { ENV } from '../../../utils/env';
-import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
-import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import { User } from '@pagopa/selfcare-common-frontend/lib/model/User';
-const { TextDecoder } = require('util');
+import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ENV } from '../../../utils/env';
+import ValidSession from '../ValidateSession';
+const { TextDecoder } = await import('util');
 
-jest.mock('i18next', () => ({
-  changeLanguage: jest.fn((lng) => {
-    currentLanguage = lng;
-  }),
-  t: jest.fn((key) => key),
-}));
+globalThis.TextDecoder = TextDecoder;
 
-global.TextDecoder = TextDecoder;
+const mockedLocation = {
+  assign: vi.fn(),
+  pathname: '/login',
+  search: '',
+  hash: '',
+  href: '',
+};
 
-const oldWindowLocation = global.window.location;
-let currentLanguage = 'it';
-
-beforeAll(() => {
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
-  i18n.changeLanguage('it');
+beforeEach(() => {
+  mockedLocation.assign = vi.fn();
+  mockedLocation.pathname = '/login';
+  mockedLocation.search = '';
+  mockedLocation.hash = '';
+  vi.stubGlobal('location', mockedLocation);
 });
-afterAll(() => {
-  Object.defineProperty(window, 'location', { value: oldWindowLocation });
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  storageUserOps.delete();
 });
 
 test('test validate session', () => {
-  render(<ValidSession sessionToken={ENV.TEST_TOKEN} />);
+  render(
+    <MemoryRouter>
+      <ValidSession sessionToken={ENV.TEST_TOKEN} />
+    </MemoryRouter>
+  );
 
   const user: User = storageUserOps.read();
   expect(user).not.toBeNull();
@@ -38,7 +44,7 @@ test('test validate session', () => {
   expect(user.surname).toBe('Rossi');
   expect(user.email).toBe('1@111sadcx11.com');
 
-  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
+  expect(globalThis.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });
 
 test('test validate session when already user stored', () => {
@@ -50,10 +56,14 @@ test('test validate session when already user stored', () => {
     taxCode: 'TAXCODE',
   };
   storageUserOps.write(expectedUser);
-  render(<ValidSession sessionToken={ENV.TEST_TOKEN} />);
+  render(
+    <MemoryRouter>
+      <ValidSession sessionToken={ENV.TEST_TOKEN} />
+    </MemoryRouter>
+  );
 
   const user: User = storageUserOps.read();
   expect(JSON.stringify(user)).toBe(JSON.stringify(expectedUser));
 
-  expect(global.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
+  expect(globalThis.window.location.assign).toBeCalledWith(ENV.URL_FE.DASHBOARD);
 });

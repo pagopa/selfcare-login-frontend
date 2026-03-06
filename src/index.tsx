@@ -7,6 +7,7 @@ import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './consentAndAnalyticsConfiguration.ts';
 import './index.css';
@@ -24,9 +25,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <ErrorBoundary>
-          <App />
-        </ErrorBoundary>
+        <BrowserRouter basename="/auth">
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

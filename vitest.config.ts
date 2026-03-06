@@ -1,24 +1,21 @@
-import { defineConfig as defineViteConfig, mergeConfig } from 'vite';
-import { defineConfig as defineVitestConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import { defineConfig as defineViteConfig, mergeConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import svgr from 'vite-plugin-svgr';
+import { defineConfig as defineVitestConfig } from 'vitest/config';
 
 export default mergeConfig(
   // Vite's defineConfig handles plugins — no type conflict
   defineViteConfig({
-    plugins: [react(), svgr(), tsconfigPaths()],
+    plugins: [react(), tsconfigPaths()],
   }),
   defineVitestConfig({
     test: {
       globals: true,
       environment: 'jsdom',
       setupFiles: ['./src/setupTests.ts'],
-      pool: 'forks',
-      maxWorkers: 4,
+      pool: 'threads',
+      maxWorkers: 3,
       fileParallelism: true,
-      testTimeout: 15000,
-      hookTimeout: 15000,
       restoreMocks: true,
       clearMocks: true,
       exclude: [
