@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { createStore } from '../../../redux/store';
 import OTPPage from '../OTPPage';
 import OtpInput from '../components/OTPInputFields';
@@ -10,26 +11,26 @@ import { SendOTPMail } from '../components/SendOTPMail';
 const user = userEvent.setup();
 const store = createStore();
 
-const mockSetErrorType = jest.fn();
+const mockSetErrorType = vi.fn();
+beforeEach(() => {
+  vi.stubGlobal('location', { assign: vi.fn() });
+});
 
-// Mock window.location.assign
-const mockLocationAssign = jest.fn();
-Object.defineProperty(window, 'location', {
-  value: {
-    assign: mockLocationAssign,
-  },
-  writable: true,
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 describe('OTPPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders OTP page with title', () => {
     render(
       <Provider store={store}>
-        <OTPPage />
+        <MemoryRouter>
+          <OTPPage />
+        </MemoryRouter>
       </Provider>
     );
     const pageTitle = screen.getByText('Conferma la tua identità');
@@ -39,7 +40,9 @@ describe('OTPPage', () => {
   test('renders OtpInput component within the page', () => {
     render(
       <Provider store={store}>
-        <OTPPage />
+        <MemoryRouter>
+          <OTPPage />
+        </MemoryRouter>
       </Provider>
     );
     const otpInputs = screen.getAllByRole('textbox');
@@ -53,13 +56,15 @@ describe('OtpInput Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders 6 OTP input fields', () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
     const inputs = screen.getAllByRole('textbox');
@@ -69,7 +74,9 @@ describe('OtpInput Component', () => {
   test('accepts only numeric input', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -87,7 +94,9 @@ describe('OtpInput Component', () => {
   test('automatically focuses next input when digit is entered', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -107,7 +116,9 @@ describe('OtpInput Component', () => {
   test('handles backspace correctly - clears current field first', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -130,7 +141,9 @@ describe('OtpInput Component', () => {
   test('handles backspace on empty field - moves to previous field and clears it', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -152,7 +165,9 @@ describe('OtpInput Component', () => {
   test('handles paste operation - fills multiple fields with numeric data', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -177,7 +192,9 @@ describe('OtpInput Component', () => {
   test('filters non-numeric characters from pasted data', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -204,7 +221,9 @@ describe('OtpInput Component', () => {
   test('has proper accessibility attributes', () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -220,7 +239,9 @@ describe('OtpInput Component', () => {
   test('Handle error case for worng otp filled', async () => {
     render(
       <Provider store={store}>
-        <OtpInput {...defaultProps} />{' '}
+        <MemoryRouter>
+          <OtpInput {...defaultProps} />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -240,7 +261,9 @@ describe('SendOTPMail component', () => {
   test('renders correctly', () => {
     const { getByText } = render(
       <Provider store={store}>
-        <SendOTPMail errorType="expiredOtp" clearErrorType={jest.fn()} />
+        <MemoryRouter>
+          <SendOTPMail errorType="expiredOtp" clearErrorType={vi.fn()} />
+        </MemoryRouter>
       </Provider>
     );
     expect(getByText('Richiedi un nuovo codice')).toBeInTheDocument();
@@ -249,7 +272,9 @@ describe('SendOTPMail component', () => {
   test('disables button when timer is active', () => {
     const { getByText } = render(
       <Provider store={store}>
-        <SendOTPMail errorType="expiredOtp" clearErrorType={jest.fn()} />
+        <MemoryRouter>
+          <SendOTPMail errorType="expiredOtp" clearErrorType={vi.fn()} />
+        </MemoryRouter>
       </Provider>
     );
     const button = getByText('Richiedi un nuovo codice');

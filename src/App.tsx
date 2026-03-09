@@ -63,6 +63,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
 

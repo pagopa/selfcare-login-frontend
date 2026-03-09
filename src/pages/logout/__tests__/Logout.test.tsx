@@ -1,20 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import Logout from '../Logout';
-import { ROUTE_LOGIN } from '../../../utils/constants';
-import { storageOnSuccessOps } from '../../../utils/storage';
 import {
   storageTokenOps,
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
+import { render } from '@testing-library/react';
+import { ROUTE_LOGIN } from '../../../utils/constants';
+import { storageOnSuccessOps } from '../../../utils/storage';
+import Logout from '../Logout';
 
-const oldWindowLocation = global.window.location;
-
-beforeAll(() => {
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+beforeEach(() => {
+  vi.stubGlobal('location', { assign: vi.fn() });
 });
-afterAll(() => {
-  Object.defineProperty(window, 'location', { value: oldWindowLocation });
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 test('test logout', () => {

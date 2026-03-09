@@ -8,7 +8,7 @@ import { OidcExchangeResponse, otpVerifyResponse } from '../models/authenticatio
 export const selfcareAuthService = async (
   oidcExchangeRequest: OidcExchangeRequest
 ): Promise<OidcExchangeResponse> => {
-  if (process.env.REACT_APP_API_MOCK === 'true') {
+  if (process.env.VITE_APP_API_MOCK === 'true') {
     return await SelfcareAuthApiMock.oneIdentityCodeExchangeMock(oidcExchangeRequest);
   } else {
     return await SelfcareAuthApi.oneIdentityCodeExchange(oidcExchangeRequest);
@@ -18,7 +18,7 @@ export const selfcareAuthService = async (
 export const otpVerifyService = async (
   otpVerifyRequest: OtpVerifyRequest
 ): Promise<otpVerifyResponse> => {
-  if (process.env.REACT_APP_API_MOCK === 'true') {
+  if (process.env.VITE_APP_API_MOCK === 'true') {
     return await SelfcareAuthApiMock.otpVerifyMock(otpVerifyRequest);
   } else {
     return await SelfcareAuthApi.otpVerify(otpVerifyRequest);
@@ -28,7 +28,7 @@ export const otpVerifyService = async (
 export const otpResendService = async (
   otpResendRequest: OtpResendRequest
 ): Promise<OidcExchangeResponse> => {
-  if (process.env.REACT_APP_API_MOCK === 'true') {
+  if (process.env.VITE_APP_API_MOCK === 'true') {
     return await SelfcareAuthApiMock.otpResendMock(otpResendRequest);
   } else {
     return await SelfcareAuthApi.otpResend(otpResendRequest);

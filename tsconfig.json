@@ -2,18 +2,14 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": [
-      "es6",
-      "dom",
-      "es2019"
-    ],
+    "lib": ["es6", "dom", "es2019"],
     "jsx": "react-jsx",
     "noEmit": true,
     "strict": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -25,16 +21,9 @@
     "strictFunctionTypes": true,
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vite/client", "vitest/globals", "vite-plugin-svgr/client"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "__mocks__",
-    "dist",
-    "node_modules",
-    "**/__tests__/*",
-    "Dangerfile.ts"
-  ]
+  "include": ["src/**/*", "vite.config.ts", "vitest.config.ts"],
+  "exclude": ["__mocks__", "dist", "node_modules", "Dangerfile.ts"]
 }

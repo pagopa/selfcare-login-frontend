@@ -1,6 +1,7 @@
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import { Mock } from 'vitest';
 import { SelfcareAuthApiMock } from '../../../api/__mocks__/SelfcareAuthApiClient';
 import { ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../../utils/constants';
 import {
@@ -11,48 +12,48 @@ import {
 import { redirectToErrorPage } from '../../../utils/utils';
 import OneIdentityAuthCallbackPage from '../OneIdentityAuthCallback';
 
-jest.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', () => ({
+vi.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', () => ({
   storageTokenOps: {
-    write: jest.fn(),
+    write: vi.fn(),
   },
 }));
 
-jest.mock('../../../api/__mocks__/SelfcareAuthApiClient', () => ({
+vi.mock('../../../api/__mocks__/SelfcareAuthApiClient', () => ({
   SelfcareAuthApiMock: {
-    oneIdentityCodeExchangeMock: jest.fn(),
+    oneIdentityCodeExchangeMock: vi.fn(),
   },
 }));
 
-process.env.REACT_APP_API_MOCK = 'true';
+process.env.VITE_APP_API_MOCK = 'true';
 
-jest.mock('../../../utils/storage', () => ({
+vi.mock('../../../utils/storage', () => ({
   storageStateOps: {
-    read: jest.fn(),
+    read: vi.fn(),
   },
   storageRedirectURIOps: {
-    read: jest.fn(),
+    read: vi.fn(),
   },
   storageMaskedEmailOps: {
-    write: jest.fn(),
+    write: vi.fn(),
   },
   storageOTPSessionUidOps: {
-    write: jest.fn(),
+    write: vi.fn(),
   },
 }));
 
-jest.mock('../../../utils/utils', () => ({
-  redirectToErrorPage: jest.fn(),
+vi.mock('../../../utils/utils', () => ({
+  redirectToErrorPage: vi.fn(),
 }));
 
-jest.mock('@pagopa/selfcare-common-frontend/lib', () => ({
+vi.mock('@pagopa/selfcare-common-frontend/lib', () => ({
   LoadingOverlayComponent: () => <div data-testid="loading-overlay">Loading...</div>,
 }));
 
 const originalWindow = { ...window };
-const mockAssign = jest.fn();
+const mockAssign = vi.fn();
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 
   Object.defineProperty(window, 'location', {
     value: {
@@ -71,7 +72,7 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
 
     render(<OneIdentityAuthCallbackPage />);
 
@@ -95,7 +96,7 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    (storageStateOps.read as jest.Mock).mockReturnValue('correct-state');
+    (storageStateOps.read as Mock).mockReturnValue('correct-state');
 
     render(<OneIdentityAuthCallbackPage />);
 
@@ -108,10 +109,10 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
+    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
-    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       sessionToken: 'auth-token',
     });
 
@@ -126,10 +127,10 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
+    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
-    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       sessionToken: 'auth-token',
     });
 
@@ -151,11 +152,11 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     // Mock stored state and redirect URI
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
+    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     // Mock API call
-    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       sessionToken: 'auth-token',
     });
 
@@ -176,11 +177,11 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     // Mock stored state and redirect URI
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
+    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     // Mock API call to fail
-    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockRejectedValue(
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockRejectedValue(
       new Error('Authentication failed')
     );
 
@@ -200,8 +201,8 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     // Mock stored state but return null for redirectURI
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue(null);
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
+    (storageRedirectURIOps.read as Mock).mockReturnValue(null);
 
     render(<OneIdentityAuthCallbackPage />);
 
@@ -217,11 +218,11 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     // Mock stored state. Value test-otp-code is used to trigger the oidcExchange response with requiresOtpFlow=true
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-otp-code');
-    (storageRedirectURIOps.read as jest.Mock).mockReturnValue('https://example.com/callback');
-    (storageStateOps.read as jest.Mock).mockReturnValue('test-state');
+    (storageStateOps.read as Mock).mockReturnValue('test-otp-code');
+    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
+    (storageStateOps.read as Mock).mockReturnValue('test-state');
 
-    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as jest.Mock).mockResolvedValue({
+    (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       requiresOtpFlow: true,
       otpSessionUid: 'otpSessionUidTest',
       maskedEmail: 'mask**Email***@email.comTest',

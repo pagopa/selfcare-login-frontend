@@ -1,49 +1,57 @@
-import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import React from 'react';
-import { ROUTE_LOGIN, ROUTE_LOGIN_ERROR } from '../../../utils/constants';
+import { ROUTE_LOGIN } from '../../../utils/constants';
 import LoginError from '../LoginError';
 import './../../../locale';
+import { MemoryRouter } from 'react-router-dom';
 
-const oldWindowLocation = global.window.location;
-
-beforeAll(() => {
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
-  i18n.changeLanguage('it');
+beforeEach(() => {
+  vi.stubGlobal('location', { assign: vi.fn() });
 });
 
-afterAll(() => {
-  Object.defineProperty(window, 'location', { value: oldWindowLocation });
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 test('Test: Identity providers authentication errors and the relative error pages', async () => {
-  render(<LoginError />);
+  render(
+    <MemoryRouter>
+      <LoginError />
+    </MemoryRouter>
+  );
 
   screen.getByText(/Non è stato possibile accedere/);
   screen.getByText(/Si è verificato un problema durante l’accesso. Riprova tra qualche minuto./);
   const tryAgainBtn = screen.getByText('Riprova');
 
   fireEvent.click(tryAgainBtn);
-  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
+  await waitFor(() => expect(location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
 });
 
 test('Test: Identity providers authentication errors and the relative error pages', async () => {
   const queryParams = new URLSearchParams({ errorType: 'otpGeneric' });
 
-  render(<LoginError queryParams={queryParams} />);
+  render(
+    <MemoryRouter>
+      <LoginError queryParams={queryParams} />
+    </MemoryRouter>
+  );
 
   screen.getByText(/Qualcosa è andato storto/);
   screen.getByText(/Riprova tra qualche minuto./);
   const tryAgainBtn = screen.getByText('Chiudi');
 
   fireEvent.click(tryAgainBtn);
-  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
+  await waitFor(() => expect(location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
 });
 
 test('Test: Identity providers authentication errors and the relative error pages', async () => {
   const queryParams = new URLSearchParams({ errorType: 'otpToManyAttempts' });
 
-  render(<LoginError queryParams={queryParams} />);
+  render(
+    <MemoryRouter>
+      <LoginError queryParams={queryParams} />
+    </MemoryRouter>
+  );
 
   screen.getByText(/Hai superato il numero massimo di tentativi/);
   screen.getByText(
@@ -52,5 +60,5 @@ test('Test: Identity providers authentication errors and the relative error page
   const tryAgainBtn = screen.getByText('Esci');
 
   fireEvent.click(tryAgainBtn);
-  await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
+  await waitFor(() => expect(location.assign).toHaveBeenCalledWith(ROUTE_LOGIN));
 });
