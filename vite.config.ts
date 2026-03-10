@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
-    base: '/auth/',
+    base: '/auth',
     server: {
       port: 3000,
     },
