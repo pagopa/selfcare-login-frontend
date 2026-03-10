@@ -24,7 +24,7 @@ vi.mock('../../../api/__mocks__/SelfcareAuthApiClient', () => ({
   },
 }));
 
-process.env.VITE_APP_API_MOCK = 'true';
+process.env.VITE_API_MOCK = 'true';
 
 vi.mock('../../../utils/storage', () => ({
   storageStateOps: {
