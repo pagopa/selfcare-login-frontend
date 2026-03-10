@@ -18,7 +18,7 @@ export function PrivacyPolicyPage() {
   useEffect(() => {
     const script = document.createElement('script');
 
-    script.src = process.env.VITE_APP_OT_SRC ?? '';
+    script.src = process.env.VITE_OT_SRC ?? '';
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
