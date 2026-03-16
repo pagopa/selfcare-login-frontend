@@ -91,7 +91,7 @@ const resolveRoute = (
   token: string | null,
   queryParams: URLSearchParams
 ): JSX.Element => {
-  const isOTPEnabled = ENV.ENABLE_OTP === true;
+  const isOTPEnabled = ENV.ENABLE_OTP === 'true';
 
   if (path === ROUTE_LOGOUT) {
     return onLogout();

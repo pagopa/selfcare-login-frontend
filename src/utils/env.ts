@@ -27,7 +27,7 @@ export const ENV = {
   },
 
   URL_FE: {
-    LOGOUT: PUBLIC_URL + 'logout',
+    LOGOUT: PUBLIC_URL + '/logout',
     LOGIN: import.meta.env.VITE_URL_FE_LOGIN,
     ONBOARDING: import.meta.env.VITE_URL_FE_ONBOARDING,
     DASHBOARD: import.meta.env.VITE_URL_FE_DASHBOARD,

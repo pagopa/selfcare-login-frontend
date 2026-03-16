@@ -54,7 +54,7 @@ const OTPPage = () => {
               <Grid item xs={6}>
                 <>
                   <OtpInput setErrorType={setErrorType} />
-                  {ENV.ENABLE_MAIL_OTP && (
+                  {ENV.ENABLE_MAIL_OTP === "true" && (
                     <SendOTPMail errorType={errorType} clearErrorType={() => setErrorType('')} />
                   )}
                 </>
