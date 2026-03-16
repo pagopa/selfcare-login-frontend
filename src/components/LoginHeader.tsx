@@ -23,7 +23,7 @@ export const LoginHeader = ({ withSecondHeader }: Props) => {
     <Header
       withSecondHeader={withSecondHeader ?? false}
       enableAssistanceButton={ENV.ENV !== 'UAT'}
-      assistanceEmail={ENV.ASSISTANCE.ENABLE === "true" ? ENV.ASSISTANCE.EMAIL : undefined}
+      assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
       enableLogin={false}
       loggedUser={false}
       onDocumentationClick={
