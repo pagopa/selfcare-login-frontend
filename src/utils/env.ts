@@ -1,4 +1,3 @@
-
 const PUBLIC_URL: string = import.meta.env.BASE_URL;
 const currentEnv: string = import.meta.env.VITE_ENV;
 
@@ -17,7 +16,7 @@ export const ENV = {
   },
 
   ASSISTANCE: {
-    ENABLE: import.meta.env.VITE_ENABLE_ASSISTANCE,
+    ENABLE: import.meta.env.VITE_ENABLE_ASSISTANCE === 'true',
     EMAIL: import.meta.env.VITE_PAGOPA_HELP_EMAIL,
   },
 
@@ -27,7 +26,7 @@ export const ENV = {
   },
 
   URL_FE: {
-    LOGOUT: PUBLIC_URL + 'logout',
+    LOGOUT: PUBLIC_URL + '/logout',
     LOGIN: import.meta.env.VITE_URL_FE_LOGIN,
     ONBOARDING: import.meta.env.VITE_URL_FE_ONBOARDING,
     DASHBOARD: import.meta.env.VITE_URL_FE_DASHBOARD,
@@ -57,7 +56,7 @@ export const ENV = {
   },
 
   ENABLE_OTP: import.meta.env.VITE_ENABLE_OTP,
-  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP,
+  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP === "true",
   GOOGLE_LOGIN_URL: import.meta.env.VITE_GOOGLE_LOGIN_URL,
 
   API_TIMEOUT_MS: {
@@ -65,9 +64,9 @@ export const ENV = {
   },
 
   ANALYTCS: {
-    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE,
-    MOCK: import.meta.env.VITE_ANALYTICS_MOCK,
-    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG,
+    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE === "true",
+    MOCK: import.meta.env.VITE_ANALYTICS_MOCK === "true",
+    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG === "true",
     TOKEN: import.meta.env.VITE_MIXPANEL_TOKEN,
     API_HOST: import.meta.env.VITE_MIXPANEL_API_HOST || 'https://api-eu.mixpanel.com',
   },
