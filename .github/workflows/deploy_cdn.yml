@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
-    needs: [release_and_deploy]
+    needs: [release_and_deploy_cdn]
     steps:
       - uses: pagopa/selfcare-commons/github-actions-template/promote-release@main
         with:
