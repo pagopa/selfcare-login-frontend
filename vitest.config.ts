@@ -1,35 +1,50 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig as defineViteConfig, mergeConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig as defineVitestConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
-export default mergeConfig(
-  // Vite's defineConfig handles plugins — no type conflict
-  defineViteConfig({
-    plugins: [react(), tsconfigPaths()],
-  }),
-  defineVitestConfig({
+export default defineConfig({
+    plugins: [react()],
     test: {
-      globals: true,
-      environment: 'jsdom',
-      setupFiles: ['./src/setupTests.ts'],
-      pool: 'threads',
-      maxWorkers: 3,
-      fileParallelism: true,
-      restoreMocks: true,
-      clearMocks: true,
-      exclude: [
-        '**/node_modules/**',
-        '**/dist/**',
-        'coverage/*',
-        'e2e/**',
-        '**/*.spec.ts',
-        '**/__mf__temp/**',
-      ],
-      coverage: {
-        provider: 'v8',
-        exclude: ['src/index.js', 'src/reportWebVitals.ts', 'src/api/generated/**'],
-      },
+        globals: true,
+        clearMocks: true,
+        mockReset: true,
+        restoreMocks: true,
+        environment: 'jsdom',
+        pool: 'forks',
+        server: {
+            deps: {
+                inline: ['@pagopa/mui-italia', '@pagopa/selfcare-common-frontend'],
+            },
+        },
+        deps: {
+            optimizer: {
+                web: {
+                    enabled: true,
+                    include: ['@pagopa/mui-italia', '@pagopa/selfcare-common-frontend'],
+                },
+            },
+        },
+        setupFiles: ['./src/setupTests.ts'],
+        exclude: [
+            '**/node_modules/**',
+            '**/dist/**',
+            'coverage/*',
+            'e2e/**',
+            '**/*.spec.ts',
+            '**/__mf__temp/**',
+        ],
+        coverage: {
+            provider: 'v8',
+            exclude: [
+                'src/index.tsx',
+                'src/api/generated/**',
+                'src/examples/**',
+                'src/AppExample.tsx',
+                'src/lib/utils/fixSwagger20ArraySchemaDef.js',
+                'src/lib/common-polyfill.ts',
+                'src/lib/index.ts',
+                'src/lib/components/icons/**',
+                'src/lib/model/**',
+            ],
+        },
     },
-  })
-);
+});

@@ -13,11 +13,12 @@ beforeAll(async () => {
       interpolation: { escapeValue: false },
       react: { useSuspense: false },
     });
+  } else {
+    await i18n.changeLanguage('it');
   }
 });
 
 afterEach(() => {
-  console.log('afterEachTest');
   cleanup();
   vi.clearAllMocks();
 });

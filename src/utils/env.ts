@@ -56,7 +56,7 @@ export const ENV = {
   },
 
   ENABLE_OTP: import.meta.env.VITE_ENABLE_OTP,
-  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP === "true",
+  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP === 'true',
   GOOGLE_LOGIN_URL: import.meta.env.VITE_GOOGLE_LOGIN_URL,
 
   API_TIMEOUT_MS: {
@@ -64,9 +64,9 @@ export const ENV = {
   },
 
   ANALYTCS: {
-    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE === "true",
-    MOCK: import.meta.env.VITE_ANALYTICS_MOCK === "true",
-    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG === "true",
+    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE === 'true',
+    MOCK: import.meta.env.VITE_ANALYTICS_MOCK === 'true',
+    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG === 'true',
     TOKEN: import.meta.env.VITE_MIXPANEL_TOKEN,
     API_HOST: import.meta.env.VITE_MIXPANEL_API_HOST || 'https://api-eu.mixpanel.com',
   },

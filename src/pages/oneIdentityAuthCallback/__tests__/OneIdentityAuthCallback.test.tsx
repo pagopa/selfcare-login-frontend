@@ -12,11 +12,15 @@ import {
 import { redirectToErrorPage } from '../../../utils/utils';
 import OneIdentityAuthCallbackPage from '../OneIdentityAuthCallback';
 
-vi.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', () => ({
-  storageTokenOps: {
-    write: vi.fn(),
-  },
-}));
+vi.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...(actual as any),
+    storageTokenOps: {
+      write: vi.fn(),
+    },
+  };
+});
 
 vi.mock('../../../api/__mocks__/SelfcareAuthApiClient', () => ({
   SelfcareAuthApiMock: {
