@@ -5,7 +5,8 @@ export const ENV = {
   ENV: currentEnv,
   PUBLIC_URL,
 
-
+  TEST_TOKEN:
+    'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMTExc2FkY3gxMS5jb20iLCJmYW1pbHlfbmFtZSI6IlJvc3NpIiwiZmlzY2FsX251bWJlciI6IlVOSVRURVNUUyIsIm5hbWUiOiJNYXJpbyIsImZyb21fYWEiOmZhbHNlLCJsZXZlbCI6IkwyIiwiaWF0IjoxNjM1MzYyODE1LCJleHAiOjE2MzUzNjY0MTUsImlzcyI6IlNQSUQiLCJqdGkiOiIwMUZLMUtHRlRYRjZNSDMwS1IyRTFGRUNIRCIsInVpZCI6IjAifQ.EuJlVuuQa2mqpaR_nj7wT95Ig3FuDTKmVGs5FEt3cZZovI6xegM3DV9Xiz3fjGk0Lg-S1qjf6oyvg1e6d7692CGbSuadkSeJNojeUaTK2yHwBRl207DpSEEqhWpqFM5qDZPgbwPFb1Oau5oE9kEwE8Z7KIBBu5gBzCb6dSKXKe_7wvR6QFwZKvjuWf82fCxuIZbHdI4bQwWoqXGCRh45T5VsMPDQ-xuJQTvxvRczEp8W3RF1INyF8vnY_wKXzjrZG4p_2kVS4RM6npy9oGluzlMTZxTaQZb1OSBv9YDzmEbJbgJ0KAt_4CrSORUi_NP38S1C2RLKCG_-Yt4H5JGWrQ',
 
   OT: {
     SRC: import.meta.env.VITE_OT_SRC,
@@ -55,7 +56,7 @@ export const ENV = {
   },
 
   ENABLE_OTP: import.meta.env.VITE_ENABLE_OTP,
-  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP === "true",
+  ENABLE_MAIL_OTP: import.meta.env.VITE_ENABLE_SEND_MAIL_OTP === 'true',
   GOOGLE_LOGIN_URL: import.meta.env.VITE_GOOGLE_LOGIN_URL,
 
   API_TIMEOUT_MS: {
@@ -63,9 +64,9 @@ export const ENV = {
   },
 
   ANALYTCS: {
-    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE === "true",
-    MOCK: import.meta.env.VITE_ANALYTICS_MOCK === "true",
-    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG === "true",
+    ENABLE: import.meta.env.VITE_ANALYTICS_ENABLE === 'true',
+    MOCK: import.meta.env.VITE_ANALYTICS_MOCK === 'true',
+    DEBUG: import.meta.env.VITE_ANALYTICS_DEBUG === 'true',
     TOKEN: import.meta.env.VITE_MIXPANEL_TOKEN,
     API_HOST: import.meta.env.VITE_MIXPANEL_API_HOST || 'https://api-eu.mixpanel.com',
   },
