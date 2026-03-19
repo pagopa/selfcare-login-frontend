@@ -3,7 +3,7 @@ import { ButtonNaked } from '@pagopa/mui-italia';
 import { useErrorDispatcher } from '@pagopa/selfcare-common-frontend/lib';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { useEffect, useState } from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { OtpErrorTypeEnum } from '../../../models/authentication';
 import { otpResendService } from '../../../services/selfcareAuth';
 import { storageOTPSessionUidOps } from '../../../utils/storage';
@@ -14,9 +14,11 @@ type Props = {
 };
 
 export const SendOTPMail = ({ errorType = 'test', clearErrorType }: Props) => {
-  const isInitiallyExpired = errorType === OtpErrorTypeEnum.ExpiredOtp;
-  const [timer, setTimer] = useState(isInitiallyExpired ? 0 : 60);
+  const [timer, setTimer] = useState(errorType === OtpErrorTypeEnum.ExpiredOtp ? 0 : 60);
+
   const addError = useErrorDispatcher();
+  const { t } = useTranslation();
+
   const otpSessionUid = storageOTPSessionUidOps.read();
 
   // Countdown effect
@@ -63,37 +65,42 @@ export const SendOTPMail = ({ errorType = 'test', clearErrorType }: Props) => {
   const timerText = timer > 0 ? `tra ${timer}s.` : '';
 
   return (
-    <Typography variant="body1" mt={4}>
-      {isExpired ? (
-        <Trans
-          i18nKey="otp.resendExpired"
-          components={{
-            0: <span />,
-            1: (
-              <ButtonNaked
-                sx={{ color: 'primary.main', fontSize: 'large', fontWeight: 'fontWeightRegular' }}
-                disabled={isButtonDisabled}
-                onClick={resendOtpMail}
-              />
-            ),
-          }}
-          values={{ timer: timerText }}
-        />
-      ) : (
-        <Trans
-          i18nKey="otp.resend"
-          components={{
-            1: (
-              <ButtonNaked
-                sx={{ color: 'primary.main', fontSize: 'large', fontWeight: 'fontWeightRegular' }}
-                disabled={isButtonDisabled}
-                onClick={resendOtpMail}
-              />
-            ),
-          }}
-          values={{ timer: timerText }}
-        />
-      )}
-    </Typography>
+    <>
+      <Typography variant="body2" color="textSecondary" mt={4}>
+        {isExpired ? (
+          <Trans
+            i18nKey="otp.resendExpired"
+            components={{
+              0: <span />,
+              1: (
+                <ButtonNaked
+                  sx={{ color: 'primary.main', fontSize: 'large', fontWeight: 'fontWeightRegular' }}
+                  disabled={isButtonDisabled}
+                  onClick={resendOtpMail}
+                />
+              ),
+            }}
+            values={{ timer: timerText }}
+          />
+        ) : (
+          <Trans
+            i18nKey="otp.resend"
+            components={{
+              1: (
+                <ButtonNaked
+                  sx={{ color: 'primary.main', fontSize: 'large', fontWeight: 'fontWeightRegular' }}
+                  disabled={isButtonDisabled}
+                  onClick={resendOtpMail}
+                />
+              ),
+            }}
+            values={{ timer: timerText }}
+          />
+        )}
+      </Typography>
+      <Typography variant="body2" color="textSecondary" mt={1}>
+        <Trans i18nKey="otp.pecMailWarning" />
+      </Typography>
+    </>
   );
 };
