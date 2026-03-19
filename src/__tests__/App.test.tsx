@@ -2,6 +2,13 @@ import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/stor
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import { storageOnSuccessOps } from '../utils/storage';
+import {
+  ROUTE_LOGOUT,
+  ROUTE_LOGIN,
+  ROUTE_LOGIN_SUCCESS,
+  ROUTE_AUTH_CALLBACK,
+  ROUTE_OTP,
+} from '../utils/constants';
 
 vi.mock('../pages/logout/Logout', () => ({ default: () => 'LOGOUT' }));
 vi.mock('../pages/loginSuccess/LoginSuccess', () => ({ default: () => 'LOGIN_SUCCESS' }));
@@ -45,14 +52,14 @@ test('test not served path', () => {
 });
 
 test('test Logout', () => {
-  mockedLocation.pathname = '/logout';
+  mockedLocation.pathname = ROUTE_LOGOUT;
   render(<App />);
   screen.getByText('LOGOUT');
   checkRedirect(false);
 });
 
 test('test Logout even if in session', () => {
-  mockedLocation.pathname = '/logout';
+  mockedLocation.pathname = ROUTE_LOGOUT;
   storageTokenOps.write('token');
   render(<App />);
   screen.getByText('LOGOUT');
@@ -60,14 +67,14 @@ test('test Logout even if in session', () => {
 });
 
 test('test Login', () => {
-  mockedLocation.pathname = '/login';
+  mockedLocation.pathname = ROUTE_LOGIN;
   render(<App />);
   expect(storageOnSuccessOps.read()).toBeUndefined();
   checkRedirect(true);
 });
 
 test('test Login with onSuccess', () => {
-  mockedLocation.pathname = '/login';
+  mockedLocation.pathname = ROUTE_LOGIN;
   mockedLocation.search = 'onSuccess=prova';
   render(<App />);
   expect(storageOnSuccessOps.read()).toBe('prova');
@@ -75,7 +82,7 @@ test('test Login with onSuccess', () => {
 });
 
 test('test ValidateSession', () => {
-  mockedLocation.pathname = '/login';
+  mockedLocation.pathname = ROUTE_LOGIN;
   storageTokenOps.write('testToken');
   render(<App />);
   screen.getByText('VALIDATE_SESSION:testToken');
@@ -83,7 +90,7 @@ test('test ValidateSession', () => {
 });
 
 test('test LoginSuccess', () => {
-  mockedLocation.pathname = '/login/success';
+  mockedLocation.pathname = ROUTE_LOGIN_SUCCESS;
   mockedLocation.hash = 'token=successToken';
   render(<App />);
   screen.getByText('LOGIN_SUCCESS');
@@ -91,7 +98,7 @@ test('test LoginSuccess', () => {
 });
 
 test('oneIdentityAuthCallback', () => {
-  mockedLocation.pathname = '/login/callback';
+  mockedLocation.pathname = ROUTE_AUTH_CALLBACK;
   mockedLocation.search = '?code=oneIdCode';
   render(<App />);
   screen.getByText('ONE_IDENTITY_AUTH_CALLBACK');
@@ -99,7 +106,7 @@ test('oneIdentityAuthCallback', () => {
 });
 
 test.skip('OTP confirmation page', () => {
-  mockedLocation.pathname = '/login/otp';
+  mockedLocation.pathname = ROUTE_OTP;
   render(<App />);
   screen.getByText('OTP_PAGE');
   checkRedirect(false);

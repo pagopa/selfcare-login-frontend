@@ -3,7 +3,7 @@ import { ButtonNaked } from '@pagopa/mui-italia';
 import { useErrorDispatcher } from '@pagopa/selfcare-common-frontend/lib';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { OtpErrorTypeEnum } from '../../../models/authentication';
 import { otpResendService } from '../../../services/selfcareAuth';
 import { storageOTPSessionUidOps } from '../../../utils/storage';
@@ -17,7 +17,6 @@ export const SendOTPMail = ({ errorType = 'test', clearErrorType }: Props) => {
   const [timer, setTimer] = useState(errorType === OtpErrorTypeEnum.ExpiredOtp ? 0 : 60);
 
   const addError = useErrorDispatcher();
-  const { t } = useTranslation();
 
   const otpSessionUid = storageOTPSessionUidOps.read();
 
@@ -27,7 +26,7 @@ export const SendOTPMail = ({ errorType = 'test', clearErrorType }: Props) => {
       const timeout = setTimeout(() => setTimer((prev) => prev - 1), 1000);
       return () => clearTimeout(timeout);
     }
-    return () => {};
+    return () => { };
   }, [timer]);
 
   // Reset timer when errorType changes

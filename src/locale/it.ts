@@ -35,6 +35,7 @@ export default {
       'Abbiamo inviato un’e-mail all’indirizzo <1>{{email}}</1><2/>Per proseguire, controlla la casella di posta e inserisci qui il codice numerico.',
     resend: 'Non hai ricevuto il codice? <1>Richiedi un nuovo codice</1> {{timer}}',
     resendExpired: '<0></0><1>Richiedi un nuovo codice</1> {{timer}}',
+    pecMailWarning: "Se ancora non ricevi il codice, potrebbe essere perché stai usando un indirizzo PEC, che <br /> non riceve email con OTP. Ti consigliamo di contattare l'amministratore per aggiornare <br /> l'email associata al tuo account.",
     error: {
       generic: {
         title: 'Qualcosa è andato storto',

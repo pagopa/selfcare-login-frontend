@@ -62,7 +62,7 @@ export default {
     },
     generic: {
       title: 'Login was not possible',
-      description: 'An problem occurred while logging in. Try again in a few <1/>minutes.',
+      description: 'An problem occurred while logging in. Try again in a few minutes.',
     },
   },
   breadCrumb: {
