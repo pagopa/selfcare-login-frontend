@@ -9,7 +9,7 @@
     "@mui/material": "^5.8.2",
     "@mui/utils": "^7.3.9",
     "@pagopa/mui-italia": "^2.3.0",
-    "@pagopa/selfcare-common-frontend": "^1.34.98",
+    "@pagopa/selfcare-common-frontend": "^1.34.102",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
