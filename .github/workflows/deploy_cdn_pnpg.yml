@@ -93,6 +93,9 @@ jobs:
     if: success()
     runs-on: ubuntu-22.04
     environment: "${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}-cd"
+    env:
+      ENVIRONMENT: ${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
+      ENV_SHORT: ${{ (github.event_name == 'workflow_dispatch' && inputs.env == 'prod') && 'p' || ((github.event_name == 'workflow_dispatch' && inputs.env == 'uat') || (github.event_name == 'push' && startsWith(github.ref_name, 'releases/'))) && 'u' || 'd' }}
     permissions:
       id-token: write
       contents: read
@@ -113,17 +116,17 @@ jobs:
 
       - name: Upload to blob storage
         run: |
-          az storage blob sync \
-            -c '$web' \
-            --account-name weupnpgcheckoutst01 \
-            -s "./${{ env.BUNDLE_NAME }}" \
-            --destination 'auth/' \
-            --auth-mode login
+          az storage blob upload-batch \
+            --account-name selc${{ env.ENV_SHORT }}weupnpgcheckoutst01 \
+            --source "./${{ env.BUNDLE_NAME }}" \
+            --destination '$web' \
+            --destination-path 'auth' \
+            --overwrite true
 
       - name: Purge Front Door endpoint
         run: |
           az afd endpoint purge \
-            --resource-group weu-pnpg-checkout-fe-rg \
-            --profile-name weu-pnpg-checkout-afd-01 \
-            --endpoint-name weu-pnpg-checkout-fde-01 \
+            --resource-group selc-${{ env.ENV_SHORT }}-weu-pnpg-checkout-fe-rg \
+            --profile-name selc-${{ env.ENV_SHORT }}-weu-pnpg-checkout-afd-01 \
+            --endpoint-name selc-${{ env.ENV_SHORT }}-weu-pnpg-checkout-fde-01 \
             --content-paths "/auth" "/auth/*" "/"
