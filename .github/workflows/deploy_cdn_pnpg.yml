@@ -117,7 +117,8 @@ jobs:
             -c '$web' \
             --account-name weupnpgcheckoutst01 \
             -s "./${{ env.BUNDLE_NAME }}" \
-            --destination 'auth/'
+            --destination 'auth/' \
+            --auth-mode login
 
       - name: Purge Front Door endpoint
         run: |
