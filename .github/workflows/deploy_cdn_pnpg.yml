@@ -95,7 +95,7 @@ jobs:
     environment: "${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}-cd"
     env:
       ENVIRONMENT: ${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      ENV_SHORT: ${{ ((github.event_name == 'workflow_dispatch' && inputs.env == 'prod') || (github.event_name == 'push' && startsWith(github.ref_name, 'releases/'))) && 'p' || (github.event_name == 'workflow_dispatch' && inputs.env == 'uat') && 'u' || 'd' }}
+      ENV_SHORT: ${{ (github.event_name == 'workflow_dispatch' && inputs.env == 'prod') && 'p' || ((github.event_name == 'workflow_dispatch' && inputs.env == 'uat') || (github.event_name == 'push' && startsWith(github.ref_name, 'releases/'))) && 'u' || 'd' }}
     permissions:
       id-token: write
       contents: read
@@ -121,7 +121,6 @@ jobs:
             --source "./${{ env.BUNDLE_NAME }}" \
             --destination '$web' \
             --destination-path 'auth' \
-            --auth-mode login \
             --overwrite true
 
       - name: Purge Front Door endpoint
