@@ -113,12 +113,13 @@ jobs:
 
       - name: Upload to blob storage
         run: |
-          az storage blob sync \
-            -c '$web' \
+          az storage blob upload-batch \
             --account-name weupnpgcheckoutst01 \
-            -s "./${{ env.BUNDLE_NAME }}" \
-            --destination 'auth/' \
-            --auth-mode login
+            --source "./${{ env.BUNDLE_NAME }}" \
+            --destination '$web' \
+            --destination-path 'auth' \
+            --auth-mode login \
+            --overwrite true
 
       - name: Purge Front Door endpoint
         run: |
