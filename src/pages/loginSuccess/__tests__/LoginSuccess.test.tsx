@@ -17,18 +17,12 @@ vi.mock('@pagopa/selfcare-common-frontend/lib/services/analyticsService', () => 
 const { TextDecoder } = await import('util');
 global.TextDecoder = TextDecoder;
 
-// save the original window.location
-const oldWindowLocation = global.window.location;
-
 // helper to safely mock window.location
-const mockLocation = (hash = '', origin = 'MOCKEDORIGIN') => {
-  Object.defineProperty(window, 'location', {
-    value: {
-      hash,
-      origin,
-      assign: vi.fn(),
-    },
-    writable: true,
+const mockLocation = (hash = '', origin = new URL(ENV.URL_FE.DASHBOARD).origin) => {
+  vi.stubGlobal('location', {
+    hash,
+    origin,
+    assign: vi.fn(),
   });
 };
 
@@ -42,7 +36,7 @@ afterEach(() => {
 });
 
 afterAll(() => {
-  Object.defineProperty(window, 'location', { value: oldWindowLocation });
+  vi.unstubAllGlobals();
 });
 
 test('test login success (token from storage)', () => {
