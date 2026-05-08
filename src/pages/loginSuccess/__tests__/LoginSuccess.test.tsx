@@ -18,7 +18,7 @@ const { TextDecoder } = await import('util');
 global.TextDecoder = TextDecoder;
 
 // helper to safely mock window.location
-const mockLocation = (hash = '', origin = 'MOCKEDORIGIN') => {
+const mockLocation = (hash = '', origin = new URL(ENV.URL_FE.DASHBOARD).origin) => {
   vi.stubGlobal('location', {
     hash,
     origin,
