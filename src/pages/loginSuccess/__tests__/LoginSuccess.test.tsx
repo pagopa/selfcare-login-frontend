@@ -29,6 +29,7 @@ const mockLocation = (hash = '', origin = 'MOCKEDORIGIN') => {
       assign: vi.fn(),
     },
     writable: true,
+    configurable: true,
   });
 };
 
