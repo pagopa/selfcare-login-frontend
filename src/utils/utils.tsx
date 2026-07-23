@@ -6,20 +6,24 @@ import {
   ROUTE_LOGOUT_GOOGLE,
 } from './constants';
 
-export const redirectToLogin = () => {
-  globalThis.location.assign(ROUTE_LOGIN);
+/** keeps the requested destination alive across a redirect that wipes the storage */
+const withOnSuccess = (route: string, onSuccess?: string | null) =>
+  onSuccess ? `${route}?onSuccess=${encodeURIComponent(onSuccess)}` : route;
+
+export const redirectToLogin = (onSuccess?: string | null) => {
+  globalThis.location.assign(withOnSuccess(ROUTE_LOGIN, onSuccess));
 };
 
 export const redirectToGoogleLogin = () => {
   globalThis.location.assign(ROUTE_LOGIN_GOOGLE);
 };
 
-export const redirectToLogout = () => {
-  globalThis.location.assign(ROUTE_LOGOUT);
+export const redirectToLogout = (onSuccess?: string | null) => {
+  globalThis.location.assign(withOnSuccess(ROUTE_LOGOUT, onSuccess));
 };
 
-export const redirectToGoogleLogout = () => {
-  globalThis.location.assign(ROUTE_LOGOUT_GOOGLE);
+export const redirectToGoogleLogout = (onSuccess?: string | null) => {
+  globalThis.location.assign(withOnSuccess(ROUTE_LOGOUT_GOOGLE, onSuccess));
 };
 
 export const redirectToErrorPage = () => {

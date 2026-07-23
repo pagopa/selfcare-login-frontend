@@ -34,3 +34,17 @@ test('test logout', () => {
 
   expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
 });
+
+test('test logout forwards the requested destination to the login', () => {
+  vi.stubGlobal('location', { assign: vi.fn(), search: '?onSuccess=%2Fonboarding%2Fuser' });
+  storageOnSuccessOps.write('ON_SUCCESS');
+  storageTokenOps.write('TOKEN');
+
+  render(<Logout />);
+
+  expect(storageOnSuccessOps.read()).toBeUndefined();
+  expect(storageTokenOps.read()).toBeUndefined();
+  expect(global.window.location.assign).toBeCalledWith(
+    ROUTE_LOGIN + '?onSuccess=' + encodeURIComponent('/onboarding/user')
+  );
+});

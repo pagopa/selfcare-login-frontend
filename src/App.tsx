@@ -58,8 +58,15 @@ const onLoginRequest = () => {
 
 const onOneIdentityAuthCallback = () => <OneIdentityAuthCallbackPage />;
 
-const handleLoginRequestOnSuccessRequest = () => {
+/** persists the onSuccess query param, if any, without touching the rest of the login flow */
+const storeOnSuccessRequest = () => {
   const onSuccess: string | null = new URLSearchParams(window.location.search).get('onSuccess');
+  if (onSuccess) {
+    storageOnSuccessOps.write(onSuccess);
+  }
+};
+
+const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
@@ -67,9 +74,7 @@ const handleLoginRequestOnSuccessRequest = () => {
   const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
 
-  if (onSuccess) {
-    storageOnSuccessOps.write(onSuccess);
-  }
+  storeOnSuccessRequest();
   storageStateOps.write(state);
   storageNonceOps.write(nonce);
   storageRedirectURIOps.write(redirect_uri);
@@ -107,6 +112,14 @@ const resolveRoute = (
   }
 
   if (token) {
+    // a login request states its own destination: since the storage is persistent, whatever a
+    // previous login left behind would otherwise hijack this one (typically back to the dashboard)
+    if (path === ROUTE_LOGIN) {
+      storageOnSuccessOps.delete();
+    }
+    // the requested destination must be honoured even when a session is already in place,
+    // otherwise ValidateSession has nothing to read and falls back to the dashboard
+    storeOnSuccessRequest();
     return onAlreadyInSession(token);
   }
 

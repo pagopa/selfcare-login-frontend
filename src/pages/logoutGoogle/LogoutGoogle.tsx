@@ -13,9 +13,16 @@ import { redirectToGoogleLogin } from '../../utils/utils';
 export const LogoutGoogle = () => {
   const { t } = useTranslation();
 
-  storageOnSuccessOps.delete();
+  const onSuccess = new URLSearchParams(globalThis.location.search).get('onSuccess');
+
   storageTokenOps.delete();
   storageUserOps.delete();
+  // the google login leaves this app, so the destination survives in storage rather than in the url
+  if (onSuccess) {
+    storageOnSuccessOps.write(onSuccess);
+  } else {
+    storageOnSuccessOps.delete();
+  }
 
   return (
     <Layout>
