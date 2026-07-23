@@ -22,13 +22,24 @@ export const readUserFromToken = (token: string) => {
   }
 };
 
-const validOnSuccessPattern = /^\/?([\w\-./?=&]|%[0-9A-Fa-f]{2})+$/;
+/**
+ * Resolves the requested destination against the platform origin, returning undefined when it
+ * points somewhere else: both absolute (https://evil.com) and protocol relative (//evil.com)
+ * values end up on a different origin, so open redirects are rejected without extra guards.
+ */
+const resolveOnSuccessRedirect = (onSuccess: string): string | undefined => {
+  try {
+    const platformOrigin = new URL(ENV.URL_FE.DASHBOARD).origin;
+    const requested = new URL(onSuccess, platformOrigin);
+    return requested.origin === platformOrigin ? requested.toString() : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 export const redirectSuccessLogin = () => {
   const onSuccess: string | null = storageOnSuccessOps.read();
-  const redirectTo =
-    onSuccess && validOnSuccessPattern.test(onSuccess)
-      ? new URL(ENV.URL_FE.DASHBOARD).origin + '/' + onSuccess.replace(/^\//, '')
-      : ENV.URL_FE.DASHBOARD;
+  const redirectTo = (onSuccess && resolveOnSuccessRedirect(onSuccess)) || ENV.URL_FE.DASHBOARD;
 
   storageOnSuccessOps.delete();
   storageStateOps.delete();
@@ -57,7 +68,8 @@ const LoginSuccess = () => {
     readUserFromToken(selfcareToken);
     redirectSuccessLogin();
   } else {
-    redirectToLogin();
+    // the login route wipes the storage before reading the querystring, so hand the destination over
+    redirectToLogin(storageOnSuccessOps.read());
   }
   return <LoadingOverlayComponent open={true} />;
 };

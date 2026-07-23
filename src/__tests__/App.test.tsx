@@ -86,6 +86,38 @@ test('test ValidateSession', () => {
   storageTokenOps.write('testToken');
   render(<App />);
   screen.getByText('VALIDATE_SESSION:testToken');
+  expect(storageOnSuccessOps.read()).toBeUndefined();
+  checkRedirect(false);
+});
+
+test('test ValidateSession with onSuccess', () => {
+  mockedLocation.pathname = ROUTE_LOGIN;
+  mockedLocation.search = 'onSuccess=prova';
+  storageTokenOps.write('testToken');
+  render(<App />);
+  screen.getByText('VALIDATE_SESSION:testToken');
+  expect(storageOnSuccessOps.read()).toBe('prova');
+  checkRedirect(false);
+});
+
+test('test ValidateSession discards the onSuccess left by a previous login', () => {
+  mockedLocation.pathname = ROUTE_LOGIN;
+  storageOnSuccessOps.write('/dashboard');
+  storageTokenOps.write('testToken');
+  render(<App />);
+  screen.getByText('VALIDATE_SESSION:testToken');
+  expect(storageOnSuccessOps.read()).toBeUndefined();
+  checkRedirect(false);
+});
+
+test('test ValidateSession keeps the onSuccess of the login round trip', () => {
+  mockedLocation.pathname = ROUTE_LOGIN_SUCCESS;
+  mockedLocation.hash = 'token=successToken';
+  storageOnSuccessOps.write('/onboarding/user');
+  storageTokenOps.write('testToken');
+  render(<App />);
+  screen.getByText('VALIDATE_SESSION:testToken');
+  expect(storageOnSuccessOps.read()).toBe('/onboarding/user');
   checkRedirect(false);
 });
 

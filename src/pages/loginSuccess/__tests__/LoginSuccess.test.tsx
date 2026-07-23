@@ -78,9 +78,18 @@ test('test login success when redirect registered', () => {
   testSuccessRedirect(`/${requestedPath}`, true, window.location.origin + '/' + requestedPath);
 });
 
-test('test login success when invalid redirect', () => {
-  const requestedPath = 'prova%';
-  testSuccessRedirect(requestedPath, true, ENV.URL_FE.DASHBOARD);
+test('test login success when redirect holds characters rejected by the old pattern', () => {
+  testSuccessRedirect(
+    '/onboarding/user?email=mario.rossi@pagopa.it',
+    true,
+    window.location.origin + '/onboarding/user?email=mario.rossi@pagopa.it'
+  );
+});
+
+test('test login success when redirect is cross origin', () => {
+  testSuccessRedirect('https://evil.com/phishing', true, ENV.URL_FE.DASHBOARD);
+  testSuccessRedirect('//evil.com/phishing', true, ENV.URL_FE.DASHBOARD);
+  testSuccessRedirect('javascript:alert(1)', true, ENV.URL_FE.DASHBOARD);
 });
 
 test('test login success no ENV.TEST_TOKEN', () => {
