@@ -5,7 +5,12 @@ import { OidcExchangeRequest } from '../generated/selfcare-auth/OidcExchangeRequ
 import { OtpResendRequest } from '../generated/selfcare-auth/OtpResendRequest';
 import { OtpVerifyRequest } from '../generated/selfcare-auth/OtpVerifyRequest';
 
-const mockedSessionToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTc1MDQxNjAxMH0.yvLnfaZEZ-DMh7pW_7DkWj637qXg4uJ7XcJQiF-8Wiw`;
+/**
+ * Test-only token used in unit tests/mocks.
+ * IMPORTANT: do not commit real JWTs here.
+ * Provide it via environment variable (e.g. .env.test) when needed.
+ */
+const mockedSessionToken = import.meta.env.VITE_MOCKED_SESSION_TOKEN ?? '';
 
 export const SelfcareAuthApiMock = {
   oneIdentityCodeExchangeMock: async (
