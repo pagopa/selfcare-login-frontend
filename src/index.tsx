@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '@pagopa/mui-italia';
 import '@pagopa/selfcare-common-frontend/index.css';
-import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
 import ErrorBoundary from '@pagopa/selfcare-common-frontend/lib/components/ErrorBoundary/ErrorBoundary';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import React from 'react';
