@@ -39,7 +39,7 @@ export function TermsAndConditionsPage() {
   }, []);
 
   return (
-    <Grid container xs={12} p={3} bgcolor={theme.palette.background.default}>
+    <Grid container item xs={12} p={3} bgcolor={theme.palette.background.default}>
       <Grid>
         <div
           id="otnotice-6f92cced-3bd1-4859-9295-baecfc74c64a"
