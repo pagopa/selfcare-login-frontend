@@ -12,6 +12,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import ValidateSession from './pages/ValidateSession/ValidateSession';
 import {
+  getOneIdentityRedirectUri,
   ROUTE_AUTH_CALLBACK,
   ROUTE_LOGIN,
   ROUTE_LOGIN_ERROR,
@@ -70,20 +71,27 @@ const handleLoginRequestOnSuccessRequest = () => {
   const generateRandomUniqueString = () => uuidv4().replace(/-/g, '').slice(0, 15);
   const state = generateRandomUniqueString();
   const nonce = generateRandomUniqueString();
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  const redirect_uri = ENV.URL_FE.LOGIN + '/login/callback';
+  const redirect_uri = getOneIdentityRedirectUri();
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
 
   storeOnSuccessRequest();
   storageStateOps.write(state);
   storageNonceOps.write(nonce);
   storageRedirectURIOps.write(redirect_uri);
-  trackEvent('LOGIN_INTENT', {
-    origin: location.origin,
-  });
 
-  window.location.assign(
-    `${ENV.ONE_IDENTITY.BASE_URL}/login?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`
+  const oneIdentityLoginUrl = `${ENV.ONE_IDENTITY.BASE_URL}/login?response_type=CODE&scope=openid&client_id=${ENV.ONE_IDENTITY.CLIENT_ID}&state=${state}&nonce=${nonce}&redirect_uri=${encodedRedirectUri}`;
+
+  // the redirect crosses to a different domain (oneId.it), so the trackEvent call must wait for
+  // mixpanel to confirm the event has been sent before navigating away, otherwise the outgoing
+  // request gets cancelled by the browser as soon as the page starts unloading
+  trackEvent(
+    'LOGIN_INTENT',
+    {
+      origin: location.origin,
+    },
+    () => {
+      window.location.assign(oneIdentityLoginUrl);
+    }
   );
 };
 

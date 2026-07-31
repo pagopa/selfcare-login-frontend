@@ -20,3 +20,12 @@ export const ROUTE_LOGIN_GOOGLE = ENV.GOOGLE_LOGIN_URL;
 export const ENABLE_LANDING_REDIRECT = !ENV.URL_FE.LANDING.endsWith('/auth/logout');
 
 export const LOADING_TASK_VERIFY_OTP = 'VERIFY_OTP';
+
+/**
+ * The redirect_uri sent to OneIdentity is deterministic per environment, so it must be recomputed
+ * (rather than read back from storage) on the auth callback page: relying on storage for this value
+ * exposes the flow to browser anti-tracking mitigations (e.g. Safari ITP) that can purge localStorage
+ * on the selfcare.it -> oneId.it -> selfcare.it redirect bounce, leaving nothing to read on return.
+ */
+// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+export const getOneIdentityRedirectUri = () => ENV.URL_FE.LOGIN + '/login/callback';
