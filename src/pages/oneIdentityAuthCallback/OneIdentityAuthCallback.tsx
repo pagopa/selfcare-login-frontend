@@ -3,13 +3,8 @@ import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyt
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { selfcareAuthService } from '../../services/selfcareAuth';
-import { ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../utils/constants';
-import {
-  storageMaskedEmailOps,
-  storageOTPSessionUidOps,
-  storageRedirectURIOps,
-  storageStateOps,
-} from '../../utils/storage';
+import { getOneIdentityRedirectUri, ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../utils/constants';
+import { storageMaskedEmailOps, storageOTPSessionUidOps, storageStateOps } from '../../utils/storage';
 import { redirectToErrorPage } from '../../utils/utils';
 
 const OneIdentityAuthCallbackPage = () => {
@@ -18,17 +13,25 @@ const OneIdentityAuthCallbackPage = () => {
   const oneIdentityCode = urlParams.get('code');
   const error = urlParams.get('error');
   const storedState = storageStateOps.read();
-  const redirectURI = storageRedirectURIOps.read();
+
+  const redirectURI = getOneIdentityRedirectUri();
 
   if (error || !oneIdentityCode || !receivedState || receivedState !== storedState) {
-    trackEvent('LOGIN_ERROR_ONE_IDENTITY', {
-      error,
-      storedState,
-      receivedState,
-      oneIdentityCode,
-      redirectURI,
-    });
-    redirectToErrorPage();
+    // wait for mixpanel to confirm the event has been sent before navigating away, otherwise the
+    // outgoing request can be cancelled as soon as the page starts unloading
+    trackEvent(
+      'LOGIN_ERROR_ONE_IDENTITY',
+      {
+        error,
+        storedState,
+        receivedState,
+        oneIdentityCode,
+        redirectURI,
+      },
+      () => {
+        redirectToErrorPage();
+      }
+    );
     return <></>;
   }
 
@@ -50,14 +53,21 @@ const OneIdentityAuthCallbackPage = () => {
         }
       })
       .catch((err) => {
-        trackEvent('LOGIN_ERROR_ONE_IDENTITY', {
-          selfcareAuthServiceError: err,
-          storedState,
-          receivedState,
-          oneIdentityCode,
-          redirectURI,
-        });
-        redirectToErrorPage();
+        // wait for mixpanel to confirm the event has been sent before navigating away, otherwise
+        // the outgoing request can be cancelled as soon as the page starts unloading
+        trackEvent(
+          'LOGIN_ERROR_ONE_IDENTITY',
+          {
+            selfcareAuthServiceError: err,
+            storedState,
+            receivedState,
+            oneIdentityCode,
+            redirectURI,
+          },
+          () => {
+            redirectToErrorPage();
+          }
+        );
       });
   }
 

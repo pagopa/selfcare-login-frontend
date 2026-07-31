@@ -46,10 +46,18 @@ export const redirectSuccessLogin = () => {
   storageNonceOps.delete();
   storageRedirectURIOps.delete();
 
-  trackEvent('LOGIN_SUCCESS', {
-    origin: location.origin,
-  });
-  window.location.assign(redirectTo);
+  // the redirect crosses to a different domain in some flows, so the trackEvent call must wait
+  // for mixpanel to confirm the event has been sent before navigating away, otherwise the
+  // outgoing request gets cancelled by the browser as soon as the page starts unloading
+  trackEvent(
+    'LOGIN_SUCCESS',
+    {
+      origin: location.origin,
+    },
+    () => {
+      window.location.assign(redirectTo);
+    }
+  );
 };
 
 /** success login operations */

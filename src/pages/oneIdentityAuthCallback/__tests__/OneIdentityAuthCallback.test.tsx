@@ -3,12 +3,8 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Mock } from 'vitest';
 import { SelfcareAuthApiMock } from '../../../api/__mocks__/SelfcareAuthApiClient';
-import { ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../../utils/constants';
-import {
-  storageMaskedEmailOps,
-  storageRedirectURIOps,
-  storageStateOps,
-} from '../../../utils/storage';
+import { getOneIdentityRedirectUri, ROUTE_LOGIN_SUCCESS, ROUTE_OTP } from '../../../utils/constants';
+import { storageMaskedEmailOps, storageStateOps } from '../../../utils/storage';
 import { redirectToErrorPage } from '../../../utils/utils';
 import OneIdentityAuthCallbackPage from '../OneIdentityAuthCallback';
 
@@ -34,9 +30,6 @@ vi.mock('../../../utils/storage', () => ({
   storageStateOps: {
     read: vi.fn(),
   },
-  storageRedirectURIOps: {
-    read: vi.fn(),
-  },
   storageMaskedEmailOps: {
     write: vi.fn(),
   },
@@ -55,6 +48,10 @@ vi.mock('@pagopa/selfcare-common-frontend/lib', () => ({
 
 const originalWindow = { ...window };
 const mockAssign = vi.fn();
+
+// the redirect_uri is now computed deterministically (env-based) instead of being read from
+// storage, so tests assert against this same computation rather than mocking storage for it
+const expectedRedirectUri = getOneIdentityRedirectUri();
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -114,7 +111,6 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     (storageStateOps.read as Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       sessionToken: 'auth-token',
@@ -132,7 +128,6 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
 
     (storageStateOps.read as Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
       sessionToken: 'auth-token',
@@ -143,7 +138,7 @@ describe('OneIdentityAuthCallbackPage', () => {
     await waitFor(() => {
       expect(SelfcareAuthApiMock.oneIdentityCodeExchangeMock).toHaveBeenCalledWith({
         code: 'test-code',
-        redirectUri: 'https://example.com/callback',
+        redirectUri: expectedRedirectUri,
       });
     });
   });
@@ -155,9 +150,8 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    // Mock stored state and redirect URI
+    // Mock stored state
     (storageStateOps.read as Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     // Mock API call
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({
@@ -180,9 +174,8 @@ describe('OneIdentityAuthCallbackPage', () => {
       writable: true,
     });
 
-    // Mock stored state and redirect URI
+    // Mock stored state
     (storageStateOps.read as Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
 
     // Mock API call to fail
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockRejectedValue(
@@ -197,23 +190,6 @@ describe('OneIdentityAuthCallbackPage', () => {
     });
   });
 
-  test('should not call API when redirectURI is missing', () => {
-    // Set up window.location.search with code and state
-    Object.defineProperty(window, 'location', {
-      value: { ...window.location, search: '?code=test-code&state=test-state' },
-      writable: true,
-    });
-
-    // Mock stored state but return null for redirectURI
-    (storageStateOps.read as Mock).mockReturnValue('test-state');
-    (storageRedirectURIOps.read as Mock).mockReturnValue(null);
-
-    render(<OneIdentityAuthCallbackPage />);
-
-    // API should not be called
-    expect(SelfcareAuthApiMock.oneIdentityCodeExchangeMock).not.toHaveBeenCalled();
-  });
-
   test('should redirect to otp page when requiredOtp is true in the token exchange response', async () => {
     // Set up window.location.search with code and state
     Object.defineProperty(window, 'location', {
@@ -223,7 +199,6 @@ describe('OneIdentityAuthCallbackPage', () => {
 
     // Mock stored state. Value test-otp-code is used to trigger the oidcExchange response with requiresOtpFlow=true
     (storageStateOps.read as Mock).mockReturnValue('test-otp-code');
-    (storageRedirectURIOps.read as Mock).mockReturnValue('https://example.com/callback');
     (storageStateOps.read as Mock).mockReturnValue('test-state');
 
     (SelfcareAuthApiMock.oneIdentityCodeExchangeMock as Mock).mockResolvedValue({

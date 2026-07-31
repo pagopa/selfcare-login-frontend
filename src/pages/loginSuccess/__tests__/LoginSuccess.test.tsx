@@ -9,9 +9,15 @@ import { ENV } from '../../../utils/env';
 import { storageOnSuccessOps } from '../../../utils/storage';
 import LoginSuccess from '../LoginSuccess';
 
-// mock analytics service
+// mock analytics service: trackEvent now takes an optional callback (invoked once mixpanel
+// confirms the event was sent) which the redirect logic relies on to fire the navigation, so the
+// mock must invoke it synchronously to keep the redirect assertions working
 vi.mock('@pagopa/selfcare-common-frontend/lib/services/analyticsService', () => ({
-  trackEvent: vi.fn(),
+  trackEvent: vi.fn((_eventName, _properties, callback) => {
+    if (callback) {
+      callback();
+    }
+  }),
 }));
 
 const { TextDecoder } = await import('util');

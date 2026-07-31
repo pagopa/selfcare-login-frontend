@@ -43,6 +43,7 @@ export default defineConfig({
                 'src/lib/index.ts',
                 'src/lib/components/icons/**',
                 'src/lib/model/**',
+                'src/locale/**',
             ],
         },
     },
