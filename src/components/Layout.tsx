@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
-import { Footer } from '@pagopa/selfcare-common-frontend/lib';
-import { ENV } from '../utils/env';
+import { ReleaseFooter } from './ReleaseFooter';
 import { LoginHeader } from './LoginHeader';
 
 type Props = {
@@ -18,7 +17,7 @@ const Layout = ({ children }: Props) => (
     <LoginHeader />
     {children}
     <Box mt={16}>
-      <Footer loggedUser={false} productsJsonUrl={ENV.JSON_URL.PRODUCTS} />
+      <ReleaseFooter />
     </Box>
   </Box>
 );

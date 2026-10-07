@@ -10,10 +10,18 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: ['tsconfig.json', 'tsconfig.test.json', 'tsconfig.tools.json'],
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', '@stylistic/ts', 'react', 'react-hooks', 'import', 'functional', 'sonarjs'],
+  plugins: [
+    '@typescript-eslint',
+    '@stylistic/ts',
+    'react',
+    'react-hooks',
+    'import',
+    'functional',
+    'sonarjs',
+  ],
   rules: {
     'no-case-declarations': 'off',
     'no-inner-declarations': 'off',

@@ -27,13 +27,16 @@ jobs:
           cache: "yarn"
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: yarn build --mode development
 
       - name: Lint
         run: yarn lint
+
+      - name: Type-check tests
+        run: yarn typecheck:test
 
       # Check where find DANGER_GITHUB_API_TOKEN secret
       - name: Danger CI
@@ -44,4 +47,4 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ env.DANGER_GITHUB_API_TOKEN }}
           
       - name: Unit tests exec
-        run: yarn test:coverage --watchAll=false
+        run: yarn test:coverage

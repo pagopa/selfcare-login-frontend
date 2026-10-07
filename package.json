@@ -2,44 +2,41 @@
   "name": "selfcare-login-frontend",
   "version": "1.4.0",
   "private": true,
-  "homepage": "/auth/",
+  "engines": {
+    "node": ">=24.13.0 <25"
+  },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/base": "^5.0.0-beta.28",
-    "@mui/icons-material": "^5.14.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/base": "^5.0.0-beta.70",
+    "@mui/icons-material": "^5.14.3",
     "@mui/lab": "^5.0.0-alpha.157",
-    "@mui/material": "^5.14.1",
-    "@pagopa/mui-italia": "^1.1.0",
-    "@pagopa/selfcare-common-frontend": "^1.34.55",
+    "@mui/material": "^5.14.5",
+    "@mui/system": "^5.14.5",
+    "@mui/x-date-pickers": "^6.17.0",
+    "@pagopa/mui-italia": "2.5.0",
+    "@pagopa/selfcare-common-frontend": "^2.5.2",
     "env-var": "^7.1.1",
-    "i18next": "^23.7.11",
-    "react": "^18.2.0",
-    "react-app-polyfill": "^3.0.0",
+    "i18next": "^25.4.2",
+    "react": "^18.3.1",
     "react-datepicker": "^4.2.1",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "react-i18next": "^15.1.2",
+    "react-md-spinner": "^1.0.0",
     "react-router": "^5.2.1",
-    "react-scripts": "^5.0.0",
-    "typescript": "^4.1.2",
-    "util": "^0.12.5",
-    "web-vitals": "^1.0.1"
+    "react-router-dom": "^5.3.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test -i",
-    "test:coverage": "craco test -i --coverage",
-    "eject": "craco eject",
-    "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
-    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
+    "start": "vite",
+    "build": "yarn typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tools.json",
+    "typecheck:test": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx,.mts --fix",
+    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx,.mts",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -54,21 +51,23 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-private-property-in-object": "^7.25.9",
-    "@craco/craco": "^6.4.3",
+    "@stylistic/eslint-plugin-ts": "^2.13.0",
+    "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
     "@types/history": "^4.7.9",
-    "@types/jest": "^26.0.24",
-    "@types/node": "^12.20.19",
+    "@types/node": "^24.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-router": "^5.1.16",
-    "@stylistic/eslint-plugin-ts": "^2.13.0",
+    "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.60.0",
     "@typescript-eslint/parser": "^8.60.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "@vitest/coverage-v8": "4.1.10",
+    "browserslist": "^4.28.0",
+    "browserslist-to-esbuild": "^2.1.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-functional": "^5.0.8",
@@ -76,18 +75,19 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.13.0",
-    "prettier": "^2.4.1"
+    "jsdom": "^26.1.0",
+    "prettier": "^2.4.1",
+    "typescript": "5.9.3",
+    "vite": "8.1.5",
+    "vitest": "4.1.10"
   },
   "resolutions": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^5.18.0",
+    "@mui/system": "^5.18.0",
+    "@mui/icons-material": "^5.18.0",
     "nth-check": ">=2.0.1",
     "postcss": ">=8.4.31"
-  },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "src/index.tsx",
-      "src/reportWebVitals.ts",
-      "src/utils/constants.ts",
-      "src/utils/IDPS.ts"
-    ]
   }
 }

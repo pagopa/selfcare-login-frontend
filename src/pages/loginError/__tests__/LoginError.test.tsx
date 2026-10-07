@@ -7,7 +7,7 @@ import './../../../locale';
 const oldWindowLocation = global.window.location;
 
 beforeAll(() => {
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  Object.defineProperty(window, 'location', { value: { assign: vi.fn() } });
 });
 afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });

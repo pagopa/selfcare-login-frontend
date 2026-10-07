@@ -6,7 +6,7 @@ import { storageOnSuccessOps } from '../utils/storage';
 
 const oldWindowLocation = global.window.location;
 const mockedLocation = {
-  assign: jest.fn(),
+  assign: vi.fn(),
   pathname: '',
   origin: 'MOCKED_ORIGIN',
   search: '',
@@ -21,24 +21,24 @@ afterAll(() => {
 });
 
 // clean storage after each test
-afterEach(() => {
-  jest.requireActual('../pages/logout/Logout').default();
+afterEach(async () => {
+  const { default: Logout } = await vi.importActual<typeof import('../pages/logout/Logout')>(
+    '../pages/logout/Logout'
+  );
+  Logout();
   mockedLocation.assign.mockReset();
 });
 
-jest.mock('../pages/logout/Logout', () => () => 'LOGOUT');
-jest.mock('../pages/login/Login', () => () => 'LOGIN');
-jest.mock('../pages/loginSuccess/LoginSuccess', () => () => 'LOGIN_SUCCESS');
-jest.mock(
-  '../pages/ValidateSession/ValidateSession',
-  () =>
-    ({ sessionToken }) =>
-      'VALIDATE_SESSION:' + sessionToken
-);
+vi.mock('../pages/logout/Logout', () => ({ default: () => 'LOGOUT' }));
+vi.mock('../pages/login/Login', () => ({ default: () => 'LOGIN' }));
+vi.mock('../pages/loginSuccess/LoginSuccess', () => ({ default: () => 'LOGIN_SUCCESS' }));
+vi.mock('../pages/ValidateSession/ValidateSession', () => ({
+  default: ({ sessionToken }: { sessionToken: string }) => 'VALIDATE_SESSION:' + sessionToken,
+}));
 
 test.skip('test not served path', () => {
   render(<App />);
-  expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
+  expect(global.window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN);
   checkRedirect(true);
 });
 

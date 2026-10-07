@@ -2,11 +2,21 @@
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import { ENV } from './utils/env';
 
-CONFIG.ANALYTCS.ENABLE = ENV.ANALYTCS.ENABLE;
-CONFIG.ANALYTCS.MOCK = ENV.ANALYTCS.MOCK;
-CONFIG.ANALYTCS.DEBUG = ENV.ANALYTCS.DEBUG;
-CONFIG.ANALYTCS.TOKEN = ENV.ANALYTCS.TOKEN;
-CONFIG.ANALYTCS.API_HOST = ENV.ANALYTCS.API_HOST;
-CONFIG.ANALYTCS.ADDITIONAL_PROPERTIES_IMPORTANT = { env: ENV.ENV };
+export const configureCommon = () => {
+  CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
+  CONFIG.URL_FE.ASSISTANCE = ENV.URL_FE.ASSISTANCE;
+  CONFIG.FOOTER.LINK.PRIVACYPOLICY = ENV.URL_FOOTER.PRIVACY_DISCLAIMER;
+  CONFIG.FOOTER.LINK.TERMSANDCONDITIONS = ENV.URL_FOOTER.TERMS_AND_CONDITIONS;
+  CONFIG.ANALYTCS.ENABLE = ENV.ANALYTCS.ENABLE;
+  CONFIG.ANALYTCS.MOCK = ENV.ANALYTCS.MOCK;
+  CONFIG.ANALYTCS.DEBUG = ENV.ANALYTCS.DEBUG;
+  CONFIG.ANALYTCS.TOKEN = ENV.ANALYTCS.TOKEN;
+  CONFIG.ANALYTCS.API_HOST = ENV.ANALYTCS.API_HOST;
+  CONFIG.ANALYTCS.ADDITIONAL_PROPERTIES_IMPORTANT = { env: ENV.ENV };
+};
 
-import '@pagopa/selfcare-common-frontend/lib/consentManagementConfigure';
+export const configureConsent = async () => {
+  configureCommon();
+  // Consent initialization reads CONFIG immediately when an existing consent cookie is present.
+  await import('@pagopa/selfcare-common-frontend/lib/consentManagementConfigure');
+};

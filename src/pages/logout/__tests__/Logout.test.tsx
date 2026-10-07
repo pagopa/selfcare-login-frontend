@@ -11,7 +11,7 @@ import {
 const oldWindowLocation = global.window.location;
 
 beforeAll(() => {
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  Object.defineProperty(window, 'location', { value: { assign: vi.fn() } });
 });
 afterAll(() => {
   Object.defineProperty(window, 'location', { value: oldWindowLocation });
@@ -34,5 +34,5 @@ test('test logout', () => {
   expect(storageTokenOps.read()).toBeUndefined();
   expect(storageUserOps.read()).toBeUndefined();
 
-  expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
+  expect(global.window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN);
 });
