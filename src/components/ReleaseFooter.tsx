@@ -4,14 +4,7 @@ import { Footer } from '@pagopa/selfcare-common-frontend/lib';
 import { ENV } from '../utils/env';
 
 const preservePrivacyNavigation = (event: MouseEvent<HTMLElement>) => {
-  if (
-    !(event.target instanceof Element) ||
-    event.button !== 0 ||
-    event.ctrlKey ||
-    event.metaKey ||
-    event.shiftKey ||
-    event.altKey
-  ) {
+  if (!(event.target instanceof Element)) {
     return;
   }
 
