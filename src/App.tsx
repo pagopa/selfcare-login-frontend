@@ -2,6 +2,7 @@ import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyt
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import Login from './pages/login/Login';
 import {
+  BASE_ROUTE,
   ROUTE_LOGIN,
   ROUTE_LOGIN_ERROR,
   ROUTE_LOGIN_SUCCESS,
@@ -16,6 +17,7 @@ import LoginError from './pages/loginError/LoginError';
 import { storageOnSuccessOps } from './utils/storage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
+import { ENV } from './utils/env';
 
 const onTermsAndCondition = () => <TermsAndConditionsPage />;
 
@@ -49,6 +51,10 @@ const onLoginSuccess = () => <LoginSuccess />;
 
 function App() {
   const token = storageTokenOps.read();
+  const isLocalLoginPreview =
+    import.meta.env.DEV &&
+    ENV.ENV === 'LOCAL_DEV' &&
+    [BASE_ROUTE, `${BASE_ROUTE}/`, ROUTE_LOGIN].includes(window.location.pathname);
 
   if (window.location.pathname === ROUTE_LOGOUT) {
     return onLogout();
@@ -56,7 +62,7 @@ function App() {
     return onTermsAndCondition();
   } else if (window.location.pathname === ROUTE_PRIVACY_DISCLAIMER) {
     return onPrivacyDisclaimer();
-  } else if (token !== null && token !== undefined) {
+  } else if (token !== null && token !== undefined && !isLocalLoginPreview) {
     return onAlreadyInSession(token);
   } else {
     switch (window.location.pathname) {

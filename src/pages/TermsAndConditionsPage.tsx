@@ -4,6 +4,7 @@ import { Breadcrumbs, Button, Grid, Link, Stack } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme } from '@pagopa/mui-italia';
 import { useTranslation } from 'react-i18next';
+import { ENV } from '../utils/env';
 
 export function TermsAndConditionsPage() {
   const { t } = useTranslation();
@@ -12,12 +13,12 @@ export function TermsAndConditionsPage() {
   useEffect(() => {
     const script = document.createElement('script');
 
-    script.src = process.env.REACT_APP_OT_SRC ?? '';
+    script.src = ENV.OT.SRC;
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = 'otprivacy-notice-script';
 
-    (script as any).settings = process.env.REACT_APP_OT_TOKEN;
+    (script as any).settings = ENV.OT.TOKEN;
 
     document.body.appendChild(script);
 
@@ -25,7 +26,7 @@ export function TermsAndConditionsPage() {
     script.onload = () => {
       (window as any).OneTrust.NoticeApi.Initialized.then(() => {
         (window as any).OneTrust.NoticeApi.LoadNotices([
-          process.env.REACT_APP_OT_TERMS_AND_CONDITION_RESOURCE,
+          ENV.OT.RESOURCE_TERMS_AND_CONDITION,
         ]);
       });
     };

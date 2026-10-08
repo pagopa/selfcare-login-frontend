@@ -8,7 +8,7 @@ const oldWindowLocation = global.window.location;
 const idps = IDPS.identityProviders;
 beforeAll(() => {
   // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(window, 'location', { value: { assign: jest.fn() } });
+  Object.defineProperty(window, 'location', { value: { assign: vi.fn() } });
 });
 afterAll(() => {
   // eslint-disable-next-line functional/immutable-data
@@ -20,11 +20,14 @@ test('Test: All the Idps from SpidModal component', () => {
 
   idps.forEach((element) => {
     const spidImg = screen.getByAltText(element.name);
-    const spidSpan = spidImg.parentNode;
-    const spidButton = spidSpan.parentNode;
+    const spidButton = spidImg.closest('button');
+    expect(spidButton).not.toBeNull();
+    if (!spidButton) {
+      throw new Error(`Missing SPID button for ${element.name}`);
+    }
     fireEvent.click(spidButton);
     let id = element.entityId;
-    expect(global.window.location.assign).toBeCalledWith(
+    expect(global.window.location.assign).toHaveBeenCalledWith(
       ENV.URL_API.LOGIN +
         '/login?entityID=' +
         id +
