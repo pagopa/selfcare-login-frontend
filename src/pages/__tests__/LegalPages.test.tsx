@@ -17,11 +17,11 @@ test.each([
   });
   const { unmount } = render(<Page />);
   const script = document.getElementById('otprivacy-notice-script');
-  expect(script).toHaveAttribute('src', ENV.OT.SRC);
-  expect(script).toHaveProperty('settings', ENV.OT.TOKEN);
   if (!script) {
     throw new Error('Missing OneTrust notice script');
   }
+  expect(script).toHaveAttribute('src', ENV.OT.SRC);
+  expect(script).toHaveProperty('settings', ENV.OT.TOKEN);
   fireEvent.load(script);
   await vi.waitFor(() => expect(loadNotices).toHaveBeenCalledWith([resource]));
   unmount();
