@@ -27,6 +27,7 @@ afterEach(async () => {
   );
   Logout();
   mockedLocation.assign.mockReset();
+  vi.unstubAllEnvs();
 });
 
 vi.mock('../pages/logout/Logout', () => ({ default: () => 'LOGOUT' }));
@@ -87,6 +88,64 @@ test('test LoginSuccess', () => {
   mockedLocation.hash = 'token=successToken';
   render(<App />);
   screen.getByText('LOGIN_SUCCESS');
+  checkRedirect(false);
+});
+
+test.each(['/auth', '/auth/', '/auth/login'])(
+  'keeps the local login page visible at "%s" with a stored session',
+  async (pathname) => {
+    vi.stubEnv('DEV', true);
+    vi.stubEnv('VITE_ENV', 'LOCAL_DEV');
+    vi.stubEnv('BASE_URL', '/auth/');
+    vi.resetModules();
+    const { default: LocalApp } = await import('../App');
+    mockedLocation.pathname = pathname;
+    mockedLocation.search = '?onSuccess=onboarding/prod-io';
+    storageTokenOps.write('testToken');
+
+    render(<LocalApp />);
+
+    expect(screen.getByText('LOGIN')).toBeInTheDocument();
+    expect(storageTokenOps.read()).toBe('testToken');
+    expect(storageOnSuccessOps.read()).toBe('onboarding/prod-io');
+    checkRedirect(false);
+  }
+);
+
+test.each([
+  [false, 'LOCAL_DEV', '/auth/login'],
+  [true, 'DEV', '/auth/login'],
+  [true, 'LOCAL_DEV', '/auth/login/success'],
+])(
+  'retains session validation with DEV=%s, environment=%s and path=%s',
+  async (development, environment, pathname) => {
+    vi.stubEnv('DEV', development);
+    vi.stubEnv('VITE_ENV', environment);
+    vi.stubEnv('BASE_URL', '/auth/');
+    vi.resetModules();
+    const { default: LocalApp } = await import('../App');
+    mockedLocation.pathname = pathname;
+    storageTokenOps.write('testToken');
+
+    render(<LocalApp />);
+
+    expect(screen.getByText('VALIDATE_SESSION:testToken')).toBeInTheDocument();
+    checkRedirect(false);
+  }
+);
+
+test('retains the local successful-login callback without a stored session', async () => {
+  vi.stubEnv('DEV', true);
+  vi.stubEnv('VITE_ENV', 'LOCAL_DEV');
+  vi.stubEnv('BASE_URL', '/auth/');
+  vi.resetModules();
+  const { default: LocalApp } = await import('../App');
+  mockedLocation.pathname = '/auth/login/success';
+  mockedLocation.hash = '#token=successToken';
+
+  render(<LocalApp />);
+
+  expect(screen.getByText('LOGIN_SUCCESS')).toBeInTheDocument();
   checkRedirect(false);
 });
 

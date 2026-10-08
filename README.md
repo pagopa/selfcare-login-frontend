@@ -10,6 +10,12 @@ yarn start
 ```
 
 The Vite development server serves the login application at `http://localhost:3000/auth/`.
+With `VITE_ENV=LOCAL_DEV`, the development server keeps `/auth`, `/auth/` and
+`/auth/login` on the login page even when a session token is stored, allowing manual
+UI testing without an automatic dashboard redirect. The token is not deleted.
+Logout and successful-login callbacks retain their normal behavior, including
+navigation to the configured dashboard after authentication. This login preview
+does not apply to builds or other environments.
 The release branch's SPID/CIE flows, pathname-based routing, domain-specific legal paths,
 redirects and session storage remain independent of main's authentication implementation.
 
