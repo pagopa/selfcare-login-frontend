@@ -8,7 +8,6 @@ Use Node 24.13.0 (see [.node-version](.node-version) and [.nvmrc](.nvmrc)) and Y
 yarn install --frozen-lockfile
 yarn start
 ```
-
 The Vite development server serves the login application at `http://localhost:3000/auth/`.
 With `VITE_ENV=LOCAL_DEV`, the development server keeps `/auth`, `/auth/` and
 `/auth/login` on the login page even when a session token is stored, allowing manual
