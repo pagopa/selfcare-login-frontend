@@ -4,24 +4,43 @@ vi.mock('@pagopa/selfcare-common-frontend/lib/services/analyticsService', () => 
   initAnalytics: vi.fn(),
 }));
 
+const originalLocation = window.location;
+
 afterEach(() => {
+  Object.defineProperty(window, 'location', { value: originalLocation });
   vi.unstubAllEnvs();
   document.cookie = 'OptanonConsent=; Max-Age=0; path=/';
 });
 
-test.each(['DEV', 'UAT', 'PROD'])('retains release destinations in %s', async (mode) => {
+test.each([
+  ['DEV', 'https://pnpg.dev.selfcare.pagopa.it'],
+  ['UAT', 'https://imprese.uat.notifichedigitali.it'],
+  ['PROD', 'https://imprese.notifichedigitali.it'],
+])('retains release destinations in %s on %s', async (mode, origin) => {
   vi.stubEnv('VITE_ENV', mode);
+  Object.defineProperty(window, 'location', {
+    value: {
+      ...originalLocation,
+      origin,
+      hostname: new URL(origin).hostname,
+      pathname: '/auth/login',
+    },
+  });
   vi.resetModules();
   const { configureCommon } = await import('../consentAndAnalyticsConfiguration');
-  const { CONFIG } = await import('@pagopa/selfcare-common-frontend/lib/config/env');
+  const { CONFIG, showStaticPrivacyPolicy } = await import(
+    '@pagopa/selfcare-common-frontend/lib/config/env'
+  );
   const { ENV } = await import('../utils/env');
+
+  expect(showStaticPrivacyPolicy()).toBe(false);
+  expect(CONFIG.FOOTER.LINK.PRIVACYPOLICY).toBe(ENV.URL_FOOTER.PRIVACY_DISCLAIMER);
+  expect(CONFIG.FOOTER.LINK.TERMSANDCONDITIONS).toBe(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
 
   configureCommon();
 
   expect(CONFIG.URL_FE.LOGOUT).toBe(ENV.URL_FE.LOGOUT);
   expect(CONFIG.URL_FE.ASSISTANCE).toBe(ENV.URL_FE.ASSISTANCE);
-  expect(CONFIG.FOOTER.LINK.PRIVACYPOLICY).toBe(ENV.URL_FOOTER.PRIVACY_DISCLAIMER);
-  expect(CONFIG.FOOTER.LINK.TERMSANDCONDITIONS).toBe(ENV.URL_FOOTER.TERMS_AND_CONDITIONS);
 });
 
 test('applies release analytics settings before initializing an existing consent cookie', async () => {

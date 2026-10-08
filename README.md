@@ -52,9 +52,9 @@ Vite consent-script paths; this preserves the release's existing endpoint. Local
 development uses `VITE_ONE_TRUST_BASE_URL`. No legacy app environment or browser
 `process.env` shim is exposed.
 
-[ReleaseFooter](src/components/ReleaseFooter.tsx) retains the configured privacy
-destination and existing same-tab click behavior despite the upgraded common footer's
-new static-policy/new-tab defaults. Shared configuration is applied before consent
+[Layout](src/components/Layout.tsx) uses the shared footer directly. Common-frontend
+2.5.3 handles Imprese privacy navigation and legal URLs without a local wrapper or
+footer configuration overrides. Shared configuration is applied before consent
 initialization, including startup with an existing consent cookie.
 The router provider supplies the context required by the upgraded shared header;
 [App](src/App.tsx) still selects pages using the existing pathname comparisons.
@@ -83,7 +83,11 @@ The Yarn resolutions prevent separate MUI/Emotion contexts from breaking the sha
 
 Select **TypeScript: Select TypeScript Version > Use Workspace Version** after installing
 dependencies. [Workspace settings](.vscode/settings.json) point to the installed SDK.
-[TypeScript configuration](tsconfig.json) uses bundler resolution, and
+[Root TypeScript configuration](tsconfig.json) links the application, test and tooling
+projects so VS Code discovers the Vitest globals in [test configuration](tsconfig.test.json).
+[Application configuration](tsconfig.app.json) uses bundler resolution, and
 [Vite client declarations](src/vite-env.d.ts) type the CSS imports and browser assets.
 Use the workspace SDK rather than suppressing deprecations or adding wildcard module
 declarations to conceal missing imports.
+If test globals still show errors after configuration changes, run
+**TypeScript: Restart TS Server** from the Command Palette.

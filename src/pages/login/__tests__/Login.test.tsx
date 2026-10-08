@@ -7,7 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 
 const oldWindowLocation = global.window.location;
-const mockedLocation = { assign: vi.fn(), search: '' };
+const mockedLocation = { ...oldWindowLocation, assign: vi.fn(), search: '' };
 
 beforeAll(async () => {
   // eslint-disable-next-line functional/immutable-data

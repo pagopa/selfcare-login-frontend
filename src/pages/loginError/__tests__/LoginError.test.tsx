@@ -5,7 +5,7 @@ import LoginError from '../LoginError';
 import './../../../locale';
 
 const oldWindowLocation = global.window.location;
-const mockedLocation = { assign: vi.fn(), search: '' };
+const mockedLocation = { ...oldWindowLocation, assign: vi.fn(), search: '' };
 
 beforeAll(async () => {
   Object.defineProperty(window, 'location', { value: mockedLocation });
