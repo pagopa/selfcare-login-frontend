@@ -48,7 +48,7 @@ test('renders the language dropdown when reached from a backstage context', () =
   ).toBeInTheDocument();
 });
 
-test('passes the normal and backstage configs to the hook, with an empty backstage noticeId', () => {
+test('passes the normal and backstage configs to the hook', () => {
   (useOneTrustNotice as Mock).mockReturnValue({
     noticeId: '6f92cced-3bd1-4859-9295-baecfc74c64a',
     isBackstage: false,
@@ -59,6 +59,6 @@ test('passes the normal and backstage configs to the hook, with an empty backsta
   expect(useOneTrustNotice).toHaveBeenCalledWith(
     expect.anything(),
     expect.objectContaining({ noticeId: '6f92cced-3bd1-4859-9295-baecfc74c64a' }),
-    expect.objectContaining({ noticeId: '' })
+    expect.objectContaining({ noticeId: 'f2ca8812-959e-48e9-8eed-61a72d131052' })
   );
 });
