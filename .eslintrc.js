@@ -10,10 +10,18 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: ['tsconfig.app.json', 'tsconfig.test.json', 'tsconfig.tools.json'],
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import', 'functional', 'sonarjs'],
+  plugins: [
+    '@typescript-eslint',
+    '@stylistic/ts',
+    'react',
+    'react-hooks',
+    'import',
+    'functional',
+    'sonarjs',
+  ],
   rules: {
     'no-case-declarations': 'off',
     'no-inner-declarations': 'off',
@@ -53,7 +61,7 @@ module.exports = {
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/consistent-type-assertions': 'error',
     '@typescript-eslint/dot-notation': 'error',
-    '@typescript-eslint/member-delimiter-style': [
+    '@stylistic/ts/member-delimiter-style': [
       'error',
       {
         multiline: {
@@ -71,8 +79,7 @@ module.exports = {
     '@typescript-eslint/no-unused-expressions': ['error'],
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/restrict-plus-operands': 'error',
-    semi: 'off',
-    '@typescript-eslint/semi': ['error'],
+    semi: ['error'],
     '@typescript-eslint/unified-signatures': 'error',
     'react/prop-types': 'off',
     'react/display-name': 'off',

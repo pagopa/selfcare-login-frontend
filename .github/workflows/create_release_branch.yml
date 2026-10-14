@@ -16,7 +16,7 @@ on:
 jobs:
   create_branch:
     name: 'Create Release Branch'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       actions: write
@@ -27,7 +27,7 @@ jobs:
 
       - name: Create Release Branch
         id: create_branch
-        uses: pagopa/selfcare-commons/github-actions-template/create-release@main
+        uses: pagopa/selfcare/.github/actions/create-release@main
         with:
           version_bump: ${{ inputs.version-bump }}
           github_path_token: ${{ secrets.GH_PAT_VARIABLES }}

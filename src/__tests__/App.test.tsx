@@ -6,7 +6,7 @@ import { storageOnSuccessOps } from '../utils/storage';
 
 const oldWindowLocation = global.window.location;
 const mockedLocation = {
-  assign: jest.fn(),
+  assign: vi.fn(),
   pathname: '',
   origin: 'MOCKED_ORIGIN',
   search: '',
@@ -21,24 +21,25 @@ afterAll(() => {
 });
 
 // clean storage after each test
-afterEach(() => {
-  jest.requireActual('../pages/logout/Logout').default();
+afterEach(async () => {
+  const { default: Logout } = await vi.importActual<typeof import('../pages/logout/Logout')>(
+    '../pages/logout/Logout'
+  );
+  Logout();
   mockedLocation.assign.mockReset();
+  vi.unstubAllEnvs();
 });
 
-jest.mock('../pages/logout/Logout', () => () => 'LOGOUT');
-jest.mock('../pages/login/Login', () => () => 'LOGIN');
-jest.mock('../pages/loginSuccess/LoginSuccess', () => () => 'LOGIN_SUCCESS');
-jest.mock(
-  '../pages/ValidateSession/ValidateSession',
-  () =>
-    ({ sessionToken }) =>
-      'VALIDATE_SESSION:' + sessionToken
-);
+vi.mock('../pages/logout/Logout', () => ({ default: () => 'LOGOUT' }));
+vi.mock('../pages/login/Login', () => ({ default: () => 'LOGIN' }));
+vi.mock('../pages/loginSuccess/LoginSuccess', () => ({ default: () => 'LOGIN_SUCCESS' }));
+vi.mock('../pages/ValidateSession/ValidateSession', () => ({
+  default: ({ sessionToken }: { sessionToken: string }) => 'VALIDATE_SESSION:' + sessionToken,
+}));
 
 test.skip('test not served path', () => {
   render(<App />);
-  expect(global.window.location.assign).toBeCalledWith(ROUTE_LOGIN);
+  expect(global.window.location.assign).toHaveBeenCalledWith(ROUTE_LOGIN);
   checkRedirect(true);
 });
 
@@ -87,6 +88,64 @@ test('test LoginSuccess', () => {
   mockedLocation.hash = 'token=successToken';
   render(<App />);
   screen.getByText('LOGIN_SUCCESS');
+  checkRedirect(false);
+});
+
+test.each(['/auth', '/auth/', '/auth/login'])(
+  'keeps the local login page visible at "%s" with a stored session',
+  async (pathname) => {
+    vi.stubEnv('DEV', true);
+    vi.stubEnv('VITE_ENV', 'LOCAL_DEV');
+    vi.stubEnv('BASE_URL', '/auth/');
+    vi.resetModules();
+    const { default: LocalApp } = await import('../App');
+    mockedLocation.pathname = pathname;
+    mockedLocation.search = '?onSuccess=onboarding/prod-io';
+    storageTokenOps.write('testToken');
+
+    render(<LocalApp />);
+
+    expect(screen.getByText('LOGIN')).toBeInTheDocument();
+    expect(storageTokenOps.read()).toBe('testToken');
+    expect(storageOnSuccessOps.read()).toBe('onboarding/prod-io');
+    checkRedirect(false);
+  }
+);
+
+test.each([
+  [false, 'LOCAL_DEV', '/auth/login'],
+  [true, 'DEV', '/auth/login'],
+  [true, 'LOCAL_DEV', '/auth/login/success'],
+])(
+  'retains session validation with DEV=%s, environment=%s and path=%s',
+  async (development, environment, pathname) => {
+    vi.stubEnv('DEV', development);
+    vi.stubEnv('VITE_ENV', environment);
+    vi.stubEnv('BASE_URL', '/auth/');
+    vi.resetModules();
+    const { default: LocalApp } = await import('../App');
+    mockedLocation.pathname = pathname;
+    storageTokenOps.write('testToken');
+
+    render(<LocalApp />);
+
+    expect(screen.getByText('VALIDATE_SESSION:testToken')).toBeInTheDocument();
+    checkRedirect(false);
+  }
+);
+
+test('retains the local successful-login callback without a stored session', async () => {
+  vi.stubEnv('DEV', true);
+  vi.stubEnv('VITE_ENV', 'LOCAL_DEV');
+  vi.stubEnv('BASE_URL', '/auth/');
+  vi.resetModules();
+  const { default: LocalApp } = await import('../App');
+  mockedLocation.pathname = '/auth/login/success';
+  mockedLocation.hash = '#token=successToken';
+
+  render(<LocalApp />);
+
+  expect(screen.getByText('LOGIN_SUCCESS')).toBeInTheDocument();
   checkRedirect(false);
 });
 

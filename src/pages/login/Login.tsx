@@ -123,7 +123,7 @@ const Login = () => {
     }
   }, [lang]);
   const tosRoute = isPnpg
-    ? ROUTE_TERMS_AND_CONDITION.replace('/auth/', '/')
+    ? ENV.URL_FOOTER.TERMS_AND_CONDITIONS
     : ROUTE_TERMS_AND_CONDITION;
 
   const handleTosRedirect = () => {
@@ -133,7 +133,7 @@ const Login = () => {
   };
 
   const privacyRoute = isPnpg
-    ? ROUTE_PRIVACY_DISCLAIMER.replace('/auth/', '/')
+    ? ENV.URL_FOOTER.PRIVACY_DISCLAIMER
     : ROUTE_PRIVACY_DISCLAIMER;
   const handlePrivacyRedirect = () => {
     trackEvent('LOGIN_PRIVACY', { SPID_IDP_NAME: 'LOGIN_PRIVACY' }, () => {
