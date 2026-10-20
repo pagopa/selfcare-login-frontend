@@ -21,7 +21,12 @@ vi.mock('../../../utils/utils', async (importOriginal) => {
 });
 
 beforeEach(() => {
-  vi.stubGlobal('location', { assign: vi.fn(), search: '' });
+  vi.stubGlobal('location', {
+    origin: window.location.origin,
+    pathname: window.location.pathname,
+    assign: vi.fn(),
+    search: '',
+  });
 });
 
 afterEach(() => {
@@ -48,6 +53,8 @@ test('clears the session and drops any pending onSuccess when reached with no de
 
 test('persists the requested destination in storage, since the google login leaves this app', () => {
   vi.stubGlobal('location', {
+    origin: window.location.origin,
+    pathname: window.location.pathname,
     assign: vi.fn(),
     search: '?onSuccess=' + encodeURIComponent('/onboarding/user'),
   });

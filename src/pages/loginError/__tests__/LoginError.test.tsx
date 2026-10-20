@@ -5,7 +5,11 @@ import './../../../locale';
 import { MemoryRouter } from 'react-router-dom';
 
 beforeEach(() => {
-  vi.stubGlobal('location', { assign: vi.fn() });
+  vi.stubGlobal('location', {
+    origin: window.location.origin,
+    pathname: window.location.pathname,
+    assign: vi.fn(),
+  });
 });
 
 afterEach(() => {
