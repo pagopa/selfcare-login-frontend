@@ -2,6 +2,7 @@
   "name": "selfcare-login-frontend",
   "version": "1.4.0",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@mui/base": "^5.0.0-beta.70",
     "@mui/icons-material": "^5.8.2",
