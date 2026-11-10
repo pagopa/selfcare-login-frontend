@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { ROUTE_LOGIN } from '../../../utils/constants';
 import LoginError from '../LoginError';
 import './../../../locale';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 beforeEach(() => {
   vi.stubGlobal('location', {

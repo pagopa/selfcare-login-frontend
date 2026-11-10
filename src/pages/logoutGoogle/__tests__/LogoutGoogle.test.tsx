@@ -3,7 +3,7 @@ import {
   storageUserOps,
 } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { storageOnSuccessOps } from '../../../utils/storage';
 import { redirectToGoogleLogin } from '../../../utils/utils';
 import { LogoutGoogle } from '../LogoutGoogle';

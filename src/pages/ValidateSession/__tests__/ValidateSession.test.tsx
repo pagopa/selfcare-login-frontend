@@ -1,7 +1,7 @@
 import { User } from '@pagopa/selfcare-common-frontend/lib/model/User';
 import { storageUserOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { ROUTE_LOGOUT } from '../../../utils/constants';
 import { ENV } from '../../../utils/env';
 import { storageOnSuccessOps } from '../../../utils/storage';
