@@ -40,5 +40,5 @@ Without `yarn generate`, `tsc` and many tests fail with missing-module errors. R
 - This is the authentication entry point: never log or persist tokens/OTP/session data outside `src/utils/storage.ts`, and treat redirect/callback parameters as untrusted.
 - `vitest.config.ts` uses the `forks` pool with `mockReset`, `restoreMocks` and `clearMocks` on; `*.spec.ts` and `e2e/**` are excluded from Vitest.
 - `src/setupTests.ts` initializes i18n with the Italian locale only; tests assert on Italian text.
-- Routing uses React Router v5; do not use v6 APIs.
+- Routing uses React Router v7 (import everything from `react-router`, not `react-router-dom`); do not use v5 APIs (`Switch`, `useHistory`).
 - Prettier: 100 cols, single quotes, semicolons, trailing commas `es5`.

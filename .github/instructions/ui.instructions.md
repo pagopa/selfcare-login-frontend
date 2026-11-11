@@ -9,7 +9,7 @@ applyTo: "src/components/**,src/pages/**"
 - All user-facing text through `useTranslation()`'s `t()`; add keys to every locale (see locale instructions).
 - API calls go through `src/services/*` (which use `src/api` clients), not directly in components.
 - Handle loading, error and empty states using the common-frontend error handling.
-- Routing is React Router v5 (`useHistory`, `useLocation`).
+- Routing is React Router v7 (`useNavigate`, `useLocation`, imported from `react-router`).
 - Treat query parameters and redirect URLs as untrusted; never log tokens, OTP or session data.
 - Keep state as close as possible to where it is used; avoid `useEffect` when a derived value or event handler suffices.
 - Use semantic HTML and accessibility attributes; stable keys in lists.
